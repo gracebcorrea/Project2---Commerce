@@ -45,14 +45,14 @@ class Comments(models.Model):
     comment = models.CharField(max_length=250)
     def __str__(self):
         return f"({self.Comcode}) ({self.Listcode}) ({self.user}) ({self.comment})"
-#Auction Results
+#Auction Results - Vendido para...
+
 class Soldto(models.Model):
     Lcode= models.IntegerField()
     Pcode = models.CharField(max_length=5)
     user  = models.CharField(max_length=25)
     date = models.DateField(help_text="Please use the following format: <em>YYYY-MM-DD</em>.")
     bidprice = models.DecimalField(max_digits=9, decimal_places=2)
-    status = models.CharField(max_length=5) #on , ended
-
-def __str__(self):
+    status = models.CharField(max_length=5) #open or closed
+    def __str__(self):
     return f"({self.Lcode})({self.Pcode}) ({self.user}) ({self.date})  ({self.bidprice})  ({self.status})"
