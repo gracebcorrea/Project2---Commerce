@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-import Pillow
+from PIL import Image
+from PIL.Image import core as _imaging
 
 class User(AbstractUser):
     pass
@@ -51,16 +52,16 @@ class Comments(models.Model):
     user = models.CharField(max_length=25)
     comment = models.CharField(max_length=250)
     def __str__(self):
-        return f"({self.Comcode}) ({self.Listcode}) ({self.user}) ({self.comment})"
+        return f"({self.Comcode}) ({self.Lcode}) ({self.user}) ({self.comment})"
 
 
 #Like Faforits???
 class Watchlist(models.Model):
-    code =models.IntegerField() #Key
-    user = models.CharField(max_length=25)
+    Wcode =models.IntegerField() #Key
     Lcode= models.IntegerField()
-
-
+    user = models.CharField(max_length=25)
+    def __str__(self):
+        return f"({self.Wcode}) ({self.Lcode}) ({self.user}) "
 
 
 #Auction Results - Vendido para...
