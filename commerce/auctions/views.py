@@ -65,6 +65,20 @@ def register(request):
         return render(request, "auctions/register.html")
 
 
+
+
+"""               NEW
+   -----------------------------------------------------------------------------------
+"""
+
+def createlistings(request):
+    if request.method == "POST":
+        return HttpResponse("Create listings POST")
+
+    else:
+        return render(request, "auctions/createlistings.html")
+
+
 def listings(request):
     if request.method == "POST":
         return HttpResponse("listings POST")
@@ -72,12 +86,14 @@ def listings(request):
     else:
         return render(request, "auctions/listings.html")
 
-def property(request):
+
+
+def ActiveListings(request):
     if request.method == "POST":
         return HttpResponse("property POST")
 
     else:
-        return render(request, "auctions/property.html")
+        return render(request, "auctions/ActiveListings.html")
 
 def bids(request):
     if request.method == "POST":
