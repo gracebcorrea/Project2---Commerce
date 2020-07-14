@@ -1,0 +1,36 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}
+    New Auction List
+
+{% endblock %}
+
+{% block body %}
+
+
+
+
+
+
+
+
+
+<div class ="flex-container"  >
+    <form  action= "{% url 'auctions:createlistings' %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+
+
+
+
+
+
+        <form class="form-inline" style="position:relative; top:100px">
+             <button type="submit" class="btn btn-success">Save</button>
+             <button type="button" class="btn btn-danger"><a href="{% url 'auctions:index' %}">Cancel</button>
+        </form>
+    </form>
+</div>
+
+
+{% endblock %}
