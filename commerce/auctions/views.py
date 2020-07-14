@@ -63,3 +63,40 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "auctions/register.html")
+
+
+def listings(request):
+    if request.method == "POST":
+        return HttpResponse("listings POST")
+
+    else:
+        return render(request, "auctions/listings.html")
+
+def property(request):
+    if request.method == "POST":
+        return HttpResponse("property POST")
+
+    else:
+        return render(request, "auctions/property.html")
+
+def bids(request):
+    if request.method == "POST":
+        return HttpResponse("bids POST")
+
+    else:
+        return render(request, "auctions/bids.html")
+
+
+def comments(request):
+    if request.method == "POST":
+        return HttpResponse("comments POST")
+
+    else:
+        return render(request, "auctions/comments.html")
+
+def soldto(request):
+    if request.method == "POST":
+        return HttpResponse("soldto POST")
+
+    else:
+        return render(request, "auctions/soldto.html")
