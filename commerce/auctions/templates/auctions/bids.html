@@ -16,46 +16,30 @@
 
 
 <div class ="flex-container"  >
-  <form  action= "{% url 'auctions:comments' %}" method="post">
+    <form  action= "{% url 'auctions:Bids' %}" method="post">
+          {% csrf_token %}
+          {{ form }}
+
+
+
+
+
+
+          <form class="form-inline" style="position:relative; top:100px">
+               <button type="submit" class="btn btn-success">Save</button>
+               <button type="button" class="btn btn-danger"><a href="{% url 'auctions:index' %}">Cancel</button>
+          </form>
+      </form>
+
+  <form  action= "{% url 'auctions:Comments' %}" method="post">
       {% csrf_token %}
       {{ form }}
-
-
-
-
-
 
       <form class="form-inline" style="position:relative; top:100px">
            <button type="submit" class="btn btn-success">Save</button>
            <button type="button" class="btn btn-danger"><a href="{% url 'auctions:index' %}">Cancel</button>
       </form>
   </form>
-
-
-
-
-
-
-
-    <form  action= "{% url 'auctions:bids' %}" method="post">
-        {% csrf_token %}
-        {{ form }}
-
-
-
-
-
-
-        <form class="form-inline" style="position:relative; top:100px">
-             <button type="submit" class="btn btn-success">Save</button>
-             <button type="button" class="btn btn-danger"><a href="{% url 'auctions:index' %}">Cancel</button>
-        </form>
-    </form>
-
-
-
-
-
 
 
 </div>
