@@ -8,10 +8,11 @@ urlpatterns = [
     path("logout", views.logout_view, name="logout"),
     path("register", views.register, name="register"),
     path("ActiveListings", views.ActiveListings, name="ActiveListings"),
-    path("bids", views.bids, name="bids"),
-    path("listings", views.listings, name="listings"),
-    path("comments", views.comments, name="comments"),
-    path("soldto", views.soldto, name="soldto"),
-    path("createlistings", views.createlistings, name="createlistings"),
+    path("Listings", views.Listings, name="Listings"),
+    path("Bids", views.Bids, name="Bids"),
+    path("Comments", views.Comments, name="Comments"), #vinculado a bids
+    path("SoldTo", views.SoldTo, name="SoldTo"),
+    path("CreateListings", views.CreateListings, name="CreateListings"),
+    path("Watchlist", views.Watchlist, name="Watchlist"),
 
 ]
