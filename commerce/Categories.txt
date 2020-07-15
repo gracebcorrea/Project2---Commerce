@@ -1,0 +1,6 @@
+Ccode,description
+1,	Apartament
+2,	Factory
+3,	Farm
+4,	House
+5,	Store
