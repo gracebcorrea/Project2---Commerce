@@ -67,26 +67,36 @@ def register(request):
         return render(request, "auctions/register.html")
 
 
-
-
 """               NEW
    -----------------------------------------------------------------------------------
 """
 
-def createlistings(request):
+
+
+#Create Listing
+def CreateListings(request):
     if request.method == "POST":
         return HttpResponse("Create listings POST")
 
     else:
         return render(request, "auctions/createlistings.html")
 
-
-def listings(request):
+#List Listings details -  All
+def Listings(request):
     if request.method == "POST":
         return HttpResponse("listings POST")
 
     else:
-        return render(request, "auctions/listings.html")
+        return render(request, "auctions/Listings.html")
+
+
+#List Categories
+def Categories(request):
+    if request.method == "POST":
+        return HttpResponse("Categories POST")
+
+    else:
+        return render(request, "auctions/Categories.html")
 
 
 
@@ -97,22 +107,30 @@ def ActiveListings(request):
     else:
         return render(request, "auctions/ActiveListings.html")
 
-def bids(request):
+
+def Bids(request):
     if request.method == "POST":
         return HttpResponse("bids POST")
 
     else:
         return render(request, "auctions/bids.html")
-
-
-def comments(request):
+def Watchlist(request):
     if request.method == "POST":
-        return HttpResponse("comments POST")
+        return HttpResponse("Watchlist POST")
 
     else:
-        return render(request, "auctions/comments.html")
+        return render(request, "auctions/Watchlist.html")
 
-def soldto(request):
+
+
+def  Comments(request):
+    if request.method == "POST":
+        return HttpResponse(" Comments POST")
+
+    else:
+        return render(request, "auctions/Comments.html")
+
+def SoldTo(request):
     if request.method == "POST":
         return HttpResponse("soldto POST")
 
