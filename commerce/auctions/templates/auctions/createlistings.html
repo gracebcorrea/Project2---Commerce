@@ -16,7 +16,7 @@
 
 
 <div class ="flex-container"  >
-    <form  action= "{% url 'auctions:createlistings' %}" method="post">
+    <form  action= "{% url 'auctions:CreateListings' %}" method="post">
         {% csrf_token %}
         {{ form }}
 
