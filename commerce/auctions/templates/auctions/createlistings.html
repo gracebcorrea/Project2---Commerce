@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block body %}
+<h2> Create a New List</h2>
 
 
 
@@ -15,22 +16,7 @@
 
 
 
-<div class ="flex-container"  >
-    <form  action= "{% url 'auctions:CreateListings' %}" method="post">
-        {% csrf_token %}
-        {{ form }}
 
-
-
-
-
-
-        <form class="form-inline" style="position:relative; top:100px">
-             <button type="submit" class="btn btn-success">Save</button>
-             <button type="button" class="btn btn-danger"><a href="{% url 'auctions:index' %}">Cancel</button>
-        </form>
-    </form>
-</div>
 
 
 {% endblock %}
