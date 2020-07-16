@@ -30,14 +30,13 @@
 				        </thead>
 
 				        {% for List in Listings %}
-				             	<tr>
+				            <tr>
 					          	<td>{{ List.Pcode }}</td>
 						          <td>{{ List.Ccode }}</td>
 						          <td>{{ List.price }}</td>
                       <td>{{ List.description }}</td>
-                      <td>{{ List.picture }}</td>
-
-				              </tr>
+                      <td><img src="{{ List.picture }}"  class="img-responsive center-block"></td>
+				            </tr>
 				        {% endfor %}
 			         </table>
             </div>
