@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block body %}
-
+{{message}}
 
 
 
@@ -18,7 +18,7 @@
 <div class ="flex-container"  >
     <form  action= "{% url 'auctions:Listings' %}" method="post">
         {% csrf_token %}
-        {{ form }}
+    
 
 
 
