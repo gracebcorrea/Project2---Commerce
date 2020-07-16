@@ -20,7 +20,7 @@ class Listings(models.Model):
     Ccode= models.IntegerField(help_text="Category House, Apartament, Commercial") #foreign key from PropTypes
     description = models.CharField(max_length=250)
     picture = models.ImageField() #Name of the picture saved on static folder
-    price = models.DecimalField(help_text="Just USD", max_digits=9, decimal_places=2) #initial price
+    price = models.FloatField(help_text="Just USD") #initial price
     def __str__(self):
         return f"({self.Pcode}) ({self.Ccode}) ({self.description}) ({self.picture}) ({self.price})"
 
@@ -50,7 +50,7 @@ class Bids(models.Model):
     Pcode = models.IntegerField()  #foreignkey Property
     user = models.CharField(max_length=25) #Who is going to buy
     Bthrow= models.IntegerField() #first throw, second , third....
-    Bprice = models.DecimalField(max_digits=9, decimal_places=2)# throw value
+    Bprice = models.FloatField(help_text="Just USD")# throw value
     def __str__(self):
         return f"({self.Bcode})({self.Lcode})({self.Pcode}) ({self.user}) ({self.Bthrow})  ({self.Bprice})"
 
@@ -81,7 +81,7 @@ class SoldTo(models.Model):
     Pcode = models.IntegerField()
     user  = models.CharField(max_length=25)
     date = models.DateField(help_text="Please use the following format: <em>YYYY-MM-DD</em>.")
-    Bprice = models.DecimalField(max_digits=9, decimal_places=2)
+    Bprice = models.FloatField(help_text="Just USD")
     status = models.CharField(max_length=5) #open or closed
     def __str__(self):
         return f"({self.Lcode})({self.Pcode}) ({self.user}) ({self.date})  ({self.Bprice})  ({self.status})"
