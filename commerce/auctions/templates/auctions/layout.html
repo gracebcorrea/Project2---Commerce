@@ -12,57 +12,57 @@
            color:  #004d00;
         }
 
-
     </style>
 
     </head>
     <body>
+        <div class="row">
+            <div class="col-lg-3" style="background-color:#004d00;color:#e6ffe6 ;">
+                <h1 style="text-align: center;">Auctions</h1>
+                {% if user.is_authenticated %}
+                    <p style="text-align: center;">Signed in as <strong >{{ user.username }}</strong>.</p>
+                {% else %}
+                    <p style="text-align: center;">Not signed in.</p>
+                {% endif %}
+            </div>
+            <div class="col-lg-9" >
+                <ul class="nav">
 
-
-        <h1>Auctions</h1>
-
-        <div>
-            {% if user.is_authenticated %}
-                Signed in as <strong>{{ user.username }}</strong>.
-            {% else %}
-                Not signed in.
-            {% endif %}
+                <li class="nav-item"><br>
+                    <a  style="color:  #004d00;" class="nav-link" href="{% url 'ActiveListings' %}">Active Listings</a>
+                </li>
+                <li class="nav-item"><br>
+                    <a  style="color:  #004d00;" class="nav-link" href="{% url 'Listings' %}">Listings</a>
+                </li>
+                <li class="nav-item"><br>
+                    <a  style="color:  #004d00;" class="nav-link" href="{% url 'CreateListings' %}">Create Listing</a>
+                </li>
+                <li class="nav-item"><br>
+                    <a  style="color:  #004d00;" class="nav-link" href="{% url 'Bids' %}">Bids</a>
+                </li>
+                <li class="nav-item"><br>
+                    <a  style="color:  #004d00;" class="nav-link" href="{% url 'Watchlist' %}">Watchlist</a>
+                </li>
+                <li class="nav-item"><br>
+                   <a  style="color:  #004d00;" class="nav-link" href="{% url 'SoldTo' %}">Bid Winners </a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item"><br>
+                         <a  style="color:  #004d00;" class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item"><br>
+                        <a  style="color:  #004d00;" class="nav-link" href="{% url 'login' %}">Log In</a>
+                    </li>
+                    <li class="nav-item"><br>
+                        <a  style="color:  #004d00;" class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                {% endif %}
+                </ul>
+            </div>
         </div>
-
-        <ul class="nav">
-          <li class="nav-item">
-              <a class="nav-link" href="{% url 'ActiveListings' %}">Active Listings</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="{% url 'Listings' %}">Listings</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="{% url 'Bids' %}">Bids</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="{% url 'Watchlist' %}">Watchlist</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="{% url 'SoldTo' %}">Bid Winners </a>
-          </li>
-
-            {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
-                </li>
-            {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Log In</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'register' %}">Register</a>
-                </li>
-            {% endif %}
-
-
-        </ul>
-        <hr>
-        {% block body %}
-        {% endblock %}
+      <hr>
+      {% block body %}
+      {% endblock %}
     </body>
 </html>
