@@ -85,7 +85,7 @@ def CreateListings(request):
         return HttpResponse("Create listings POST")
 
     else:
-        return render(request, "auctions/createlistings.html")
+        return render(request, "auctions/CreateListings.html")
 
 """
 Categories: Users should be able to visit a page that displays a list of all
@@ -126,7 +126,7 @@ def Listings(request):
         return HttpResponse("listings POST")
 
     else:
-        return render(request, "auctions/listings.html")
+        return render(request, "auctions/Listings.html")
 
 
 
@@ -150,7 +150,17 @@ def Bids(request):
         return HttpResponse("bids POST")
 
     else:
-        return render(request, "auctions/bids.html")
+        return render(request, "auctions/Bids.html")
+
+
+def  Comments(request):
+    if request.method == "POST":
+        return HttpResponse(" Comments POST")
+
+    else:
+        return render(request, "auctions/Comments.html")
+
+
 
 """
 Watchlist: Users who are signed in should be able to visit a Watchlist page, which
@@ -163,20 +173,13 @@ def Watchlist(request):
         return HttpResponse("Watchlist POST")
 
     else:
-        return render(request, "auctions/Watchlist.html")
+        return render(request, "auctions/WatchList.html")
 
 
-
-def  Comments(request):
-    if request.method == "POST":
-        return HttpResponse(" Comments POST")
-
-    else:
-        return render(request, "auctions/comments.html")
 
 def SoldTo(request):
     if request.method == "POST":
         return HttpResponse("soldto POST")
 
     else:
-        return render(request, "auctions/soldto.html")
+        return render(request, "auctions/SoldTo.html")
