@@ -12,11 +12,11 @@ class User(AbstractUser):
 Models: Your application should have at least three models in addition to the User model:
 one for auction listings, one for bids, and one for comments made on auction listings.
 It’s up to you to decide what fields each model should have, and what the types of those
-fields should be. You may have additional models if you would like.    
+fields should be. You may have additional models if you would like.
 """
 #Properties   table  auctions_ActiveListings
 class Listings(models.Model):
-    Pcode = models.IntegerField(max_length=5) #key
+    Pcode = models.IntegerField() #key
     Ccode= models.IntegerField(help_text="Category House, Apartament, Commercial") #foreign key from PropTypes
     description = models.CharField(max_length=250)
     picture = models.ImageField() #Name of the picture saved on static folder
@@ -36,7 +36,7 @@ class Categories(models.Model):
 #Auctions List  table auctions_Listings
 class ActiveListings(models.Model):
     Lcode= models.IntegerField() #Key?
-    Pcode = models.IntegerField(max_length=5) #foreignkey Property
+    Pcode = models.IntegerField() #foreignkey Property
     dateStart = models.DateField(help_text="Please use the following format: <em>YYYY-MM-DD</em>.")
     duration = models.IntegerField(help_text="Duration expressed in days" )
     status = models.CharField(max_length=5) #to Begin, on , ended
@@ -47,7 +47,7 @@ class ActiveListings(models.Model):
 class Bids(models.Model):
     Bcode = models.IntegerField() #pk
     Lcode= models.IntegerField() #foreignkey Listings
-    Pcode = models.IntegerField(max_length=5)  #foreignkey Property
+    Pcode = models.IntegerField()  #foreignkey Property
     user = models.CharField(max_length=25) #Who is going to buy
     Bthrow= models.IntegerField() #first throw, second , third....
     Bprice = models.DecimalField(max_digits=9, decimal_places=2)# throw value
@@ -78,7 +78,7 @@ class Watchlist(models.Model):
 class SoldTo(models.Model):
     Scode=models.IntegerField()
     Lcode= models.IntegerField()
-    Pcode = models.IntegerField(max_length=5)
+    Pcode = models.IntegerField()
     user  = models.CharField(max_length=25)
     date = models.DateField(help_text="Please use the following format: <em>YYYY-MM-DD</em>.")
     Bprice = models.DecimalField(max_digits=9, decimal_places=2)
