@@ -10,12 +10,12 @@ urlpatterns = [
     path("logout", views.logout_view, name="logout"),
     path("register", views.register, name="register"),
 
-    path("ActiveListings", views.ActiveListings, name="ActiveListings"),
-    path("Listings", views.Listings, name="Listings"),
-    path("Bids", views.Bids, name="Bids"),
-    path("Comments", views.Comments, name="Comments"), #vinculado a bids
-    path("SoldTo", views.SoldTo, name="SoldTo"),
-    path("CreateListings", views.CreateListings, name="CreateListings"),
-    path("Watchlist", views.Watchlist, name="Watchlist"),
+    path("Bids", views.Bids_view, name="Bids"),
+    path("Categories", views.Categories_view, name="Categories"),
+    path("CreateListings", views.CreateListings_view, name="CreateListings"),
+    path("ActiveListings", views.ActiveListings_view, name="ActiveListings"), #jogar para index quando terminar
+    path("Listings", views.Listings_view, name="Listings"),
+    path("Comments", views.Comments_view, name="Comments"), #vinculado a bids
+    path("Watchlist", views.Watchlist_view, name="Watchlist"),
 
 ]
