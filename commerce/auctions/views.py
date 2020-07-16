@@ -123,7 +123,14 @@ The listing page should display all comments that have been made on the listing.
 #List Listings details -  All
 def Listings(request):
     if request.method == "POST":
-        return HttpResponse("listings POST")
+
+
+
+
+        context= {
+                "message":"Listings POST",
+        }
+        return render(request,"auctions/Listings.html", context)
 
     else:
         return render(request, "auctions/Listings.html")
