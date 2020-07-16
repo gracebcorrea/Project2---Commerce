@@ -13,10 +13,9 @@
 
 
 <div class="form-group">
-  	<!--<form action= "{% url 'auctions:Listings' %}" method="post" >-->
-    <form>
-      {% csrf_token %}
-        {% if results and results|length > 0 %}
+  	<form action= "{% url 'Listings' %}" method="post" >
+        {% csrf_token %}
+        {% if Listings and Listings|length > 0 %}
 	         	<div class="form-group">
 		          	<table class="table">
 			        	<thead>
@@ -24,18 +23,20 @@
 					     	<th scope="col">Code </th>
       		    	<th scope="col">Category</th>
 					    	<th scope="col">Price  </th>
-						    <th scope="col">Picture </th>
                 <th scope="col">Description </th>
+						    <th scope="col">Picture </th>
+
 					      </tr>
 				        </thead>
 
-				        {% for result in results %}
+				        {% for List in Listings %}
 				             	<tr>
-					          	<td>{{ result.Pcode }}</td>
-						          <td>{{ result.Category }}</td>
-						          <td>{{ result.Price }}</td>
-                      <td>{{ result.Picture }}</td>
-                      <td>{{ result.Description }}</td>
+					          	<td>{{ List.Pcode }}</td>
+						          <td>{{ List.Ccode }}</td>
+						          <td>{{ List.price }}</td>
+                      <td>{{ List.description }}</td>
+                      <td>{{ List.picture }}</td>
+
 				              </tr>
 				        {% endfor %}
 			         </table>
