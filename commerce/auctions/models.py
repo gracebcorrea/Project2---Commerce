@@ -1,5 +1,9 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django import forms
+from django.http import HttpResponseBadRequest, HttpResponseRedirect, Http404
+from django.shortcuts import render
+from django.urls import reverse
 from PIL import Image
 from PIL.Image import core as _imaging
 
@@ -71,17 +75,3 @@ class Watchlist(models.Model):
     user = models.CharField(max_length=25)
     def __str__(self):
         return f"({self.Wcode}) ({self.Lcode}) ({self.user}) "
-
-
-#Auction Results - Vendido para...  table auctions_Soldto
-
-class SoldTo(models.Model):
-    Scode=models.IntegerField()
-    Lcode= models.IntegerField()
-    Pcode = models.IntegerField()
-    user  = models.CharField(max_length=25)
-    date = models.DateField(help_text="Please use the following format: <em>YYYY-MM-DD</em>.")
-    Bprice = models.FloatField(help_text="Just USD")
-    status = models.CharField(max_length=5) #open or closed
-    def __str__(self):
-        return f"({self.Lcode})({self.Pcode}) ({self.user}) ({self.date})  ({self.Bprice})  ({self.status})"
