@@ -88,9 +88,11 @@ def Categories_view(request):
         context= {
                 "Categories": Categories.objects.all(),
         }
-
+        return render(request, "auctions/Categories.html", context)
     else:
         return render(request, "auctions/Categories.html")
+
+
 
 """
 Listing Page: Clicking on a listing should take users to a page specific to that listing.
@@ -112,13 +114,13 @@ The listing page should display all comments that have been made on the listing.
 """
 #List Listings details -  All
 def Listings_view(request):
-
-    context= {
+    if request.method == "POST":
+        context= {
             "Listings": Listings.objects.all(),
-    }
-    return render(request,"auctions/Listings.html", context)
-
-
+        }
+        return render(request,"auctions/Listings.html", context)
+    else:
+        return render(request,"auctions/Listings.html")
 
 
 
