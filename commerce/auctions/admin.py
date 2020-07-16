@@ -2,7 +2,7 @@ from django.contrib import admin
 
 #from django.contrib import admin
 
-from .models import Listings, Categories, ActiveListings, Bids, Comments, Watchlist,SoldTo
+from .models import Listings, Categories, ActiveListings, Bids, Comments, Watchlist
 # Register your models here.
 
 
@@ -16,6 +16,6 @@ admin.site.register(ActiveListings)
 admin.site.register(Bids)
 admin.site.register(Comments)
 admin.site.register(Watchlist)
-admin.site.register(SoldTo)
+
 
 #admin.site.register(Admin,Admin)
