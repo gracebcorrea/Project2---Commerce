@@ -7,8 +7,47 @@
 
 {% block body %}
 
-  <h2>See all items Available</<h2>
-{{message}}
+<h2>See all items Available:</<h2>
+<p> {{message}}</p>
+
+
+
+<div class="form-group">
+  	<!--<form action= "{% url 'auctions:Listings' %}" method="post" >-->
+    <form>
+      {% csrf_token %}
+        {% if results and results|length > 0 %}
+	         	<div class="form-group">
+		          	<table class="table">
+			        	<thead>
+				      	<tr>
+					     	<th scope="col">Code </th>
+      		    	<th scope="col">Category</th>
+					    	<th scope="col">Price  </th>
+						    <th scope="col">Picture </th>
+                <th scope="col">Description </th>
+					      </tr>
+				        </thead>
+
+				        {% for result in results %}
+				             	<tr>
+					          	<td>{{ result.Pcode }}</td>
+						          <td>{{ result.Category }}</td>
+						          <td>{{ result.Price }}</td>
+                      <td>{{ result.Picture }}</td>
+                      <td>{{ result.Description }}</td>
+				              </tr>
+				        {% endfor %}
+			         </table>
+            </div>
+
+        {% else %}
+	         	<div class="form-group">
+		          	<output>No matches found</output>
+	        	</div>
+	{% endif %}
+	</form>
+</div>
 
 
 
