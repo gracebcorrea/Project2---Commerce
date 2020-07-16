@@ -32,20 +32,20 @@
                     <a  style="color:  #004d00;" class="nav-link" href="{% url 'ActiveListings' %}">Active Listings</a>
                 </li>
                 <li class="nav-item"><br>
-                    <a  style="color:  #004d00;" class="nav-link" href="{% url 'Listings' %}">Listings</a>
-                </li>
-                <li class="nav-item"><br>
-                    <a  style="color:  #004d00;" class="nav-link" href="{% url 'CreateListings' %}">Create Listing</a>
-                </li>
-                <li class="nav-item"><br>
-                    <a  style="color:  #004d00;" class="nav-link" href="{% url 'Bids' %}">Bids</a>
+                    <a  style="color:  #004d00;" class="nav-link" href="{% url 'Categories' %}">Categories</a>
                 </li>
                 <li class="nav-item"><br>
                     <a  style="color:  #004d00;" class="nav-link" href="{% url 'Watchlist' %}">Watchlist</a>
                 </li>
+
                 <li class="nav-item"><br>
-                   <a  style="color:  #004d00;" class="nav-link" href="{% url 'SoldTo' %}">Bid Winners </a>
+                    <a  style="color:  #004d00;" class="nav-link" href="{% url 'CreateListings' %}">Create Listing</a>
                 </li>
+                <li class="nav-item"><br>
+                    <a  style="color:  #004d00;" class="nav-link" href="{% url 'Listings' %}">Listings</a>
+                </li>
+              
+
                 {% if user.is_authenticated %}
                     <li class="nav-item"><br>
                          <a  style="color:  #004d00;" class="nav-link" href="{% url 'logout' %}">Log Out</a>
