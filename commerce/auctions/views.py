@@ -85,7 +85,9 @@ all of the active listings in that category.
 #List Categories- drop down list?
 def Categories_view(request):
     if request.method == "POST":
-        return HttpResponse("Categories POST")
+        context= {
+                "Categories": Categories.objects.all(),
+        }
 
     else:
         return render(request, "auctions/Categories.html")
