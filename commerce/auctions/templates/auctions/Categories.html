@@ -1,13 +1,13 @@
 {% extends "auctions/layout.html" %}
 
 {% block title %}
-    See all items Available
+    Categories
 
 {% endblock %}
 
 {% block body %}
 
-<h2>See all items Available:</<h2>
+
 <p> {{message}}</p>
 
 
@@ -15,14 +15,14 @@
 <div class="form-group">
   	<form action= "{% url 'Categories' %}" method="post" >
         {% csrf_token %}
-        {% if Category and Categories|length > 0 %}
+        {% if Categories|length > 0 %}
 	         	<div class="form-group">
 		          	<table class="table">
-			        	<thead>
-				      	<tr>
-					     	<th scope="col">Code </th>
-      		      <th scope="col">Description </th>
-						    </tr>
+			            	<thead>
+				      	    <tr>
+					        	<th scope="col">Code </th>
+      		          <th scope="col">Description </th>
+						        </tr>
 				        </thead>
 
 				        {% for Category in Categories %}
@@ -36,7 +36,7 @@
 
         {% else %}
 	         	<div class="form-group">
-		          	<output>No matches found</output>
+		          	<output><h1>No matches found</h1></output>
 	        	</div>
 	{% endif %}
 	</form>
