@@ -26,11 +26,10 @@
 				        </thead>
 
 				        {% for Category in Categories %}
-				             	<tr>
-					          	<td>{{ List.Pcode }}</td>
-						          <td>{{ List.description }}</td>
-
-				              </tr>
+				            <tr>
+					          	<td>{{ Category.Ccode }}</td>
+						          <td>{{ Category.description }}</td>
+				            </tr>
 				        {% endfor %}
 			         </table>
             </div>
