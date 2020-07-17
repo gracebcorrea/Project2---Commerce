@@ -4,8 +4,12 @@ from django import forms
 from django.http import HttpResponseBadRequest, HttpResponseRedirect, Http404
 from django.shortcuts import render
 from django.urls import reverse
+
 from PIL import Image
 from PIL.Image import core as _imaging
+
+from django.conf import settings
+from django.conf.urls.static import static
 
 class User(AbstractUser):
     pass
@@ -23,7 +27,7 @@ class Listings(models.Model):
     Pcode = models.IntegerField() #key
     Ccode= models.IntegerField(help_text="Category House, Apartament, Commercial") #foreign key from PropTypes
     description = models.CharField(max_length=250)
-    picture = models.ImageField(blank=True,upload_to=b"images") #Name of the picture saved on static folder
+    picture = models.ImageField(upload_to=b"images",blank=True) #Name of the picture saved on static folder
     price = models.FloatField(help_text="Just USD") #initial price
     def __str__(self):
         return f"({self.Pcode}) ({self.Ccode}) ({self.description}) ({self.picture}) ({self.price})"
