@@ -8,12 +8,13 @@ from django.urls import reverse
 from django.contrib import admin
 
 
-from .models import User, Listings, Categories, ActiveListings, Bids, Comments, Watchlist
+from .models import User, Listings, Categories, Bids, Comments, Watchlist
 
 
 def index(request):
+
     context={
-            "ActiveListings": ActiveListings.objects.all(),
+            "ActiveListings": Listings.objects.all(),
     }
     return render(request, "auctions/index.html", context)
 
@@ -115,7 +116,7 @@ The listing page should display all comments that have been made on the listing.
 def Listings_view(request):
 
         context= {
-            "Listings": Listings.objects.all(),
+            "message": "Working on this",
         }
         return render(request,"auctions/Listings.html", context)
 
@@ -128,10 +129,12 @@ page should display (at minimum) the title, description, current price, and phot
  (if one exists for the listing).
 """
 def ActiveListings_view(request):
-    context= {
-               "ActiveListings": ActiveListings.objects.all(),
+    Active=request
+    context={
+        "ActiveListings": Listings.objects.all(),
     }
     return render(request, "auctions/index.html", context)
+
 
 
 """
