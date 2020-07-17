@@ -31,7 +31,7 @@
 						          <td>{{ List.Ccode }}</td>
 						          <td>{{ List.price }}</td>
                       <td>{{ List.description }}</td>
-                      <td><img src={{ List.picture }}  class="img-responsive center-block"></td>
+                      <td><img src="{{ List.picture.image.url }}" width="300"></td>
 				            </tr>
 				        {% endfor %}
 			         </table>
