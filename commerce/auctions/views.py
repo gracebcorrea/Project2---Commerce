@@ -122,19 +122,6 @@ def Listings_view(request):
 
 
 
-"""
-Active Listings Page: The default route of your web application should let users
-view all of the currently active auction listings. For each active listing, this
-page should display (at minimum) the title, description, current price, and photo
- (if one exists for the listing).
-"""
-def ActiveListings_view(request):
-    Active=request
-    context={
-        "ActiveListings": Listings.objects.all(),
-    }
-    return render(request, "auctions/index.html", context)
-
 
 
 """
