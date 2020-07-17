@@ -7,48 +7,58 @@
 
 {% block body %}
 
-<p> {{message}}</p>
+
+<<h1>{{message}}</h1>>
 
 <div class="form-group">
-  	<form action= "{% url 'Listings_view' %}" method="post" >
+    <form >
         {% csrf_token %}
         {% if Listings|length > 0 %}
-	         	<div class="form-group">
-		          	<table class="table">
-			           	<thead>
-				           	<tr>
-					        	<th scope="col">Code </th>
-      		        	<th scope="col">Category</th>
-					        	<th scope="col">Price  </th>
-                    <th scope="col">Description </th>
-						        <th scope="col">Picture </th>
-					         </tr>
-				        </thead>
+            <div class="form-group">
+                <table class="table">
+                  <thead>
+                    <tr>
+                       <th scope="col">Status</th>
+                       <th scope="col">Title</th>
+                       <th scope="col">Category</th>
+                       <th scope="col">Description </th>
+                       <th scope="col">Initial Price </th>
+                       <th scope="col">dateStart  </th>
+                       <th scope="col">duration  </th>
+                       <th scope="col">Seller  </th>
+                       <th scope="col">Image </th>
+                    </tr>
+                  </thead>
 
-				        {% for List in Listings %}
-				            <tr>
-					          	<td>{{ List.Pcode }}</td>
-						          <td>{{ List.Ccode }}</td>
-						          <td>{{ List.price }}</td>
-                      <td>{{ List.description }}</td>
-                      {% load static %}
-                      <td><img src="{% static {{List.Limage}} %}"  width="300"></td>
+                {%for Listed in Listings %}
 
+                    <tr>
+                        <td>{{ Listed.Lstatus }}</td>
+                        <td>{{ Listed.Ltitle }}</td>
+                        <td>{{ Listed.Ccode }}</td>
+                        <td>{{ Listed.Ldescription }}</td>
+                        <td>{{ Listed.Lprice }}</td>
+                        <td>{{ Listed.Ldatestart }}</td>
+                        <td>{{ Listed.Lduration }}</td>
+                        <td>{{ Listed.Luser }}</td>
 
-				            </tr>
-				        {% endfor %}
-			         </table>
+                        {% load static %}
+                        <td><img src=" {{Active.Limage}} "  width="300"></td>
+
+                        <td></td>
+                    </tr>
+
+                {% endfor %}
+               </table>
             </div>
 
         {% else %}
-	         	<div class="form-group">
-		          	<output>No matches found</output>
-	        	</div>
-	{% endif %}
-	</form>
+            <div class="form-group">
+                <output>No matches found</output>
+            </div>
+        {% endif %}
+  </form>
 </div>
-
-
 
 
 
