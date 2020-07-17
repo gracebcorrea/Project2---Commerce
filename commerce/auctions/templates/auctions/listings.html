@@ -31,7 +31,10 @@
 						          <td>{{ List.Ccode }}</td>
 						          <td>{{ List.price }}</td>
                       <td>{{ List.description }}</td>
-                      <td><img src="{{ List.picture.url }}" width="300"></td>
+                      {% load static %}
+                      <td><img src="{{ List.picture }}" width="300"></td>
+                    <!--  <td><img src="{% static {{ List.picture.url }} %}" width="300"></td>-->
+
 				            </tr>
 				        {% endfor %}
 			         </table>
