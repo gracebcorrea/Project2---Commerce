@@ -17,6 +17,7 @@
                         <th scope="col">Description </th>
     						        <th scope="col">Initial Price </th>
                         <th scope="col">Image </th>
+                        <th scope="col">Status</th>
     					         </tr>
     				        </thead>
 
@@ -27,7 +28,9 @@
                             <td>{{ Active.Ldatestart }}</td>
     						            <td>{{ Active.Ldescription }}</td>
                             <td>{{ Active.Lprice }}</td>
-    						            <td><<img src="{{ Active.image }}" width="300"></td>
+                            {% load static %}
+    						            <td><img src=" {{Active.Limage}} "  width="300"></td>
+                            <td>{{ Active.Lstatus }}</td>
                             <td></td>
     				                </tr>
                         {%endif%}
