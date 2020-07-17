@@ -7,10 +7,7 @@
 
 {% block body %}
 
-<h2>See all items Available:</<h2>
 <p> {{message}}</p>
-
-
 
 <div class="form-group">
   	<form action= "{% url 'Listings' %}" method="post" >
@@ -34,7 +31,7 @@
 						          <td>{{ List.Ccode }}</td>
 						          <td>{{ List.price }}</td>
                       <td>{{ List.description }}</td>
-                      <td><img src="{{ List.picture }}"  class="img-responsive center-block"></td>
+                      <td><img src={{ List.picture }}  class="img-responsive center-block"></td>
 				            </tr>
 				        {% endfor %}
 			         </table>
