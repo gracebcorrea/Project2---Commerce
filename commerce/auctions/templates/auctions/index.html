@@ -5,30 +5,32 @@
     <p> {{message}}</p>
 
     <div class="form-group">
-      	<form action= "{% url 'index' %}" method="post" >
+      	<form >
             {% csrf_token %}
             {% if ActiveListings|length > 0 %}
     	         	<div class="form-group">
     		          	<table class="table">
     			           	<thead>
     				           	<tr>
-    					        	<th scope="col">Active Listening Code </th>
-          		        	<th scope="col">Listening Code</th>
+                      	<th scope="col">Title</th>
     					        	<th scope="col">dateStart  </th>
-                        <th scope="col">duration </th>
-    						        <th scope="col">status </th>
+                        <th scope="col">Description </th>
+    						        <th scope="col">Initial Price </th>
+                        <th scope="col">Image </th>
     					         </tr>
     				        </thead>
 
     				        {% for Active in ActiveListings %}
-    				            <tr>
-    					          	<td>{{ Active.Lcode }}</td>
-    						          <td>{{ Active.Pcode }}</td>
-                          <td>{{ Active.dateStart }}</td>
-    						          <td>{{ Active.duration }}</td>
-                          <td>{{ Active.status }}</td>
-                          <td></td>
-    				            </tr>
+                        {%if Active.Lstatus == "A"%}
+    				                <tr>
+                           	<td>{{ Active.Ltitle }}</td>
+                            <td>{{ Active.Ldatestart }}</td>
+    						            <td>{{ Active.Ldescription }}</td>
+                            <td>{{ Active.Lprice }}</td>
+    						            <td><<img src="{{ Active.image }}" width="300"></td>
+                            <td></td>
+    				                </tr>
+                        {%endif%}
     				        {% endfor %}
     			         </table>
                 </div>
