@@ -84,13 +84,11 @@ all of the active listings in that category.
 
 #List Categories- drop down list?
 def Categories_view(request):
-    if request.method == "POST":
-        context= {
-                "Categories": Categories.objects.all(),
+
+    context= {
+        "Categories": Categories.objects.all(),
         }
-        return render(request, "auctions/Categories.html", context)
-    else:
-        return render(request, "auctions/Categories.html", {"message":"Not in POST"})
+    return render(request, "auctions/Categories.html", context)
 
 
 
@@ -115,8 +113,8 @@ The listing page should display all comments that have been made on the listing.
 #List Listings details -  All
 def Listings_view(request):
 
-        context= {
-            "message": "Working on this",
+        context={
+                "Listings": Listings.objects.all(),
         }
         return render(request,"auctions/Listings.html", context)
 
