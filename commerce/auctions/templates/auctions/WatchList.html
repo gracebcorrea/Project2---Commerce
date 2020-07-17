@@ -1,7 +1,53 @@
 {% extends "auctions/layout.html" %}
 
-{% block body %}
-    <h2>Whatch List</h2>
-
+{% block title %}
     Whatch List
+
+{% endblock %}
+
+{% block body %}
+
+
+<p> {{message}}</p>
+
+
+
+<div class="form-group">
+  	<form action= "{% url 'Watchlist_view' %}" method="post" >
+        {% csrf_token %}
+        {% if Whatchlists|length > 0 %}
+	         	<div class="form-group">
+		          	<table class="table">
+			            	<thead>
+				      	    <tr>
+					        	<th scope="col">Auction Code </th>
+      		          <th scope="col">Whatch Code </th>
+                    <th scope="col">User </th>
+						        </tr>
+				        </thead>
+
+				        {% for Whatchlist in Whatchlists %}
+				            <tr>
+					          	<td>{{ Whatchlists.Lcode }}</td>
+						          <td>{{ Whatchlists.Wcode }}</td>
+                      <td>{{ Whatchlists.user }}</td>
+				            </tr>
+				        {% endfor %}
+			         </table>
+            </div>
+
+        {% else %}
+	         	<div class="form-group">
+		          	<output><h1>No matches found</h1></output>
+	        	</div>
+	{% endif %}
+	</form>
+</div>
+
+
+
+
+
+
+
 {% endblock %}
