@@ -13,7 +13,7 @@
 
 
 <div class="form-group">
-  	<form action= "{% url 'Categories' %}" method="post" >
+  	<form  >
         {% csrf_token %}
         {% if Categories|length > 0 %}
 	         	<div class="form-group">
@@ -28,7 +28,7 @@
 				        {% for Category in Categories %}
 				            <tr>
 					          	<td>{{ Category.Ccode }}</td>
-						          <td>{{ Category.description }}</td>
+						          <td>{{ Category.Cdescription }}</td>
 				            </tr>
 				        {% endfor %}
 			         </table>
