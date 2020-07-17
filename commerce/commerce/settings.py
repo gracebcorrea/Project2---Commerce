@@ -121,6 +121,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
-#MEDIA_URL = '/images/'
-#MEDIA_ROUT = os.path.join(BASE_DIR, 'static/images')
+MEDIA_URL = '/static/images/'
+MEDIA_ROUT = os.path.join(BASE_DIR, 'static/images')
