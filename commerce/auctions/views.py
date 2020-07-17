@@ -13,8 +13,7 @@ from .models import User, Listings, Categories, ActiveListings, Bids, Comments, 
 
 def index(request):
     context={
-            "ActiveListings": "We are working on this!"
-
+            "ActiveListings": ActiveListings.objects.all(),
     }
     return render(request, "auctions/index.html", context)
 
