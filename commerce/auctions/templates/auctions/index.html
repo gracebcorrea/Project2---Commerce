@@ -1,7 +1,48 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2>Active Listings</h2>
+  <h2>Active Listings</h2>
+    <p> {{message}}</p>
 
-    {{ActiveListings}}
+    <div class="form-group">
+      	<form action= "{% url 'index' %}" method="post" >
+            {% csrf_token %}
+            {% if ActiveListings|length > 0 %}
+    	         	<div class="form-group">
+    		          	<table class="table">
+    			           	<thead>
+    				           	<tr>
+    					        	<th scope="col">Active Listening Code </th>
+          		        	<th scope="col">Listening Code</th>
+    					        	<th scope="col">dateStart  </th>
+                        <th scope="col">duration </th>
+    						        <th scope="col">status </th>
+    					         </tr>
+    				        </thead>
+
+    				        {% for Active in ActiveListings %}
+    				            <tr>
+    					          	<td>{{ Active.Lcode }}</td>
+    						          <td>{{ Active.Pcode }}</td>
+                          <td>{{ Active.dateStart }}</td>
+    						          <td>{{ Active.duration }}</td>
+                          <td>{{ Active.status }}</td>
+                          <td></td>
+    				            </tr>
+    				        {% endfor %}
+    			         </table>
+                </div>
+
+            {% else %}
+    	         	<div class="form-group">
+    		          	<output>No matches found</output>
+    	        	</div>
+    	{% endif %}
+    	</form>
+    </div>
+
+
+
+
+
 {% endblock %}
