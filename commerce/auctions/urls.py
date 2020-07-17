@@ -18,6 +18,5 @@ urlpatterns = [
     path("Listings", views.Listings_view, name="Listings"),
     path("Comments", views.Comments_view, name="Comments"), #vinculado a bids
     path("Watchlist", views.Watchlist_view, name="Watchlist"),
-    path("ActiveListings", views.ActiveListings_view, name="index"),
-
+    
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
