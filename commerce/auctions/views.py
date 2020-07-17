@@ -90,7 +90,7 @@ def Categories_view(request):
         }
         return render(request, "auctions/Categories.html", context)
     else:
-        return render(request, "auctions/Categories.html")
+        return render(request, "auctions/Categories.html", {"message":"Not in POST"})
 
 
 
@@ -114,13 +114,11 @@ The listing page should display all comments that have been made on the listing.
 """
 #List Listings details -  All
 def Listings_view(request):
-    if request.method == "POST":
+
         context= {
             "Listings": Listings.objects.all(),
         }
         return render(request,"auctions/Listings.html", context)
-    else:
-        return render(request,"auctions/Listings.html")
 
 
 
