@@ -10,7 +10,7 @@
 <p> {{message}}</p>
 
 <div class="form-group">
-  	<form action= "{% url 'Listings' %}" method="post" >
+  	<form action= "{% url 'Listings_view' %}" method="post" >
         {% csrf_token %}
         {% if Listings|length > 0 %}
 	         	<div class="form-group">
@@ -32,8 +32,8 @@
 						          <td>{{ List.price }}</td>
                       <td>{{ List.description }}</td>
                       {% load static %}
-                      <td><img src="{{ List.picture }}" width="300"></td>
-                    
+                      <td><img src="{% static {{List.Limage}} %}"  width="300"></td>
+
 
 				            </tr>
 				        {% endfor %}
