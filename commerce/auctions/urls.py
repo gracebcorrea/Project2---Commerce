@@ -15,9 +15,9 @@ urlpatterns = [
     path("Bids", views.Bids_view, name="Bids"),
     path("Categories", views.Categories_view, name="Categories"),
     path("CreateListings", views.CreateListings_view, name="CreateListings"),
-    path("ActiveListings", views.ActiveListings_view, name="ActiveListings"), #jogar para index quando terminar
     path("Listings", views.Listings_view, name="Listings"),
     path("Comments", views.Comments_view, name="Comments"), #vinculado a bids
     path("Watchlist", views.Watchlist_view, name="Watchlist"),
+    path("ActiveListings", views.ActiveListings_view, name="index"),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
