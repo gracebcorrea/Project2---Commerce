@@ -22,61 +22,61 @@ one for auction listings, one for bids, and one for comments made on auction lis
 It’s up to you to decide what fields each model should have, and what the types of those
 fields should be. You may have additional models if you would like.
 """
-#Properties   table  auctions_ActiveListings
+#Properties   table  auctions_Listings
 class Listings(models.Model):
-    Pcode = models.IntegerField() #key
-    Ccode= models.IntegerField(help_text="Category House, Apartament, Commercial") #foreign key from PropTypes
-    description = models.CharField(max_length=250)
-    picture = models.ImageField() #Name of the picture saved on static folder
-    image= models.ImageField(upload_to="images",blank=True) #Name of the picture saved on static folder
-    price = models.FloatField(help_text="Just USD") #initial price
+    STATUS = (
+        ('A', 'Active'),
+        ('B', 'To Begin'),
+        ('C', 'Closed'),
+        ('S', 'Sold'),
+    )
+
+    Ltitle = models.CharField(help_text="Choose a title for your listing",max_length=50)
+    Ccode=models.IntegerField(help_text="Categories Ex: 1-Apartament,2-Commercial,3-Farm, 4-House ") #foreign key from PropTypes
+    Ldescription = models.CharField(max_length=250)
+    Lprice = models.FloatField(help_text="starting bid Just USD") #initial price
+    Ldatestart = models.DateField(help_text="Please use the following format: <em>YYYY-MM-DD</em>. for the auction start")
+    Lduration = models.IntegerField(help_text="Duration expressed in days" )
+    Luser = models.CharField(max_length=25)
+    Limage= models.ImageField(upload_to="images", blank=True) #Name of the picture saved on static folder
+    Lstatus = models.CharField(max_length=1, choices=STATUS )
     def __str__(self):
-        return f"({self.Pcode}) ({self.Ccode}) ({self.description}) ({self.picture}) ({self.price})"
+        return f"({self.Ltitle}) ({self.Ccode}) ({self.Ldescription}) ({self.Lprice}) ({self.Ldatestart}) ({self.Lduration}) ({self.Luser})({self.Limage})({self.Lstatus}) "
 
 #Properties types table auctions_Categories
 class Categories(models.Model):
     Ccode=models.IntegerField() #key
-    description = models.CharField(max_length=50)
+    Cdescription = models.CharField(max_length=50)
     def __str__(self):
-        return f"({self.Ccode}) ({self.description})"
+        return f"({self.Ccode}) ({self.Cdescription})"
 
 
-
-#Auctions List  table auctions_Listings
-class ActiveListings(models.Model):
-    Lcode= models.IntegerField() #Key?
-    Pcode = models.IntegerField() #foreignkey Property
-    dateStart = models.DateField(help_text="Please use the following format: <em>YYYY-MM-DD</em>.")
-    duration = models.IntegerField(help_text="Duration expressed in days" )
-    status = models.CharField(max_length=5) #to Begin, on , ended
-    def __str__(self):
-        return f"({self.Lcode})({self.Pcode}) ({self.dateStart}) ({self.duration}) ({self.status})"
 
 #bids list  table auctions_Bids
 class Bids(models.Model):
-    Bcode = models.IntegerField() #pk
-    Lcode= models.IntegerField() #foreignkey Listings
-    Pcode = models.IntegerField()  #foreignkey Property
-    user = models.CharField(max_length=25) #Who is going to buy
+    Lcode = models.ForeignKey(Listings, on_delete=models.CASCADE)
+    Buser = models.CharField(max_length=25) #Who is going to buy
     Bthrow= models.IntegerField() #first throw, second , third....
     Bprice = models.FloatField(help_text="Just USD")# throw value
+    Bdate = models.DateField(help_text="Please use the following format: <em>YYYY-MM-DD</em>.")
     def __str__(self):
-        return f"({self.Bcode})({self.Lcode})({self.Pcode}) ({self.user}) ({self.Bthrow})  ({self.Bprice})"
+        return f"({self.Ltitle})({self.Buser})({self.Bthrow}) ({self.Bprice}) ({self.Bdate})"
 
 #Comments table auctions_Comments
 class Comments(models.Model):
-    Ccode =models.IntegerField() #Key
-    Lcode= models.IntegerField() #foreign key
-    user = models.CharField(max_length=25)
-    comment = models.CharField(max_length=250)
+    Lcode = models.ForeignKey(Listings, on_delete=models.CASCADE)
+    Luser  = models.CharField(max_length=25) #Who is selling
+    Lcomment = models.CharField(max_length=250)
+    Buser = models.CharField(max_length=25) #Who is buying
+    Bcomment = models.CharField(max_length=250)
     def __str__(self):
-        return f"({self.Ccode}) ({self.Lcode}) ({self.user}) ({self.comment})"
+        return f"({self.Ltitle}) ({self.Luser }) ({self.Lcomment}) ({self.Buser}) ({self.Bcomment})"
 
 
 #Like Faforits???  table auctions_Watchlist
 class Watchlist(models.Model):
-    Wcode =models.IntegerField() #Key
-    Lcode= models.IntegerField()
+    Lcode = models.ForeignKey(Listings, on_delete=models.CASCADE)
+    Wflag =models.IntegerField() #Key
     user = models.CharField(max_length=25)
     def __str__(self):
-        return f"({self.Wcode}) ({self.Lcode}) ({self.user}) "
+        return f"({self.Lcode}) ({self.Wflag}) ({self.user}) "
