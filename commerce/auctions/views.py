@@ -135,7 +135,7 @@ def Categories_view(request):
     return render(request, "auctions/Categories.html", context)
 
 #resolver problema
-def CategoryShow(request, C_id, C_description):
+def CategoryShow_view(request, C_id, C_description):
 
     category_id = Categories.objects.get(id=C_id)
     category_description = Categories.objects.get(Cdescription=C_description)
