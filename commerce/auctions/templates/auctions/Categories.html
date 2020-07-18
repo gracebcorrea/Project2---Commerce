@@ -16,17 +16,22 @@
       {% if Categories|length > 0 %}
 	        <div class="container" style="width:90%">
 		          <div class="row" width="1000px;">
-                  <div class="col-lg-4">
+                  <div class="col-lg-4" style="position:relative; top:50px">
                       <h3>Choose a category</h3>
-                      <h3>to see available itens</h3>
+                      <h3>to see available itens:</h3>
                   </div>
-                <div class="col-lg-4" style="background-color:#004d00;color:#e6ffe6 ;">
+                <div class="col-lg-4" >
                     {% csrf_token %}
-					          {% for Category in Categories %}
-				                <p><a href="{% url 'CategoryShow' Category.Cdescription  %}"  method="post">
-                                         {{ Category.Cdescription }}
-                        </a> </p>
-				            {% endfor %}
+                        <ol>
+					              {% for Category in Categories %}
+                            <h4>
+                                <li style="background-color:#004d00 ;color:#e6ffe6; text-align: center; position:relative; top:30px">
+                                <a href= "{% url 'CategoryShow' C_id=Category.id C_description=Category.Cdescription %}" >
+                                    {{ Category.id }} {{ Category.Cdescription }}
+                            </a>  </li>  <h4>
+
+				                {% endfor %}
+                        </ol>
                   </div>
                   <div class="col-lg-4">
                   </div>
