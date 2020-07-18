@@ -7,16 +7,28 @@
 
 {% block body %}
 <h2> Create a New List</h2>
+<div class ="flex-container"  >
+    <form  action= "{% url 'CreateListings' %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <label for="Ltitle"><b>Title for the auction item :</b></label>
+        <input type="text" class="form-control" id="Ltitle" name="Ltitle" placeholder="Title for the auction">
+        <br>
+        <label for="Ccode"><b>Select the Category:</b></label>
+        <select name="Ccode" id="Ccode" name="Ccode">
+            {%for Category in Categories %}
+                <option value={{Category.id}}>  {{ Category.id }} - {{ Category.Cdescription }}</option>
+            {% endfor %}
+         </select>
+        <br>
+
+        <label for="Ldescription"><b>Item Description :</b></label>
+        <textarea rows='5' cols='25' type="text" class="form-control"  id="Ldescription" name="Ldescription" Ldescription required ></textarea>
 
 
 
 
 
-
-
-
-
-
-
-
+    </form>
+</div>
 {% endblock %}
