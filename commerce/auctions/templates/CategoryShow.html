@@ -6,12 +6,12 @@
 {% endblock %}
 
 {% block body %}
-<h2>Category :  {{ categoryshow }}</h2>
+
+ {% csrf_token %}
+<h2>Category :  {{ category_id }} - {{category_description}}</h2>
 
 <p> {{message}}</p>
 
-<form  action="{% url 'CategoryShow' categoryshow %}"  method="post" width=90% >
-   {% csrf_token %}
 
-</form>
+
 {% endblock %}
