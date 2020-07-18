@@ -7,28 +7,55 @@
 
 {% block body %}
 <h2> Create a New List</h2>
-{{message}}
+<p>{{message}}<p>
 <div class ="flex-container"  >
     <form  action= "{% url 'CreateListings' %}" method="post">
+
         {% csrf_token %}
         {{ form }}
-        <label for="Ltitle"><b>Title for the auction item :</b></label>
-        <input type="text" class="form-control" id="Ltitle" name="Ltitle" placeholder="Title for the auction">
+        <form class="form-inline" >
+            <label for="Ltitle"><b>Title for the auction item :</b>
+            <input type="text" class="form-inline" id="Ltitle" name="Ltitle" placeholder="Title for the auction"></label>
+            <label for="Ccode"><b>Select the Category:</b>
+            <select  class="form-inline" name="Ccode" id="Ccode" name="Ccode">
+                {% for Category in Categories %}
+                      <option value={{Category.id}}>  {{ Category.id }} - {{ Category.Cdescription }}</option>
+                {% endfor %}
+             </select></label>
+
+        </form>
         <br>
-        <label for="Ccode"><b>Select the Category:</b></label>
-        <select name="Ccode" id="Ccode" name="Ccode">
-            {% for Category in Categories %}
-                <option value={{Category.id}}>  {{ Category.id }} - {{ Category.Cdescription }}</option>
-            {% endfor %}
-         </select>
+        <label for="Ldescription"><b>Start Price :</b></label>
+        <textarea rows='5' cols='25' type="text" class="form-control"  id="Ldescription" name="Ldescription"  required ></textarea>
+        <br>
+        <label for="Ldatestart"><b>Date for Auction starts :</b></label>
+        <input type="text" class="form-control" id="Ldatestart" name="Ldatestart">{{Date}}
+        <br>
+        <label for="Lduration"><b>How many days the auction will be vallid :</b></label>
+        <input type="text" class="form-control" id="Lduration" name="Lduration">
+        <br>
+        <label for="Luser"><b>Advertiser user :</b></label>
+        <input type="text" class="form-control" id="Luser" name="Luser">
         <br>
 
-        <label for="Ldescription"><b>Item Description :</b></label>
-        <textarea rows='5' cols='25' type="text" class="form-control"  id="Ldescription" name="Ldescription" Ldescription required ></textarea>
+        <p><b>Click on the "Choose File" button to upload a file:</b></p>
+            <form action="#" style="border :#e6ffe6;">
+                  <input type="file" id="Limage" name="Limage">
+                  <input type="submit" >Upload
+            </form>
+        <br>
+        <label for="Lstatus"><b>Status :</b></label>
+        <select name="Lstatus" id="Lstatus" name="Lstatus">
+            <option value="A">Active </option>
+            <option value="B">To Begin </option>
+            <option value="C">Closed </option>
+            <option value="S">Sold </option>
+        </select>
 
-
-
-
+        <form class="form-inline" style="position:relative; top:100px">
+             <button type="submit" class="btn btn-success">Save</button>
+             <button type="button" class="btn btn-danger"><a href="{% url 'index' %}">Cancel</button>
+        </form>
 
     </form>
 </div>
