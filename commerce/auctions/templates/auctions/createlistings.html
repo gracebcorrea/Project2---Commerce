@@ -15,24 +15,33 @@
         {{ form }}
         <form class="form-inline" >
             <label for="Ltitle"><b>Title for the auction item :</b>
-            <input type="text" class="form-inline" id="Ltitle" name="Ltitle" placeholder="Title for the auction"></label>
-            <label for="Ccode"><b>Select the Category:</b>
-            <select  class="form-inline" name="Ccode" id="Ccode" name="Ccode">
+            <input type="text" class="form-inline" id="Ltitle" name="Ltitle"></label>
+
+            <label for="Lprice"><b>Start Price :</b>
+            <input type="text" class="form-inline" id="Lprice" name="Lprice" ></label>
+        </form>
+        <br>
+
+        <label for="Ccode"><b>Select the Category:</b>
+        <select  class="form-inline" name="Ccode" id="Ccode" name="Ccode">
+            <option value="None  ">None
                 {% for Category in Categories %}
                       <option value={{Category.id}}>  {{ Category.id }} - {{ Category.Cdescription }}</option>
                 {% endfor %}
-             </select></label>
-
-        </form>
+            </select></label>
         <br>
-        <label for="Ldescription"><b>Start Price :</b></label>
+
+        <label for="Ldescription"><b>Describe de Item do be sold :</b></label>
         <textarea rows='5' cols='25' type="text" class="form-control"  id="Ldescription" name="Ldescription"  required ></textarea>
         <br>
-        <label for="Ldatestart"><b>Date for Auction starts :</b></label>
-        <input type="text" class="form-control" id="Ldatestart" name="Ldatestart">{{Date}}
-        <br>
-        <label for="Lduration"><b>How many days the auction will be vallid :</b></label>
-        <input type="text" class="form-control" id="Lduration" name="Lduration">
+
+        <form class="form-inline" >
+            <label for="Ldatestart"><b>Date for Auction starts :</b>
+            <input type="text" class="form-inline" id="Ldatestart" name="Ldatestart">{{Date}}</label>
+
+            <label for="Lduration"><b>How many days the auction will be vallid :</b>
+            <input type="text" class="form-inline" id="Lduration" name="Lduration"></label>
+        </form>
         <br>
         <label for="Luser"><b>Advertiser user :</b></label>
         <input type="text" class="form-control" id="Luser" name="Luser">
