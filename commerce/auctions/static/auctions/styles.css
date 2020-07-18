@@ -2,3 +2,50 @@ body {
     padding: 10px;
 
 }
+
+/* form in line */
+.form-inline {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+
+.form-inline input {
+  width: 80%;
+  font-size: 15px;
+  line-height: 15px;
+}
+
+.form-inline select {
+  width: 100%;
+  font-size: 15px;
+  line-height: 15px;
+}
+
+.form-inline button {
+  width: 40%;
+  padding: 10px 20px;
+  border: 1px solid #ddd;
+  color: white;
+  cursor: pointer;
+}
+
+.form-inline button:hover {
+  background-color: royalblue;
+}
+.form-inline img {
+  padding: 10px 20px;
+  border: 1px solid #ddd;
+}
+
+@media (max-width: 800px) {
+  .form-inline input {
+    margin: 10px 0;
+  }
+
+  .form-inline {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
