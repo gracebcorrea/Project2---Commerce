@@ -1,4 +1,4 @@
-import sqlite3, datetime
+import sqlite3, datetime, os, os.path
 
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.contrib import admin
 
-
+from . import views
 from .models import User, Listings, Categories, Bids, Comments, Watchlist
 
 
@@ -75,6 +75,44 @@ def register(request):
    -----------------------------------------------------------------------------------
 """
 
+
+"""
+Create Listing: Users should be able to visit a page to create a new listing.
+They should be able to specify a title for the listing, a text-based description,
+and what the starting bid should be. Users should also optionally be able to provide
+a URL for an image for the listing and/or a category
+(e.g. Fashion, Toys, Electronics, Home, etc.).
+"""
+
+#Create Listing
+def CreateListings_view(request):
+    d = datetime.datetime.now()
+    if request.method == "POST":
+
+
+
+
+
+        context={
+              "Categories": Categories.objects.all()
+        }
+
+        return render(request, "auctions/CreateListings.html", context)
+
+    else:
+        context={
+              "message": "Not in POST",
+              "Categories": Categories.objects.all(),
+        }
+
+        return render(request, "auctions/CreateListings.html")
+
+
+
+
+
+
+
 """
 Categories: Users should be able to visit a page that displays a list of all
 listing categories.
@@ -102,7 +140,7 @@ def CategoryShow(request, C_id, C_description):
     context= {
             "category_id" :category_id,
             "category_description" :category_description,
-            "Listings": listings
+            "Listings": listings,
         }
     return render(request, "auctions/CategoryShow.html", context)
 
@@ -135,29 +173,6 @@ def Listings_view(request):
 
 
 
-
-"""
-Create Listing: Users should be able to visit a page to create a new listing.
-They should be able to specify a title for the listing, a text-based description,
-and what the starting bid should be. Users should also optionally be able to provide
-a URL for an image for the listing and/or a category
-(e.g. Fashion, Toys, Electronics, Home, etc.).
-"""
-
-#Create Listing
-def CreateListings_view(request):
-    if request.method == "POST":
-
-
-
-
-
-
-        
-        return HttpResponse("Create listings POST")
-
-    else:
-        return render(request, "auctions/CreateListings.html")
 
 
 
