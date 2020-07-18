@@ -13,39 +13,46 @@
 
         {% csrf_token %}
         {{ form }}
-        <form class="form-inline" >
+        <div class="newspaper" >
             <label for="Ltitle"><b>Title for the auction item :</b>
             <input type="text" class="form-inline" id="Ltitle" name="Ltitle"></label>
 
             <label for="Lprice"><b>Start Price :</b>
             <input type="text" class="form-inline" id="Lprice" name="Lprice" ></label>
-        </form>
-        <br>
 
-        <label for="Ccode"><b>Select the Category:</b>
-        <select  class="form-inline" name="Ccode" id="Ccode" name="Ccode">
-            <option value="None  ">None
+            <label for="Ccode"><b>Select the Category:</b>
+            <select  class="form-inline" name="Ccode" id="Ccode" name="Ccode">
+                <option class="form-inline"  value="None  ">None
                 {% for Category in Categories %}
                       <option value={{Category.id}}>  {{ Category.id }} - {{ Category.Cdescription }}</option>
                 {% endfor %}
             </select></label>
+        </div>
         <br>
-
         <label for="Ldescription"><b>Describe de Item do be sold :</b></label>
-        <textarea rows='5' cols='25' type="text" class="form-control"  id="Ldescription" name="Ldescription"  required ></textarea>
+        <textarea  type="text" class="form-inline"   id="Ldescription" name="Ldescription"  required ></textarea>
         <br>
 
-        <form class="form-inline" >
+        <div class="newspaper" >
             <label for="Ldatestart"><b>Date for Auction starts :</b>
             <input type="text" class="form-inline" id="Ldatestart" name="Ldatestart">{{Date}}</label>
 
             <label for="Lduration"><b>How many days the auction will be vallid :</b>
             <input type="text" class="form-inline" id="Lduration" name="Lduration"></label>
-        </form>
+
+            <label for="Luser"><b>Advertiser user :</b>
+            <input type="text"  id="Luser" name="Luser"></label>
+        </div>
         <br>
-        <label for="Luser"><b>Advertiser user :</b></label>
-        <input type="text" class="form-control" id="Luser" name="Luser">
-        <br>
+
+
+        <label for="Lstatus"><b>Status :</b>
+        <select name="Lstatus" id="Lstatus" name="Lstatus">
+            <option value="A">Active </option>
+            <option value="B">To Begin </option>
+            <option value="C">Closed </option>
+            <option value="S">Sold </option>
+        </select></label>
 
         <p><b>Click on the "Choose File" button to upload a file:</b></p>
             <form action="#" style="border :#e6ffe6;">
@@ -53,13 +60,7 @@
                   <input type="submit" >Upload
             </form>
         <br>
-        <label for="Lstatus"><b>Status :</b></label>
-        <select name="Lstatus" id="Lstatus" name="Lstatus">
-            <option value="A">Active </option>
-            <option value="B">To Begin </option>
-            <option value="C">Closed </option>
-            <option value="S">Sold </option>
-        </select>
+
 
         <form class="form-inline" style="position:relative; top:100px">
              <button type="submit" class="btn btn-success">Save</button>
