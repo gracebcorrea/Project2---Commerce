@@ -48,8 +48,6 @@
                 <li class="nav-item"><br>
                     <a  style="color:  #004d00;" class="nav-link" href="{% url 'Listings' %}">Listings</a>
                 </li>
-
-
                 {% if user.is_authenticated %}
                     <li class="nav-item"><br>
                          <a  style="color:  #004d00;" class="nav-link" href="{% url 'logout' %}">Log Out</a>
