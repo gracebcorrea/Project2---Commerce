@@ -2,14 +2,14 @@ from django.contrib import admin
 
 #from django.contrib import admin
 
-from .models import Listings, Categories, Bids, Comments, Watchlist
+from .models import Listings, Categories, Bids, Comments, Watchlist,User
 # Register your models here.
 
 
 class Admin(admin.ModelAdmin):
     filter_horizontal = ("commerce",)
 
-
+admin.site.register(User)
 admin.site.register(Listings)
 admin.site.register(Categories)
 admin.site.register(Bids)
