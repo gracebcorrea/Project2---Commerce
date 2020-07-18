@@ -12,15 +12,17 @@ body {
 
 
 .form-inline input {
-  width: 80%;
+  width: 90%;
   font-size: 15px;
   line-height: 15px;
+  padding: 10px;
 }
 
 .form-inline select {
   width: 100%;
   font-size: 15px;
   line-height: 15px;
+  padding: 10px;
 }
 
 .form-inline button {
