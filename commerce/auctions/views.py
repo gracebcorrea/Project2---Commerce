@@ -94,15 +94,21 @@ def CreateListings_view(request):
 
 
         context={
-              "Categories": Categories.objects.all()
+              "Date" : d ,
+              "message": "Inside POST",
+              "Categories": Categories.objects.all(),
+
         }
 
         return render(request, "auctions/CreateListings.html", context)
 
     else:
         context={
+
+              "Date" : d ,
               "message": "Not in POST",
               "Categories": Categories.objects.all(),
+
         }
 
         return render(request, "auctions/CreateListings.html")
