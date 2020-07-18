@@ -90,24 +90,22 @@ def Categories_view(request):
         }
     return render(request, "auctions/Categories.html", context)
 
-def CategoryShow_view(request, C_description):
+#resolver problema
+def CategoryShow(request, C_id, C_description):
 
-    category_description =  C_description
+    category_id = Categories.objects.get(id=C_id)
+    category_description = Categories.objects.get(Cdescription=C_description)
     listings="working on this"
-    if request.method == "POST":
 
 
-        context= {
-            "categoryshow":category_description,
+
+    context= {
+            "category_id" :category_id,
+            "category_description" :category_description,
             "Listings": listings
         }
-        return render(request, "auctions/CategoryShow.html", context)
-    else:
-        context={
-                "Listings": listings,
-                "message": "Not in POST"
-                }
-        return render(request, "auctions/CategoryShow.html", context)
+    return render(request, "auctions/CategoryShow.html", context)
+
 """
 Listing Page: Clicking on a listing should take users to a page specific to that listing.
 On that page, users should be able to view all details about the listing, including the
@@ -149,6 +147,13 @@ a URL for an image for the listing and/or a category
 #Create Listing
 def CreateListings_view(request):
     if request.method == "POST":
+
+
+
+
+
+
+        
         return HttpResponse("Create listings POST")
 
     else:
