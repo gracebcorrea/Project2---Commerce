@@ -90,8 +90,24 @@ def Categories_view(request):
         }
     return render(request, "auctions/Categories.html", context)
 
+def CategoryShow_view(request, C_description):
+
+    category_description =  C_description
+    listings="working on this"
+    if request.method == "POST":
 
 
+        context= {
+            "categoryshow":category_description,
+            "Listings": listings
+        }
+        return render(request, "auctions/CategoryShow.html", context)
+    else:
+        context={
+                "Listings": listings,
+                "message": "Not in POST"
+                }
+        return render(request, "auctions/CategoryShow.html", context)
 """
 Listing Page: Clicking on a listing should take users to a page specific to that listing.
 On that page, users should be able to view all details about the listing, including the
