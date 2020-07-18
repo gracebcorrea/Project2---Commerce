@@ -13,37 +13,33 @@
 
 
 <div class="form-group">
-  	<form  >
-        {% csrf_token %}
-        {% if Categories|length > 0 %}
-	         	<div class="form-group">
-		          	<table class="table">
-			            	<thead>
-				      	    <tr>
-					        	<th scope="col">Code </th>
-      		          <th scope="col">Description </th>
-						        </tr>
-				        </thead>
-
-				        {% for Category in Categories %}
-				            <tr>
-					          	<td>{{ Category.Ccode }}</td>
-						          <td>{{ Category.Cdescription }}</td>
-				            </tr>
-				        {% endfor %}
-			         </table>
-            </div>
+      {% if Categories|length > 0 %}
+	        <div class="container" style="width:90%">
+		          <div class="row" width="1000px;">
+                  <div class="col-lg-4">
+                      <h3>Choose a category</h3>
+                      <h3>to see available itens</h3>
+                  </div>
+                <div class="col-lg-4" style="background-color:#004d00;color:#e6ffe6 ;">
+                    {% csrf_token %}
+					          {% for Category in Categories %}
+				                <p><a href="{% url 'CategoryShow' Category.Cdescription  %}"  method="post">
+                                         {{ Category.Cdescription }}
+                        </a> </p>
+				            {% endfor %}
+                  </div>
+                  <div class="col-lg-4">
+                  </div>
+			        </div
+          </div>
 
         {% else %}
 	         	<div class="form-group">
 		          	<output><h1>No matches found</h1></output>
 	        	</div>
-	{% endif %}
-	</form>
+	      {% endif %}
+
 </div>
-
-
-
 
 
 
