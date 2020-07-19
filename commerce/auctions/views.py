@@ -110,15 +110,17 @@ def CreateListings_view(request):
         print("Details   -> :" , [Lduration]  ,  [Luser],[Limage] , [Lstatus] )
 
         fieldtranslate ={"Ltitle":Ltitle}
-
+        """
         if Listings.objects.filter(Ltitle =Ltitle):
             context: {
-                 "message" : " This title already exits please choose another Title",
+                 "message" :  Ltitle +" already exits please choose another Title",
                  "Date" : d ,
                  "Categories": Categories.objects.all(),
             }
             return render(request, "auctions/CreateListings.html", context)
+        """
         else:
+            """
             try:
 
                 name_map=  {"Ltitle":Ltitle,"Ccode":Ccode,"Ldescription":Ldescription,"Lprice":Lprice,"Ldatestart":Ldatestart,"Lduration":Lduration,"Luser":Luser,"Limage":Limage,"Lstatus":Lstatus}
@@ -133,12 +135,13 @@ def CreateListings_view(request):
 
                 return HttpResponseRedirect(reverse("auctions:index"))
             except:
-                context={
+            """
+            context={
                   "message": "Error trying to insert new listing, please contact support",
                   "Date" : d ,
                   "Categories": Categories.objects.all(),
                 }
-                return render(request, "auctions/CreateListings.html" , context)
+            return render(request, "auctions/CreateListings.html" , context)
 
     else:
         context={
