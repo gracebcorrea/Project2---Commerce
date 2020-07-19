@@ -2,13 +2,20 @@ import sqlite3, datetime, os, os.path
 
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import render
-from django.urls import reverse
+from django.urls import reverse,include, path
 from django.contrib import admin
+from django import forms
 
 from . import views
+
 from .models import User, Listings, Categories, Bids, Comments, Watchlist
+
+
+class UploadFileForm(forms.Form):
+    title = forms.CharField(max_length=50)
+    file = forms.FileField()
 
 
 def index(request):
@@ -135,13 +142,13 @@ def Categories_view(request):
     return render(request, "auctions/Categories.html", context)
 
 #resolver problema
-def CategoryShow_view(request, C_id, C_description):
-
-    category_id = Categories.objects.get(id=C_id)
-    category_description = Categories.objects.get(Cdescription=C_description)
-    listings="working on this"
-
-
+def CategoryShow_view(request, C_id):
+    try:
+       category_id = Categories.objects.get(id=C_id)
+       category_description = Categories.objects.get(Cdescription)
+       listings="working on this"
+    except Categories.DoesNotExist:
+        raise Http404("Categories does not exist")
 
     context= {
             "category_id" :category_id,
@@ -219,3 +226,17 @@ def Watchlist_view(request):
             "message":"Nao entrei no Post"
         }
         return render(request, "auctions/WatchList.html", context)
+
+
+
+#https://docs.djangoproject.com/en/3.0/topics/http/file-uploads/
+def upload_file(request):
+    if request.method == 'POST':
+        form = ModelFormWithFileField(request.POST, request.FILES)
+        if form.is_valid():
+            # file is saved
+            form.save()
+            return HttpResponseRedirect('/success/url/')
+    else:
+        form = ModelFormWithFileField()
+    return render(request, 'upload.html', {'form': form})
