@@ -13,37 +13,47 @@
 
         {% csrf_token %}
         {{ form }}
-        <div class="form-group"  >
-          <form class="form-inline" style="position:relative;" >
-            <label for="Ltitle" style="column-gap: 40px;"><b>Title for the auction item :</b>
-            <input type="text" class="form-inline" id="Ltitle" name="Ltitle"></label>
-
-            <label for="Lprice" style="column-gap: 40px;"><b>Start Price :</b>
-            <input type="text" class="form-inline" id="Lprice" name="Lprice" ></label>
-
-            <label for="Ccode" style="column-gap: 40px;"><b>Select the Category:</b>
-            <select  class="form-inline" id="Ccode" name="Ccode">
-                <option   value="None  ">None
-                {% for Category in Categories %}
-                      <option value={{Category.id}}>  {{ Category.id }} - {{ Category.Cdescription }}</option>
-                {% endfor %}
-            </select></label>
-            </form>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-4">
+                <label for="Ltitle" style="column-gap: 40px;"><b>Title for the auction item :</b>
+                <input type="text" class="form-inline" id="Ltitle" name="Ltitle"></label>
+            </div>
+            <div class="col-sm-4">
+                <label for="Lprice" style="column-gap: 40px;"><b>Start Price :</b>
+                <input type="text" class="form-inline" id="Lprice" name="Lprice" ></label>
+            </div>
+            <div class="col-sm-4">
+                <label for="Ccode" style="column-gap: 40px;"><b>Select the Category:</b>
+                  <select  class="form-inline" id="Ccode" name="Ccode">
+                    <option   value="None  ">None
+                      {% for Category in Categories %}
+                          <option value={{Category.object.id}}>  {{ Category.id }} - {{ Category.Cdescription }}</option>
+                      {% endfor %}
+                  </select>
+                </label>
+            </div>
+          </div>
         </div>
         <br>
         <label for="Ldescription"><b>Describe de Item do be sold :</b></label>
         <textarea  type="text" class="form-inline"   id="Ldescription" name="Ldescription" rows="6" cols="100" required ></textarea>
         <br>
-
-        <div class="form-group" >
-            <label for="Ldatestart"><b>Date for Auction starts :</b>
-            <input type="text" class="form-inline" id="Ldatestart" name="Ldatestart">{{Date}}</label>
-
-            <label for="Lduration"><b>How many days the auction will be vallid :</b>
-            <input type="text" class="form-inline" id="Lduration" name="Lduration"></label>
-
-            <label for="Luser"><b>Advertiser user :</b>
-            <input type="text" class="form-inline"  id="Luser" name="Luser"></label>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-4">
+                <label for="Ldatestart"><b>Date for Auction starts :</b>
+                <input type="text" class="form-inline" id="Ldatestart" name="Ldatestart">{{Date}}</label>
+            </div>
+            <div class="col-sm-4">
+                <label for="Lduration"><b>How many days the auction will be vallid?</b>
+                <input type="text" class="form-inline" id="Lduration" name="Lduration"></label>
+            </div>
+            <div class="col-sm-4">
+                <label for="Luser"><b>Advertiser user :</b>
+                <input type="text" class="form-inline"  id="Luser" name="Luser"></label>
+            </div>
+          </div>
         </div>
         <br>
 
