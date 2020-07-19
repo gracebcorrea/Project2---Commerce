@@ -124,7 +124,7 @@ def CreateListings_view(request):
                 db.execute("INSERT INTO auctions_listings ( Ltitle,Ccode, Ldescription,Lprice,Ldatestart,Lduration,Luser,Lstatus,Limage) VALUES (values)",fieldtranslate)
                 db.commit()
                 return HttpResponseRedirect(reverse("auctions:index"))
-            except (x) as error:
+            except:
                 context={
                   "message": "Error trying to insert new listing, please contact support",
                   "Date" : d ,
@@ -134,7 +134,6 @@ def CreateListings_view(request):
 
     else:
         context={
-              "message": "Fields with * are required to save the listing"
               "Date" : d ,
               "Categories": Categories.objects.all(),
         }
