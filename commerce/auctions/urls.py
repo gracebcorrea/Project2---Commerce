@@ -4,7 +4,7 @@ from django.conf.urls.static import static
 
 
 from . import views
-
+from .views import index, login_view,logout_view,register,Bids_view,Categories_view,CreateListings_view,Listings_view,Comments_view,Watchlist_view
 
 app_name = 'auctions'
 urlpatterns = [
