@@ -7,7 +7,7 @@
 
 {% block body %}
 <h2> Create a New List</h2>
-<p style="color: red;">Fields with * are required to save the listing<p>
+<p style="color: red;">Fields with * are required to save the listing.<p>
 <p>{{message}}<p>
 <div class ="flex-container" style="border-style: solid; border-color :#e6ffe6;  width: 80%; grid-column-gap: 50px;">
     <form  action= "{% url 'auctions:CreateListings' %}" method="post"" >
@@ -66,15 +66,14 @@
             <option value="C">Closed </option>
             <option value="S">Sold </option>
         </select></label>
-           <br>
+        <br><br>
         <p><b>Click on the "Choose File" button to upload a Picture:</b></p>
             <form action="#" style="border :#e6ffe6;">
                   <input type="file" id="Limage" name="Limage" >
                   <input type="submit" name="Submit" value="Upload">
             </form>
-        <br>
         <p style="color: red;"> {{CheckMessage}} </p>
-        <br>
+
         <form class="form-inline" style="position:relative; top:100px">
              <button type="submit" class="btn btn-success">Save</button>
              <button type="button" class="btn btn-danger"><a href="{% url 'auctions:index' %}">Cancel</button>
