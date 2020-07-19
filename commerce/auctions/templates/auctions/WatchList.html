@@ -13,7 +13,7 @@
 
 
 <div class="form-group">
-  	<form action= "{% url 'Watchlist_view' %}" method="post" >
+  	<form action= "{% url 'auctions:Watchlist_view' %}" method="post" >
         {% csrf_token %}
         {% if Whatchlists|length > 0 %}
 	         	<div class="form-group">
