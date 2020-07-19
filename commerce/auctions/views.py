@@ -79,6 +79,7 @@ def register(request):
         return render(request, "auctions/register.html")
 
 
+
 """               NEW
    -----------------------------------------------------------------------------------
 """
@@ -118,7 +119,6 @@ def CreateListings_view(request):
               "Categories": Categories.objects.all(),
 
         }
-
         return render(request, "auctions/CreateListings.html")
 
 
