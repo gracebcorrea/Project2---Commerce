@@ -84,7 +84,6 @@ def register(request):
    -----------------------------------------------------------------------------------
 """
 
-
 """
 Create Listing: Users should be able to visit a page to create a new listing.
 They should be able to specify a title for the listing, a text-based description,
@@ -110,7 +109,12 @@ def CreateListings_view(request):
         print("Details   -> :" , [Lduration]  ,  [Luser],[Limage] , [Lstatus] )
 
         fieldtranslate ={"Ltitle":Ltitle}
-        if db.execute("SELECT * FROM auctions_listings WHERE Ltitle = :Ltitle " ,fieldtranslate):
+        if Titulo existir:
+
+
+
+
+
             context: {
                  "CheckMessage" : "This title already exits please choose another Title",
                  "Date" : d ,
@@ -119,10 +123,8 @@ def CreateListings_view(request):
             return render(request, "auctions/CreateListings.html", context)
         else:
             try:
-                fieldtranslate ={"Ltitle":Ltitle,"Ccode":Ccode,"Ldescription": Ldescription,"Lprice":Lprice,"Ldatestart":Ldatestart,"Lduration":Lduration,"Luser":Luser,"Lstatus":Lstatus,"Limage": Limage}
-                values = ":Ltitle,:Ccode, :Ldescription,:Lprice,:Ldatestart,:Lduration,:Luser,:Lstatus,:Limage"
-                db.execute("INSERT INTO auctions_listings ( Ltitle,Ccode, Ldescription,Lprice,Ldatestart,Lduration,Luser,Lstatus,Limage) VALUES (values)",fieldtranslate)
-                db.commit()
+
+                #salvar dados da listing
                 return HttpResponseRedirect(reverse("auctions:index"))
             except:
                 context={
