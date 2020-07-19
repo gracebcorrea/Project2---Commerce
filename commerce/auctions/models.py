@@ -60,7 +60,7 @@ class Bids(models.Model):
     Bprice = models.FloatField(help_text="Just USD")# throw value
     Bdate = models.DateField(help_text="Please use the following format: <em>YYYY-MM-DD</em>.")
     def __str__(self):
-        return f"({self.Ltitle})({self.Buser})({self.Bthrow}) ({self.Bprice}) ({self.Bdate})"
+        return f"({self.Lcode})({self.Buser})({self.Bthrow}) ({self.Bprice}) ({self.Bdate})"
 
 #Comments table auctions_Comments
 class Comments(models.Model):
@@ -70,7 +70,7 @@ class Comments(models.Model):
     Buser = models.CharField(max_length=25) #Who is buying
     Bcomment = models.CharField(max_length=250)
     def __str__(self):
-        return f"({self.Ltitle}) ({self.Luser }) ({self.Lcomment}) ({self.Buser}) ({self.Bcomment})"
+        return f"({self.Lcode}) ({self.Luser }) ({self.Lcomment}) ({self.Buser}) ({self.Bcomment})"
 
 
 #Like Faforits???  table auctions_Watchlist
