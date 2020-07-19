@@ -1,7 +1,7 @@
 import sqlite3, datetime, os, os.path
 
 from django.contrib.auth import authenticate, login, logout
-from django.db import IntegrityError
+from django.db import IntegrityError,connection
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import render
 from django.urls import reverse,include, path
@@ -12,6 +12,7 @@ from . import views
 
 from .models import User, Listings, Categories, Bids, Comments, Watchlist
 
+conn = sqlite3.connect('db.sqlite3')
 
 class UploadFileForm(forms.Form):
     title = forms.CharField(max_length=50)
@@ -109,14 +110,10 @@ def CreateListings_view(request):
         print("Details   -> :" , [Lduration]  ,  [Luser],[Limage] , [Lstatus] )
 
         fieldtranslate ={"Ltitle":Ltitle}
-        if Titulo existir:
 
-
-
-
-
+        if Listings.objects.filter(Ltitle =Ltitle):
             context: {
-                 "CheckMessage" : "This title already exits please choose another Title",
+                 "message" : " This title already exits please choose another Title",
                  "Date" : d ,
                  "Categories": Categories.objects.all(),
             }
@@ -124,7 +121,16 @@ def CreateListings_view(request):
         else:
             try:
 
-                #salvar dados da listing
+                name_map=  {"Ltitle":Ltitle,"Ccode":Ccode,"Ldescription":Ldescription,"Lprice":Lprice,"Ldatestart":Ldatestart,"Lduration":Lduration,"Luser":Luser,"Limage":Limage,"Lstatus":Lstatus}
+
+                with conn.cursor() as cursor:
+                    cursor.execute("INSERT INTO auctions_Listings VALUES (:Ltitle,:Ccode,:Ldescription,:Lprice,:Ldatestart,:Lduration,:Luser,:Limage,:Lstatus) ",translations=name_map )
+                    # Save (commit) the changes
+                    conn.commit()
+                    # We can also close the connection if we are done with it.
+                    # Just be sure any changes have been committed or they will be lost.
+                    conn.close()
+
                 return HttpResponseRedirect(reverse("auctions:index"))
             except:
                 context={
