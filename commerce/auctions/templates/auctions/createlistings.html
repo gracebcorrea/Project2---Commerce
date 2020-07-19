@@ -68,11 +68,10 @@
         </select></label>
         <br><br>
         <p><b>Click on the "Choose File" button to upload a Picture:</b></p>
-            <form action="#" style="border :#e6ffe6;">
-                  <input type="file" id="Limage" name="Limage" >
-                  <input type="submit" name="Submit" value="Upload">
-            </form>
-        <p style="color: red;"> {{CheckMessage}} </p>
+        <input type="file" id="myFile" >
+        <button onclick="myFunction()">Upload</button>
+
+        <br><br>
 
         <form class="form-inline" style="position:relative; top:100px">
              <button type="submit" class="btn btn-success">Save</button>
@@ -81,4 +80,11 @@
 
     </form>
 </div>
+
+<script>
+function myFunction() {
+  var x = document.getElementById("myFile");
+  x.disabled = true;
+}
+</script>
 {% endblock %}
