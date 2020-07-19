@@ -14,7 +14,7 @@ urlpatterns = [
     path("register", views.register, name="register"),
 
 
-    path("index", views.index, name="index"),
+    #path("index", views.index, name="index"),
     path("Bids", views.Bids_view, name="Bids"),
     path("Categories", views.Categories_view, name="Categories"),
     path("CategoryShow", views.CategoryShow_view, name="CategoryShow"),
