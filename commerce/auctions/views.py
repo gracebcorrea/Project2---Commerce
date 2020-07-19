@@ -12,7 +12,6 @@ from . import views
 
 from .models import User, Listings, Categories, Bids, Comments, Watchlist
 
-conn = sqlite3.connect('db.sqlite3')
 
 class UploadFileForm(forms.Form):
     title = forms.CharField(max_length=50)
@@ -107,46 +106,25 @@ def CreateListings_view(request):
         Limage=request.POST["Limage"]
         Lstatus=request.POST["Lstatus"]
         print("Trying to SAVE   -> :" , [Ltitle],  [Ccode] , [Lprice] , [Ldatestart], [Ldescription])
-        print("Details   -> :" , [Lduration]  ,  [Luser],[Limage] , [Lstatus] )
+        print("Details   -> :" , [Lduration], [Luser],[Limage] , [Lstatus] )
 
-        fieldtranslate ={"Ltitle":Ltitle}
-        """
-        if Listings.objects.filter(Ltitle =Ltitle):
-            context: {
-                 "message" :  Ltitle +" already exits please choose another Title",
-                 "Date" : d ,
-                 "Categories": Categories.objects.all(),
+        try:
+            Listings_create = Listings.objects.create(Ltitle=Ltitle, Ccode=Ccode, Ldescription=Ldescription, Lprice= Lprice, Ldatestart=Ldatestart, Lduration=Lduration, Luser=Luser, Limage=Limage, Lstatus=Lstatus )
+            Listings_create.save()
+            return render(request, "auctions/login.html")
+
+        except IntegrityError:
+            context={
+                "message": "Title already exists, please choose other Title",
+                "Date" : d ,
+                "Categories": Categories.objects.all(),
+
             }
             return render(request, "auctions/CreateListings.html", context)
-        """
-        else:
-            """
-            try:
-
-                name_map=  {"Ltitle":Ltitle,"Ccode":Ccode,"Ldescription":Ldescription,"Lprice":Lprice,"Ldatestart":Ldatestart,"Lduration":Lduration,"Luser":Luser,"Limage":Limage,"Lstatus":Lstatus}
-
-                with conn.cursor() as cursor:
-                    cursor.execute("INSERT INTO auctions_Listings VALUES (:Ltitle,:Ccode,:Ldescription,:Lprice,:Ldatestart,:Lduration,:Luser,:Limage,:Lstatus) ",translations=name_map )
-                    # Save (commit) the changes
-                    conn.commit()
-                    # We can also close the connection if we are done with it.
-                    # Just be sure any changes have been committed or they will be lost.
-                    conn.close()
-
-                return HttpResponseRedirect(reverse("auctions:index"))
-            except:
-            """
-            context={
-                  "message": "Error trying to insert new listing, please contact support",
-                  "Date" : d ,
-                  "Categories": Categories.objects.all(),
-                }
-            return render(request, "auctions/CreateListings.html" , context)
-
     else:
         context={
-              "Date" : d ,
-              "Categories": Categories.objects.all(),
+            "Date" : d ,
+            "Categories": Categories.objects.all(),
         }
         return render(request, "auctions/CreateListings.html", context)
 
