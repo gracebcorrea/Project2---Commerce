@@ -8,20 +8,20 @@
 {% block body %}
 <h2> Create a New List</h2>
 <p>{{message}}<p>
-<div class ="flex-container" >
-    <form  action= "{% url 'CreateListings' %}" method="post" style="border-style: solid; border-color :#e6ffe6;  width: 80%;" >
+<div class ="flex-container" style="border-style: solid; border-color :#e6ffe6;  width: 80%; grid-column-gap: 50px;">
+    <form  action= "{% url 'CreateListings' %}" method="post"" >
 
         {% csrf_token %}
         {{ form }}
         <div class="form-group"  >
           <form class="form-inline" style="position:relative;">
-            <label for="Ltitle"><b>Title for the auction item :</b>
+            <label for="Ltitle" style="column-gap: 40px;"><b>Title for the auction item :</b>
             <input type="text" class="form-inline" id="Ltitle" name="Ltitle"></label>
 
-            <label for="Lprice"><b>Start Price :</b>
+            <label for="Lprice" style="column-gap: 40px;"><b>Start Price :</b>
             <input type="text" class="form-inline" id="Lprice" name="Lprice" ></label>
 
-            <label for="Ccode"><b>Select the Category:</b>
+            <label for="Ccode" style="column-gap: 40px;"><b>Select the Category:</b>
             <select  class="form-inline" id="Ccode" name="Ccode">
                 <option   value="None  ">None
                 {% for Category in Categories %}
@@ -32,7 +32,7 @@
         </div>
         <br>
         <label for="Ldescription"><b>Describe de Item do be sold :</b></label>
-        <textarea  type="text" class="form-inline"   id="Ldescription" name="Ldescription"  required ></textarea>
+        <textarea  type="text" class="form-inline"   id="Ldescription" name="Ldescription" rows="6" cols="100" required ></textarea>
         <br>
 
         <div class="form-group" >
@@ -43,7 +43,7 @@
             <input type="text" class="form-inline" id="Lduration" name="Lduration"></label>
 
             <label for="Luser"><b>Advertiser user :</b>
-            <input type="text"  id="Luser" name="Luser"></label>
+            <input type="text" class="form-inline"  id="Luser" name="Luser"></label>
         </div>
         <br>
 
