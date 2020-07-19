@@ -106,17 +106,35 @@ def CreateListings_view(request):
         Luser=request.POST["Luser"]
         Limage=request.POST["Limage"]
         Lstatus=request.POST["Lstatus"]
+        print("Trying to SAVE   -> :" , [Ltitle],  [Ccode] , [Lprice] , [Ldatestart], [Ldescription])
+        print("Details   -> :" , [Lduration]  ,  [Luser],[Limage] , [Lstatus] )
 
-        context={
-
-              "Date" : d ,
-              "Categories": Categories.objects.all(),
-
-        }
-        return render(request, "auctions/CreateListings.html" , context)
+        fieldtranslate ={"Ltitle":Ltitle}
+        if db.execute("SELECT * FROM auctions_listings WHERE Ltitle = :Ltitle " ,fieldtranslate):
+            context: {
+                 "CheckMessage" : "This title already exits please choose another Title",
+                 "Date" : d ,
+                 "Categories": Categories.objects.all(),
+            }
+            return render(request, "auctions/CreateListings.html", context)
+        else:
+            try:
+                fieldtranslate ={"Ltitle":Ltitle,"Ccode":Ccode,"Ldescription": Ldescription,"Lprice":Lprice,"Ldatestart":Ldatestart,"Lduration":Lduration,"Luser":Luser,"Lstatus":Lstatus,"Limage": Limage}
+                values = ":Ltitle,:Ccode, :Ldescription,:Lprice,:Ldatestart,:Lduration,:Luser,:Lstatus,:Limage"
+                db.execute("INSERT INTO auctions_listings ( Ltitle,Ccode, Ldescription,Lprice,Ldatestart,Lduration,Luser,Lstatus,Limage) VALUES (values)",fieldtranslate)
+                db.commit()
+                return HttpResponseRedirect(reverse("auctions:index"))
+            except (x) as error:
+                context={
+                  "message": "Error trying to insert new listing, please contact support",
+                  "Date" : d ,
+                  "Categories": Categories.objects.all(),
+                }
+                return render(request, "auctions/CreateListings.html" , context)
 
     else:
         context={
+              "message": "Fields with * are required to save the listing"
               "Date" : d ,
               "Categories": Categories.objects.all(),
         }
