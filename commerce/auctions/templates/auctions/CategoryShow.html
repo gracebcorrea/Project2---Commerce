@@ -1,0 +1,19 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}
+    Categories
+
+{% endblock %}
+
+{% block body %}
+
+
+<p> {{message}}</p>
+<p>{{category_id}}</p>
+
+<div class ="flex-container" style="border-style: solid; border-color :#e6ffe6;  width: 80%; grid-column-gap: 50px;">
+    <form  action= "{% url 'auctions:CategoryShow' %}" method="post" >
+
+
+    </form>
+</div>
