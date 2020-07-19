@@ -19,8 +19,9 @@ class UploadFileForm(forms.Form):
 
 
 def index(request):
-
+    d = datetime.datetime.now()
     context={
+            "d" : d,
             "ActiveListings": Listings.objects.all(),
     }
     return render(request, "auctions/index.html", context)
@@ -135,7 +136,7 @@ all of the active listings in that category.
 
 #List Categories- drop down list?
 def Categories_view(request):
-
+    d = datetime.datetime.now()
     context= {
         "Categories": Categories.objects.all(),
         }
@@ -154,6 +155,7 @@ def CategoryShow_view(request, C_id):
             "category_id" :category_id,
             "category_description" :category_description,
             "Listings": listings,
+            "d" :d,
         }
     return render(request, "auctions/CategoryShow.html", context)
 
@@ -177,9 +179,10 @@ The listing page should display all comments that have been made on the listing.
 """
 #List Listings details -  All
 def Listings_view(request):
-
+        d = datetime.datetime.now()
         context={
                 "Listings": Listings.objects.all(),
+                "d": d,
         }
         return render(request,"auctions/Listings.html", context)
 
@@ -190,6 +193,7 @@ def Listings_view(request):
 
 
 def Bids_view(request):
+    d = datetime.datetime.now()
     if request.method == "POST":
         return HttpResponse("bids POST")
 
@@ -213,6 +217,7 @@ Clicking on any of those listings should take the user to that listing’s page.
 """
 
 def Watchlist_view(request):
+    d = datetime.datetime.now()
     if request.method == "POST":
 
 
