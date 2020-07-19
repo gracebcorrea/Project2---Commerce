@@ -38,7 +38,7 @@ def login_view(request):
         # Check if authentication successful
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse("auctions:index"))
         else:
             return render(request, "auctions/login.html", {
                 "message": "Invalid username and/or password."
@@ -49,7 +49,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect(reverse("index"))
+    return HttpResponseRedirect(reverse("auctions:index"))
 
 
 def register(request):
@@ -74,7 +74,7 @@ def register(request):
                 "message": "Username already taken."
             })
         login(request, user)
-        return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect(reverse("auctions:index"))
     else:
         return render(request, "auctions/register.html")
 
@@ -97,29 +97,30 @@ a URL for an image for the listing and/or a category
 def CreateListings_view(request):
     d = datetime.datetime.now()
     if request.method == "POST":
-
-
-
-
+        Ltitle=request.POST["Ltitle"]
+        Ccode=request.POST["Ccode"]
+        Ldescription=request.POST["Ldescription"]
+        Lprice=request.POST["Lprice"]
+        Ldatestart=request.POST["Ldatestart"]
+        Lduration=request.POST["Lduration"]
+        Luser=request.POST["Luser"]
+        Limage=request.POST["Limage"]
+        Lstatus=request.POST["Lstatus"]
 
         context={
+
               "Date" : d ,
-              "message": "Inside POST",
               "Categories": Categories.objects.all(),
 
         }
-
-        return render(request, "auctions/CreateListings.html", context)
+        return render(request, "auctions/CreateListings.html" , context)
 
     else:
         context={
-
               "Date" : d ,
-              "message": "Not in POST",
               "Categories": Categories.objects.all(),
-
         }
-        return render(request, "auctions/CreateListings.html")
+        return render(request, "auctions/CreateListings.html", context)
 
 
 
@@ -143,10 +144,10 @@ def Categories_view(request):
     return render(request, "auctions/Categories.html", context)
 
 #resolver problema
-def CategoryShow_view(request, C_id):
+def CategoryShow_view(request, C_id, C_description):
     try:
        category_id = Categories.objects.get(id=C_id)
-       category_description = Categories.objects.get(Cdescription)
+       category_description = Categories.objects.get(Cdescription=C_description)
        listings="working on this"
     except Categories.DoesNotExist:
         raise Http404("Categories does not exist")
