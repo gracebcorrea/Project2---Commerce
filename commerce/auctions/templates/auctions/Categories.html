@@ -24,10 +24,8 @@
                     {% csrf_token %}
                         <ul>
 					              {% for Category in Categories %}
-                            <h4>
-                                <li style="background-color:#004d00 ;color:#e6ffe6; text-align: center; position:relative; top:30px">
-                                <a href= "{% url 'auctions:CategoryShow' C_id=Category.id  %}" >
-                                    {{ Category.id }} {{ Category.Cdescription }}
+                            <h4><li style="background-color:#004d00 ;color:#e6ffe6; text-align: center; position:relative; top:30px">
+                                    <a href= "{% url 'auctions:CategoryShow' Category.id  %}" >{{ Category.id }} {{ Category.Cdescription }}
                                 </a>  </li>  <h4>
 
 				                {% endfor %}
