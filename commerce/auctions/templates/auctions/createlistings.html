@@ -9,7 +9,7 @@
 <h2> Create a New List</h2>
 <p>{{message}}<p>
 <div class ="flex-container" style="border-style: solid; border-color :#e6ffe6;  width: 80%; grid-column-gap: 50px;">
-    <form  action= "{% url 'CreateListings' %}" method="post"" >
+    <form  action= "{% url 'auctions:CreateListings' %}" method="post"" >
 
         {% csrf_token %}
         {{ form }}
