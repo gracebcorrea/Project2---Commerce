@@ -1,7 +1,7 @@
 import sqlite3, datetime, os, os.path
 
 from django.contrib.auth import authenticate, login, logout
-from django.db import IntegrityError,connection
+from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import render
 from django.urls import reverse,include, path
@@ -12,10 +12,6 @@ from . import views
 
 from .models import User, Listings, Categories, Bids, Comments, Watchlist
 
-
-class UploadFileForm(forms.Form):
-    title = forms.CharField(max_length=50)
-    file = forms.FileField()
 
 
 def index(request):
@@ -103,8 +99,9 @@ def CreateListings_view(request):
         Ldatestart=request.POST["Ldatestart"]
         Lduration=request.POST["Lduration"]
         Luser=request.POST["Luser"]
-        Limage=request.POST["Limage"]
         Lstatus=request.POST["Lstatus"]
+        Limage=request.POST["Limage"]
+
         print("Trying to SAVE   -> :" , [Ltitle],  [Ccode] , [Lprice] , [Ldatestart], [Ldescription])
         print("Details   -> :" , [Lduration], [Luser],[Limage] , [Lstatus] )
 
