@@ -207,7 +207,15 @@ Clicking on any of those listings should take the user to that listing’s page.
 
 def Watchlist_view(request):
     if request.method == "POST":
-        return HttpResponse("Watchlist POST")
 
+
+        context={
+            "message" :"Entrei no Post",
+            "Whatchlists" : Watchlist.objects.all(),
+        }
+        return render(request, "auctions/WatchList.html", context)
     else:
-        return render(request, "auctions/WatchList.html")
+        context={
+            "message":"Nao entrei no Post"
+        }
+        return render(request, "auctions/WatchList.html", context)
