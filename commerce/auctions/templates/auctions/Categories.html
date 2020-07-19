@@ -22,16 +22,16 @@
                   </div>
                 <div class="col-lg-4" >
                     {% csrf_token %}
-                        <ol>
+                        <ul>
 					              {% for Category in Categories %}
                             <h4>
                                 <li style="background-color:#004d00 ;color:#e6ffe6; text-align: center; position:relative; top:30px">
-                                <a href= "{% url 'CategoryShow' C_id=Category.id C_description=Category.Cdescription %}" >
+                                <a href= "{% url 'auctions:CategoryShow' C_id=Category.id  %}" >
                                     {{ Category.id }} {{ Category.Cdescription }}
-                            </a>  </li>  <h4>
+                                </a>  </li>  <h4>
 
 				                {% endfor %}
-                        </ol>
+                        </ul>
                   </div>
                   <div class="col-lg-4">
                   </div>
