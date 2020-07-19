@@ -12,7 +12,7 @@ body {
 
 
 .form-inline input {
-  width: 50%;
+  width: 70%;
   font-size: 15px;
   line-height: 15px;
   padding: 10px;
@@ -61,11 +61,11 @@ body {
 
 .newspaper {
   column-count: 3;
-  column-gap: 40px;
+  column-gap: 30px;
 }
 
 .newspaper input{
-  width: 60%;
+  width: 70%;
   font-size: 15px;
   line-height: 15px;
   padding: 10px;
