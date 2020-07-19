@@ -7,7 +7,7 @@
 
 {% block body %}
 <h2> Create a New List</h2>
-<p>{{message}}<p>
+<p style="color: red;">{{message}}<p>
 <div class ="flex-container" style="border-style: solid; border-color :#e6ffe6;  width: 80%; grid-column-gap: 50px;">
     <form  action= "{% url 'auctions:CreateListings' %}" method="post"" >
 
@@ -17,11 +17,11 @@
           <div class="row">
             <div class="col-sm-4">
                 <label for="Ltitle" style="column-gap: 40px;"><b>Title for the auction item :</b>
-                <input type="text" class="form-inline" id="Ltitle" name="Ltitle"></label>
+                <input type="text" class="form-inline" id="Ltitle" name="Ltitle" required></label>
             </div>
             <div class="col-sm-4">
                 <label for="Lprice" style="column-gap: 40px;"><b>Start Price :</b>
-                <input type="text" class="form-inline" id="Lprice" name="Lprice" ></label>
+                <input type="text" class="form-inline" id="Lprice" name="Lprice" required></label>
             </div>
             <div class="col-sm-4">
                 <label for="Ccode" style="column-gap: 40px;"><b>Select the Category:</b>
@@ -32,6 +32,7 @@
                   </select>
                 </label>
             </div>
+
           </div>
         </div>
         <br>
@@ -42,15 +43,15 @@
           <div class="row">
             <div class="col-sm-4">
                 <label for="Ldatestart"><b>Date for Auction starts :</b>
-                <input type="text" class="form-inline" id="Ldatestart" name="Ldatestart" placeholder=YYYY-MM-DD>{{Date}}</label>
+                <input type="text" class="form-inline" id="Ldatestart" name="Ldatestart" placeholder=YYYY-MM-DD required>{{Date}}</label>
             </div>
             <div class="col-sm-4">
                 <label for="Lduration"><b>How many days the auction will be vallid?</b>
-                <input type="text" class="form-inline" id="Lduration" name="Lduration"></label>
+                <input type="text" class="form-inline" id="Lduration" name="Lduration" required></label>
             </div>
             <div class="col-sm-4">
                 <label for="Luser"><b>Advertiser user :</b>
-                <input type="text" class="form-inline"  id="Luser" name="Luser" value="{{ user.username }}"> </label>
+                <input type="text" class="form-inline"  id="Luser" name="Luser" value="{{ user.username }}" required> </label>
             </div>
           </div>
         </div>
@@ -71,8 +72,8 @@
                   <input type="submit" >Upload
             </form>
         <br>
-
-
+        <p style="color: red;"> {{CheckMessage}} </p>
+        <br>
         <form class="form-inline" style="position:relative; top:100px">
              <button type="submit" class="btn btn-success">Save</button>
              <button type="button" class="btn btn-danger"><a href="{% url 'auctions:index' %}">Cancel</button>
