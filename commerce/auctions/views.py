@@ -106,12 +106,12 @@ def CreateListings_view(request):
         try:
             Listings_create = Listings.objects.create(Ltitle=Ltitle, Ccode=Ccode, Ldescription=Ldescription, Lprice= Lprice, Ldatestart=Ldatestart, Lduration=Lduration, Luser=Luser, Limage=Limage, Lstatus=Lstatus )
             Listings_create.save()
+
         except IntegrityError:
             context={
                 "message": "Title already exists, please choose other Title",
-                "Date" : d ,
+                "d" : d ,
                 "Categories": Categories.objects.all(),
-
             }
             return render(request, "auctions/CreateListings.html", context)
 
@@ -123,7 +123,7 @@ def CreateListings_view(request):
 
     else:
         context={
-            "Date" : d ,
+            "d" : d ,
             "Categories": Categories.objects.all(),
         }
         return render(request, "auctions/CreateListings.html", context)
