@@ -23,4 +23,4 @@ urlpatterns = [
     path("Comments", views.Comments_view, name="Comments"), #vinculado a bids
     path("Watchlist", views.Watchlist_view, name="Watchlist"),
 
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
