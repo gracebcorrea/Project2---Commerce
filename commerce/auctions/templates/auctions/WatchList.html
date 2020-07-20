@@ -13,30 +13,29 @@
 
 
 <div class="form-group">
-  	<form action= "{% url 'auctions:Watchlist' %}" method="post" >
-        {% csrf_token %}
-        {% if Whatchlists|length > 0 %}
-	         	<div class="form-group">
-		          	<table class="table">
-			            	<thead>
-				      	    <tr>
-					        	<th scope="col">Auction Code </th>
-      		          <th scope="col">Whatch Code </th>
+  <form action= "{% url 'auctions:Watchlist' %}" method="post" >
+      {% csrf_token %}
+      {% if Whatchlists|length > 0 %}
+	       	<div class="form-group">
+		        <table class="table">
+			           	<thead>
+			      	    <tr>
+				        	<th scope="col">Auction Code </th>
+      	          <th scope="col">Whatch Code </th>
+					        </tr>
+    			        </thead>
 
-						        </tr>
-				        </thead>
-
-				        {% for Whatchlist in Whatchlists %}
-                   {%if user.username == Whatchlist.user%}
+				          {% for Whatchlist in Whatchlists %}
+                    {%if user.username == Whatchlist.user%}
 				            <tr>
 					          	<td>{{ Whatchlist.Lcode }}</td>
 						          <td>{{ Whatchlist.Wflag }}</td>
 
 				            </tr>
                     {%endif%}
-				        {% endfor %}
-			         </table>
-            </div>
+				          {% endfor %}
+			      </table>
+          </div>
 
         {% else %}
 	         	<div class="form-group">
@@ -45,6 +44,17 @@
 	{% endif %}
 	</form>
 </div>
+
+<script>
+  $("w").click(function() {
+    console.log("classname - " + this.className)
+    if(this.className=="" || this.className == "remove")
+        this.className = "add";
+    else
+        this.className = "remove";
+  });
+
+</script>
 
 
 
