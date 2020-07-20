@@ -11,8 +11,8 @@
 
 <p>{{message}}<p>
 
-<div class ="flex-container" style="border-style: solid; border-color :#e6ffe6;  width: 80%; grid-column-gap: 50px;">
-    <form  action= "{% url 'auctions:CreateListings' %}" method="post"" >
+<div class ="flex-container" style="width: 80%">
+    <form  action= "{% url 'auctions:CreateListings' %}" method="post" >
 
         {% csrf_token %}
 
@@ -35,19 +35,19 @@
                   </select>
                 </label>
             </div>
-            <p name><p>
+
           </div>
         </div>
         <br>
         <label for="Ldescription"><b>Describe de Item do be sold : *</b></label>
-        <textarea  type="text" class="form-inline"   id="Ldescription" name="Ldescription" rows="6" cols="100" required ></textarea>
+        <textarea  type="text" id="Ldescription" name="Ldescription" rows="6" cols="100" required ></textarea>
         <br>
 
         <div class="container">
           <div class="row">
             <div class="col-sm-4">
                 <label for="Ldatestart"><b>Date for Auction starts : *</b>
-                <input type="text" class="form-inline" id="Ldatestart" name="Ldatestart" placeholder=YYYY-MM-DD required>{{Date}}</label>
+                <input type="text" class="form-inline" id="Ldatestart" name="Ldatestart" placeholder=YYYY-MM-DD required>{{d}}</label>
             </div>
             <div class="col-sm-4">
                 <label for="Lduration"><b>Deadline to close (in days)? *</b>
