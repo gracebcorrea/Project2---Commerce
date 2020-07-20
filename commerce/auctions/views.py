@@ -80,14 +80,6 @@ def register(request):
    -----------------------------------------------------------------------------------
 """
 
-"""
-Create Listing: Users should be able to visit a page to create a new listing.
-They should be able to specify a title for the listing, a text-based description,
-and what the starting bid should be. Users should also optionally be able to provide
-a URL for an image for the listing and/or a category
-(e.g. Fashion, Toys, Electronics, Home, etc.).
-"""
-
 #Create Listing
 def CreateListings_view(request):
     d = datetime.datetime.now()
@@ -226,23 +218,9 @@ Clicking on any of those listings should take the user to that listing’s page.
 def Watchlist_view(request):
     d = datetime.datetime.now()
     context={
-        "date" : d,
+        "d" : d,
         "message":"Nao entrei no Post",
-        "Whatchlists": Watchlist.objects.all(),
+        "Watchlists": Watchlist.objects.all(),
 
     }
     return render(request, "auctions/WatchList.html", context)
-
-
-
-#https://docs.djangoproject.com/en/3.0/topics/http/file-uploads/
-def upload_file(request):
-    if request.method == 'POST':
-        form = ModelFormWithFileField(request.POST, request.FILES)
-        if form.is_valid():
-            # file is saved
-            form.save()
-            return HttpResponseRedirect('/success/url/')
-    else:
-        form = ModelFormWithFileField()
-    return render(request, 'upload.html', {'form': form})
