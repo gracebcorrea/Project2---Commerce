@@ -99,7 +99,7 @@ def CreateListings_view(request):
         Lduration=request.POST["Lduration"]
         Luser=request.POST["Luser"]
         Lstatus=request.POST["Lstatus"]
-        Limage=request.POST["Limage"]
+        Limage="media/"+request.POST["Limage"]
         Lastid = Listings.objects.latest('id')
         print(Lastid)
         Ccode= int(Lastid.id) + 1
@@ -110,13 +110,6 @@ def CreateListings_view(request):
         try:
             Listings_create = Listings.objects.create(Ltitle=Ltitle, Ccode=Ccode, Ldescription=Ldescription, Lprice= Lprice, Ldatestart=Ldatestart, Lduration=Lduration, Luser=Luser, Limage=Limage, Lstatus=Lstatus )
             Listings_create.save()
-
-            context={
-                    "d" : d,
-                    "ActiveListings": Listings.objects.all(),
-            }
-            return render(request, "auctions/index.html", context)
-
         except IntegrityError:
             context={
                 "message": "Title already exists, please choose other Title",
@@ -125,6 +118,13 @@ def CreateListings_view(request):
 
             }
             return render(request, "auctions/CreateListings.html", context)
+
+        context={
+                "d" : d,
+                "ActiveListings": Listings.objects.all(),
+        }
+        return render(request, "auctions/index.html", context)
+
     else:
         context={
             "Date" : d ,
