@@ -28,14 +28,13 @@
             </div>
             <div class="col-sm-4">
                 <label for="Ccode" ><b>Select the Category: *</b>
-                  <select  class="form-inline" id="Ccode" name="Ccode">
+                  <select  class="form-control" id="Ccode" name="Ccode">
                       {% for Category in Categories %}
                           <option value={{Category.object.id}}>  {{ Category.id }} - {{ Category.Cdescription }}</option>
                       {% endfor %}
                   </select>
                 </label>
             </div>
-
           </div>
         </div>
         <br>
