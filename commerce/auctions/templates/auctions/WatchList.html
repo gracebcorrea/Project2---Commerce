@@ -1,7 +1,7 @@
 {% extends "auctions/layout.html" %}
 
 {% block title %}
-    Whatch List
+    WhatchList
 
 {% endblock %}
 
@@ -22,16 +22,18 @@
 				      	    <tr>
 					        	<th scope="col">Auction Code </th>
       		          <th scope="col">Whatch Code </th>
-                    <th scope="col">User </th>
+
 						        </tr>
 				        </thead>
 
 				        {% for Whatchlist in Whatchlists %}
+                   {%if user.username == Whatchlist.user%}
 				            <tr>
 					          	<td>{{ Whatchlist.Lcode }}</td>
-						          <td>{{ Whatchlist.Wcode }}</td>
-                      <td>{{ Whatchlist.user }}</td>
+						          <td>{{ Whatchlist.Wflag }}</td>
+
 				            </tr>
+                    {%endif%}
 				        {% endfor %}
 			         </table>
             </div>
