@@ -15,7 +15,7 @@
 <div class="form-group">
   <form action= "{% url 'auctions:Watchlist' %}" method="post" >
       {% csrf_token %}
-      {% if Whatchlists|length > 0 %}
+      {% if Watchlists|length > 0 %}
 	       	<div class="form-group">
 		        <table class="table">
 			           	<thead>
@@ -27,7 +27,7 @@
 					        </tr>
     			        </thead>
 
-				          {% for Whatchlist in Whatchlists %}
+				          {% for Whatchlist in Watchlists %}
                     {%if user.username == Whatchlist.user and Whatchlist.Wflag == 1%}
 				            <tr>
 
