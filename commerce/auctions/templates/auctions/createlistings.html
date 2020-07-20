@@ -61,16 +61,14 @@
 
         <label for="Lstatus"><b>Status : *</b>
         <select name="Lstatus" id="Lstatus" name="Lstatus">
-            <option value="A">Active </option>
-            <option value="B">To Begin </option>
-            <option value="C">Closed </option>
-            <option value="S">Sold </option>
+            <option value="Active">Active </option>
+            <option value="To Begin">To Begin </option>
+            <option value="Closed">Closed </option>
+            <option value="Sold">Sold </option>
         </select></label>
         <br><br>
         <p><b>Click on the "Choose File" button to upload a Picture:</b></p>
         <input type="file" id="Limage" name="Limage">
-        <button onclick="myFunction()">Upload</button>
-
         <br>
         <br>
         <br>
@@ -83,10 +81,5 @@
     </form>
 </div>
 
-<script>
-function myFunction() {
-  var x = document.getElementById("myFile");
-  x.disabled = true;
-}
-</script>
+
 {% endblock %}
