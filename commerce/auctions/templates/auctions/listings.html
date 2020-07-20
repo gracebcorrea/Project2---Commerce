@@ -6,9 +6,10 @@
 {% endblock %}
 
 {% block body %}
+<h1>Below are all items available:</h1>
+<h5>Click on the Title for details</5>
 
-
-<<h1>{{message}}</h1>>
+<h1>{{message}}</h1>
 
 <div class="form-group">
     <form >
@@ -20,13 +21,6 @@
                     <tr>
                        <th scope="col">Status</th>
                        <th scope="col">Title</th>
-                       <th scope="col">Category</th>
-                       <th scope="col">Description </th>
-                       <th scope="col">Initial Price </th>
-                       <th scope="col">dateStart  </th>
-                       <th scope="col">duration  </th>
-                       <th scope="col">Seller  </th>
-                       <th scope="col">Image </th>
                     </tr>
                   </thead>
 
@@ -34,16 +28,8 @@
 
                     <tr>
                         <td>{{ Listed.Lstatus }}</td>
-                        <td>{{ Listed.Ltitle }}</td>
-                        <td>{{ Listed.Ccode }}</td>
-                        <td>{{ Listed.Ldescription }}</td>
-                        <td>{{ Listed.Lprice }}</td>
-                        <td>{{ Listed.Ldatestart }}</td>
-                        <td>{{ Listed.Lduration }}</td>
-                        <td>{{ Listed.Luser }}</td>
 
-
-                        <td><img src=" {{Listed.Limage.url}} "  width="300"></td>
+                        <td><a  href = "">{{ Listed.Ltitle }}</a></td>
 
                         <td></td>
                     </tr>
