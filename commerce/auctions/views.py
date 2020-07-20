@@ -111,7 +111,11 @@ def CreateListings_view(request):
             Listings_create = Listings.objects.create(Ltitle=Ltitle, Ccode=Ccode, Ldescription=Ldescription, Lprice= Lprice, Ldatestart=Ldatestart, Lduration=Lduration, Luser=Luser, Limage=Limage, Lstatus=Lstatus )
             Listings_create.save()
 
-            return render(request, "auctions/index.html")
+            context={
+                    "d" : d,
+                    "ActiveListings": Listings.objects.all(),
+            }
+            return render(request, "auctions/index.html", context)
 
         except IntegrityError:
             context={
