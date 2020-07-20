@@ -101,7 +101,7 @@ def CreateListings_view(request):
         Luser=request.POST["Luser"]
         Lstatus=request.POST["Lstatus"]
         Limage="media/"+str(request.POST["Limage"])
-        Lastid = Listings.objects.latest('id')
+        #Lastid = Listings.objects.latest('id')
 
         try:
             Listings_create = Listings.objects.create(Ltitle=Ltitle, Ccode=Ccode, Ldescription=Ldescription, Lprice= Lprice, Ldatestart=Ldatestart, Lduration=Lduration, Luser=Luser, Limage=Limage, Lstatus=Lstatus )
