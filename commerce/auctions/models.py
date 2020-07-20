@@ -38,7 +38,7 @@ class Listings(models.Model):
     Ldatestart = models.DateField(help_text="Please use the following format: <em>YYYY-MM-DD</em>. for the auction start")
     Lduration = models.IntegerField(help_text="Duration expressed in days" )
     Luser = models.CharField(max_length=25)
-    Limage= models.ImageField(upload_to="images", blank=True) #Name of the picture saved on static folder
+    Limage= models.ImageField(upload_to="media", blank=True) #Name of the picture saved on static folder
     Lstatus = models.CharField(max_length=1, choices=STATUS )
     def __str__(self):
         return f"({self.Ltitle}) ({self.Ccode}) ({self.Ldescription}) ({self.Lprice}) ({self.Ldatestart}) ({self.Lduration}) ({self.Luser})({self.Limage})({self.Lstatus}) "
