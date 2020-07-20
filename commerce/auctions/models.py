@@ -25,10 +25,10 @@ fields should be. You may have additional models if you would like.
 #Properties   table  auctions_Listings
 class Listings(models.Model):
     STATUS = (
-        ('A', 'Active'),
-        ('B', 'To Begin'),
-        ('C', 'Closed'),
-        ('S', 'Sold'),
+        ('Active', 'Active - Receiving Bids'),
+        ('To Begin', 'To Begin - De Auction didn´t start yet'),
+        ('Closed', 'Closed - The seller gave up the auction'),
+        ('Sold', 'Sold'),
     )
 
     Ltitle = models.CharField(help_text="Choose a title for your listing",max_length=50)
@@ -39,7 +39,7 @@ class Listings(models.Model):
     Lduration = models.IntegerField(help_text="Duration expressed in days" )
     Luser = models.CharField(max_length=25)
     Limage= models.ImageField(upload_to="media", blank=True) #Name of the picture saved on static folder
-    Lstatus = models.CharField(max_length=1, choices=STATUS )
+    Lstatus = models.CharField(max_length=8, choices=STATUS )
     def __str__(self):
         return f"({self.Ltitle}) ({self.Ccode}) ({self.Ldescription}) ({self.Lprice}) ({self.Ldatestart}) ({self.Lduration}) ({self.Luser})({self.Limage})({self.Lstatus}) "
 
