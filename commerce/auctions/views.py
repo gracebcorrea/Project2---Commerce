@@ -93,14 +93,16 @@ def CreateListings_view(request):
     d = datetime.datetime.now()
     if request.method == "POST":
         Ltitle=request.POST["Ltitle"]
-        Ccode=request.POST["Ccode"]
         Ldescription=request.POST["Ldescription"]
-        Lprice=request.POST["Lprice"]
+        Lprice=float(request.POST["Lprice"].replace(',', '.'))
         Ldatestart=request.POST["Ldatestart"]
         Lduration=request.POST["Lduration"]
         Luser=request.POST["Luser"]
         Lstatus=request.POST["Lstatus"]
         Limage=request.POST["Limage"]
+        Lastid = Listings.objects.latest('id')
+        print(Lastid)
+        Ccode= int(Lastid.id) + 1
 
         print("Trying to SAVE   -> :" , [Ltitle],  [Ccode] , [Lprice] , [Ldatestart], [Ldescription])
         print("Details   -> :" , [Lduration], [Luser],[Limage] , [Lstatus] )
@@ -108,7 +110,8 @@ def CreateListings_view(request):
         try:
             Listings_create = Listings.objects.create(Ltitle=Ltitle, Ccode=Ccode, Ldescription=Ldescription, Lprice= Lprice, Ldatestart=Ldatestart, Lduration=Lduration, Luser=Luser, Limage=Limage, Lstatus=Lstatus )
             Listings_create.save()
-            return render(request, "auctions/login.html")
+
+            return render(request, "auctions/index.html")
 
         except IntegrityError:
             context={
@@ -226,7 +229,7 @@ def Watchlist_view(request):
         "date" : d,
         "message":"Nao entrei no Post",
         "Whatchlists": Watchlist.objects.all(),
-        
+
     }
     return render(request, "auctions/WatchList.html", context)
 
