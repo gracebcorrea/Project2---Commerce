@@ -21,15 +21,20 @@
 			           	<thead>
 			      	    <tr>
 				        	<th scope="col">Auction Code </th>
-      	          <th scope="col">Whatch Code </th>
+      	          <th scope="col">Initial Price </th>
+                  <th scope="col">Status </th>
+                  <th scope="col">Watchlist </th>
 					        </tr>
     			        </thead>
 
 				          {% for Whatchlist in Whatchlists %}
-                    {%if user.username == Whatchlist.user%}
+                    {%if user.username == Whatchlist.user and Whatchlist.Wflag == 1%}
 				            <tr>
-					          	<td>{{ Whatchlist.Lcode }}</td>
-						          <td>{{ Whatchlist.Wflag }}</td>
+
+					          	<td> <a  href= "#" >{{ Whatchlist.Lcode.Ltitle }}</a></td>
+                      <td>{{ Whatchlist.Lcode.Lprice }}</td>
+                      <td>{{ Whatchlist.Lcode.Lstatus }}</td>
+                      <td>{{ Whatchlist.Wflag}}</td>
 
 				            </tr>
                     {%endif%}
