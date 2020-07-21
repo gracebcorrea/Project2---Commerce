@@ -178,21 +178,23 @@ def Categories_view(request):
 def CategoryShow_view(request, C_description):
     d = datetime.datetime.now()
 
-    if request.method == "POST":
-        Cat_desctiption = C_description
-        print(Cat_desctiption)
-
-
+    cat_description=C_description
+    try:
+        cat_code = Categories.objects.filter(Cdescription=cat_description)
+        print(cat_code)
+        cat_data = Listings.objects.filter(Ccode__unaccent__icontains=cat_code)
+        print(cat_data)
         context= {
            "d" :d,
-           "C_description" :C_description ,
+           "C_description" :cat_description ,
+           "C_data" :cat_data,
         }
-        return render(request, "auctions/Listings.html", context)
-    else:
+        return render(request, "auctions/CategoryShow.html", context)
+    except:
         context= {
             "d" :d,
-            "C_description" :C_description ,
-            "message":"Not in CategoryShow POST" + C_description,
+            "C_description" :cat_description ,
+            "message":"Nothing to show in category:  " + C_description,
         }
         return render(request, "auctions/CategoryShow.html", context)
 
