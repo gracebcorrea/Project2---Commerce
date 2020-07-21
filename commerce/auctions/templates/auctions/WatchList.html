@@ -26,11 +26,12 @@
 	          {% for Watchlist in Watchlists %}
                 {%if user.username == Watchlist.user and Watchlist.Wflag == 1%}
 				            <tr>
+                      
 					          	<td>
                       <a  href= "#" >
-                          {{ Listings.Lcode.Ltitle }}</a></td>
-                      <td>{{ Listings.Lcode.Lprice }}</td>
-                      <td>{{ Listings.Lcode.Lstatus }}</td>
+                          {{ Watchlist.Lcode.Ltitle }}</a></td>
+                      <td>{{ Watchlist.Lcode.Lprice }}</td>
+                      <td>{{ Watchlist.Lcode.Lstatus }}</td>
 				            </tr>
                 {%endif%}
 	          {% endfor %}
