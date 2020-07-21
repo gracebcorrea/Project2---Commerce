@@ -8,13 +8,14 @@
 {% block body %}
 
 
-<h1>{{message}}</h1> 
+<h1>{{message}}</h1>
 
 <div class ="flex-container" style="width: 80%">
     <form  action=  >
       {% csrf_token %}
-        {{C_data}}
-
+      {% for C in C_data%}
+        {{C}}
+      {%endfor%}
 
 
 
