@@ -14,14 +14,50 @@
     <form  action=  >
       {% csrf_token %}
       {% for C in C_data%}
-        {{C}}
+          {%if C.Lstatus == "Active"%}
+            <div class="container" style="border:#004d00; width:90%">
+                <div class="row"  width="1700px">
+                    <div class="col-lg-2">
+                    </div>
+                    <div class="col-lg-4">
+                        <h3>{{ C.Ltitle }}</h3>
+                        <img src=" {{C.Limage.url}} "  width="200">
+                        <br>
+                    </div>
+                    <div class="col-lg-4">
+                      <br>
+                      <h5>Auction Start Date  </h5>
+                      <p>{{ C.Ldatestart }}</p>
+                        <h5>Initial Price </h5>
+                        <p> {{ C.Lprice }}</p>
+
+                      <h5>Description</h5>
+                      <p>{{ C.Ldescription }}</p>
+                    </div>
+                    <div class="col-lg-2">
+                      <h5>Seller</h5>
+                        <p>{{ C.Luser }}</p>
+                    </div>
+                </div>
+                <hr>
+            </div>
+        {%endif%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       {%endfor%}
-
-
-
-
-
-
     </form>
 </div>
 {% endblock %}
