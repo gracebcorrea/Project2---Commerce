@@ -9,45 +9,39 @@
 
 <p> {{message}}</p>
 
-<div class="form-group">
-  <form action= "{% url 'auctions:Watchlist' %}" method="post" >
-      {% csrf_token %}
-      {% if Watchlists|length > 0 %}
-	       	<div class="form-group">
-		        <table class="table">
-			           	<thead>
+
+{% csrf_token %}
+{% if Watchlists|length > 0 %}
+   	<div class="form-group">
+        <table class="table">
+           	<thead>
 			      	    <tr>
 				        	<th scope="col">Auction Title </th>
       	          <th scope="col">Initial Price </th>
                   <th scope="col">Status </th>
 
 					        </tr>
-    			        </thead>
+		        </thead>
 
-				          {% for Watchlist in Watchlists %}
-                    {%if user.username == Watchlist.user and Watchlist.Wflag == 1%}
+	          {% for Watchlist in Watchlists %}
+                {%if user.username == Watchlist.user and Watchlist.Wflag == 1%}
 				            <tr>
-
 					          	<td>
                       <a  href= "#" >
                           {{ Listings.Lcode.Ltitle }}</a></td>
                       <td>{{ Listings.Lcode.Lprice }}</td>
                       <td>{{ Listings.Lcode.Lstatus }}</td>
-
-
 				            </tr>
-                    {%endif%}
-				          {% endfor %}
-			      </table>
-          </div>
+                {%endif%}
+	          {% endfor %}
+	      </table>
+    </div>
 
-        {% else %}
-	         	<div class="form-group">
-		          	<output><h1>No matches found</h1></output>
-	        	</div>
+    {% else %}
+       	<div class="form-group">
+	          	<output><h1>No matches found</h1></output>
+      	</div>
 	{% endif %}
-	</form>
-</div>
 
 <script>
   $("w").click(function() {
