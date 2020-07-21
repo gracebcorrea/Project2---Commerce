@@ -11,10 +11,10 @@
 <h1>{{message}}</h1>
 
 <div class ="flex-container" style="width: 80%">
-    <form  action=  >
-      {% csrf_token %}
-      {% for C in C_data%}
-          {%if C.Lstatus == "Active"%}
+    <form  >
+    {% csrf_token %}
+    {% for C in C_data%}
+        {%if C.Lstatus == "Active"%}
             <div class="container" style="border:#004d00; width:90%">
                 <div class="row"  width="1700px">
                     <div class="col-lg-2">
@@ -22,21 +22,20 @@
                     <div class="col-lg-4">
                         <h3>{{ C.Ltitle }}</h3>
                         <img src=" {{C.Limage.url}} "  width="200">
-                        <br>
                     </div>
+                    <br>
                     <div class="col-lg-4">
                       <br>
                       <h5>Auction Start Date  </h5>
                       <p>{{ C.Ldatestart }}</p>
-                        <h5>Initial Price </h5>
-                        <p> {{ C.Lprice }}</p>
-
+                      <h5>Initial Price </h5>
+                      <p> {{ C.Lprice }}</p>
                       <h5>Description</h5>
                       <p>{{ C.Ldescription }}</p>
                     </div>
                     <div class="col-lg-2">
                       <h5>Seller</h5>
-                        <p>{{ C.Luser }}</p>
+                      <p>{{ C.Luser }}</p>
                     </div>
                 </div>
                 <hr>
@@ -44,20 +43,7 @@
         {%endif%}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-      {%endfor%}
+    {%endfor%}
     </form>
 </div>
 {% endblock %}
