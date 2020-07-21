@@ -81,6 +81,7 @@ def register(request):
 """
 
 #Create Listing
+
 def CreateListings_view(request):
     d = datetime.datetime.now()
     if request.method == "POST":
@@ -136,7 +137,6 @@ def Watchlist_view(request):
 
     context={
         "d" : d,
-        "message":"Nao entrei no Post",
         "Watchlists": Watchlist.objects.all(),
 
     }
@@ -162,6 +162,7 @@ def Categories_view(request):
     return render(request, "auctions/Categories.html", context)
 
 #resolver problema
+
 def CategoryShow_view(request, C_description):
     d = datetime.datetime.now()
     Cat_desctiption = C_description
