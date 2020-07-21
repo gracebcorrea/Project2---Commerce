@@ -5,10 +5,10 @@
     <p> {{message}}</p>
     <hr>
     <div class="form-group">
-      	<form >
-            {% csrf_token %}
-            {% if ActiveListings|length > 0 %}
-                {% for Active in ActiveListings %}
+      <form >
+          {% csrf_token %}
+          {% if ActiveListings|length > 0 %}
+              {% for Active in ActiveListings %}
                     {%if Active.Lstatus == "Active"%}
                         <div class="container" style="border:#004d00; width:90%">
                             <div class="row"  width="1700px">
@@ -34,18 +34,15 @@
                             </div>
                             <hr>
                         </div>
-                        {%endif%}
-    				        {% endfor %}
-
-                </div>
-
-            {% else %}
+                    {%endif%}
+    				  {% endfor %}
+          {% else %}
     	         	<div class="form-group">
     		          	<output>No matches found</output>
     	        	</div>
-    	{% endif %}
+          {% endif %}
     	</form>
     </div>
-    <script>
+
 
 {% endblock %}
