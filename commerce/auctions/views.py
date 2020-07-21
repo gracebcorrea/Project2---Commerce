@@ -125,19 +125,11 @@ def CreateListings_view(request):
 
 def Watchlist_view(request):
     d = datetime.datetime.now()
-    if request.method == "POST":
-
-        context={
-          "d" : d,
-          "Watchlists" : Watchlist.objects.all(),
-        }
-        return render(request, "auctions/Listingspage.html", context)
-    else:
-        context={
+    context={
            "d" : d,
            "Watchlists": Watchlist.objects.all(),
-        }
-        return render(request, "auctions/Watchlist.html", context)
+    }
+    return render(request, "auctions/Watchlist.html", context)
 
 
 
