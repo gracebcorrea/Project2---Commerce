@@ -9,11 +9,18 @@
 
 
 <p> {{message}}</p>
-<p>{{category_id}}</p>
+<p>{{C_description}}</p>
+<div class ="flex-container" style="width: 80%">
+    <form  action= "{% url 'auctions:CategoryShow' C_description %}" method="post" >
+        {% csrf_token %}
 
-<div class ="flex-container" >
-    <form  action= "{% url 'auctions:CategoryShow' %}" method="post" >
+
+
+
+
+
 
 
     </form>
 </div>
+{% endblock %}
