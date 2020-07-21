@@ -1,7 +1,7 @@
 {% extends "auctions/layout.html" %}
 
 {% block title %}
-    Categories
+    {{C_description}}
 
 {% endblock %}
 
@@ -9,10 +9,10 @@
 
 
 <p> {{message}}</p>
-<p>{{C_description}}</p>
+
 <div class ="flex-container" style="width: 80%">
     <form  action= "{% url 'auctions:CategoryShow' C_description %}" method="post" >
-        {% csrf_token %}
+      {% csrf_token %}
 
 
 
