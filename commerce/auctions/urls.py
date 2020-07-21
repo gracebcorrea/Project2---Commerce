@@ -21,7 +21,7 @@ urlpatterns = [
 
 
     path("Listingspage", views.Listingspage_view, name="Listingspage"),
-    path("BidsDetail", views.Bids_view, name="BidsDetail"),
+    path("<str:Btitle>", views.Bids_view, name="BidsDetail"),
     path("Comments", views.Comments_view, name="Comments"), #vinculado a bids
 
     path("Watchlist", views.Watchlist_view, name="Watchlist"),
