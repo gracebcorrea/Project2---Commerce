@@ -122,28 +122,16 @@ def CreateListings_view(request):
         return render(request, "auctions/CreateListings.html", context)
 
 
-"""
-Watchlist: Users who are signed in should be able to visit a Watchlist page, which
-should display all of the listings that a user has added to their watchlist.
-Clicking on any of those listings should take the user to that listing’s page.
-"""
 
 def Watchlist_view(request):
     d = datetime.datetime.now()
     if request.method == "POST":
-
-
-
-
 
         context={
           "d" : d,
           "Watchlists" : Watchlist.objects.all(),
         }
         return render(request, "auctions/Listingspage.html", context)
-
-
-
     else:
         context={
            "d" : d,
@@ -153,17 +141,6 @@ def Watchlist_view(request):
 
 
 
-
-
-
-"""
-Categories: Users should be able to visit a page that displays a list of all
-listing categories.
-Clicking on the name of any category should take the user to a page that displays
-all of the active listings in that category.
-"""
-
-#List Categories- drop down list?
 def Categories_view(request):
     d = datetime.datetime.now()
 
@@ -183,11 +160,9 @@ def CategoryShow_view(request, C_description):
 
     try:
         cat_filter = Categories.objects.filter(Cdescription=cat_description)
-
         cat_code=cat_filter[0].Ccode
-
         cat_data = Listings.objects.filter(Ccode=cat_code)
-    
+
         context= {
            "d" :d,
            "C_description" :cat_description ,
@@ -225,12 +200,14 @@ The listing page should display all comments that have been made on the listing.
 """
 #List Listings details -  All
 def Listingspage_view(request):
-        d = datetime.datetime.now()
-        context={
-                "Listings": Listings.objects.all(),
-                "d": d,
-        }
-        return render(request,"auctions/Listingspage.html", context)
+    d = datetime.datetime.now()
+    context={
+       "d": d,
+       "Listings": Listings.objects.all(),
+       "Watchlist":Watchlist.objects.all(),
+    }
+    return render(request,"auctions/Listingspage.html", context)
+
 
 
 
