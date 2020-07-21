@@ -243,7 +243,7 @@ def Bids_view(request):
         return HttpResponse("bids POST")
 
     else:
-        return render(request, "auctions/Listingspage.html")
+        return render(request, "auctions/BidsDetail.html")
 
 
 def  Comments_view(request):
