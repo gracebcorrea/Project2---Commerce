@@ -25,8 +25,8 @@
 
 					              {% for Category in Categories %}
                             <h4><li style="background-color:#004d00 ; text-align: center; position:relative; top:30px">
-                                <a style="color:#e6ffe6;" href= "{% url 'auctions:CategoryShow'  C_description=Category.Cdescription  %}">
-                                      {{ Category.id }} - {{ Category.Cdescription }}</a>
+                                <a style="color:#e6ffe6;" href= "{% url 'auctions:CategoryShow' C_description=Category.Cdescription  %}">
+                                      {{ Category.Ccode }} - {{ Category.Cdescription }}</a>
                                 </li><h4>
 
 				                {% endfor %}
