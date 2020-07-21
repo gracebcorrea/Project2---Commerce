@@ -1,7 +1,7 @@
 {% extends "auctions/layout.html" %}
 
 {% block title %}
-    Listing Page - Bids
+    Listing Page
 
 {% endblock %}
 
@@ -23,7 +23,7 @@
                             <img src=" {{L.Limage.url}} "  width="200">
                             <br>
                       </div>
-                      <div class="col-lg-4" >
+                      <div class="col-lg-6" >
                           <br><br>
                           <h5>Auction Start Date  </h5>
                           <p>{{  L.Ldatestart }}</p>
@@ -34,49 +34,20 @@
                           <p>{{  L.Ldescription }}</p>
                           <h5>Seller:</h5>
                           <p>{{  L.Luser }}</p>
-
                       </div>
-                      <div class="col-lg-2"  style="background-color:#009966; color:white; border:double; border-color:white;">
-                            <h5>Go for a Bid?</h5>
-
-                            <a style='color:white;' href="{% url 'auctions:BidsDetail' Btitle=L.Ltitle%}" >{{  L.Ltitle }}</a>
-                            <br><br><br><br>
-                            <h5>Actual Bids</h5>
-
-
-
-
-
-
-
-
+                      <div class="col-lg-3" >
+                      <br>
+                      <h5>Status</h5>
+                      <h4 style="background-color:#004d00; color:#e6ffe6 ; align:center;">{{  L.Lstatus}}
+                      </h4>
+                      <br>
+                      <br>
+                      <br>
+                          <p style="color:  #004d00; border:double;" >
+                          <a href="{% url 'auctions:BidsDetail' Btitle=L.Ltitle%}" >
+                          <h4>Go for Bid Details of listing:  {{  L.Ltitle }}</h4></a>
+                          </p>
                       </div>
-                      <div class="col-lg-3">
-                            <h5>Add to Whatchlist?</h5>
-                            <form action="">
-                                 <input type="checkbox" id="Wflag" name="Wflag" value="Wflag">
-                            </form >
-                            <br><br>
-
-                            <h5>Status</h5>
-                            <h4 style="background-color:#004d00;color:#e6ffe6 ;">{{  L.Lstatus}}</h4>
-                            {%if user.username == L.Luser  %}
-                                 <p>Do you want to change Status</p>
-                                 <p> {{user.username}} ?</p>
-                                 <label for="Lstatus"><b>Status : </b>
-                                 <select name="Lstatus" id="Lstatus" name="Lstatus" >
-                                     <option value="Active"  >Active   - Bids Open</option>
-                                     <option value="To Begin">To Begin - About to Start Auciton</option>
-                                     <option value="Closed"  >Closed   - Give up and close Aution</option>
-                                     <option value="Sold"    >Sold    - I got lucky, it is SOLD!</option>
-                                 </select></label>
-                            {%endif%}
-                            <br><br><br>
-                      </div>
-
-                  </div>
-              <hr>
-              </div>
 
           {% endfor %}
       {% else %}
@@ -86,9 +57,6 @@
       {% endif %}
   </form>
 </div>
-
-
-
 
 
 {% endblock %}
