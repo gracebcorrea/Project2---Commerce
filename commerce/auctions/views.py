@@ -121,6 +121,26 @@ def CreateListings_view(request):
         return render(request, "auctions/CreateListings.html", context)
 
 
+"""
+Watchlist: Users who are signed in should be able to visit a Watchlist page, which
+should display all of the listings that a user has added to their watchlist.
+Clicking on any of those listings should take the user to that listing’s page.
+"""
+
+def Watchlist_view(request):
+    d = datetime.datetime.now()
+
+
+
+
+
+    context={
+        "d" : d,
+        "message":"Nao entrei no Post",
+        "Watchlists": Watchlist.objects.all(),
+
+    }
+    return render(request, "auctions/Watchlist.html", context)
 
 
 
@@ -142,21 +162,24 @@ def Categories_view(request):
     return render(request, "auctions/Categories.html", context)
 
 #resolver problema
-def CategoryShow_view(request, C_id, C_description):
-    try:
-       category_id = Categories.objects.get(id=C_id)
-       category_description = Categories.objects.get(Cdescription=C_description)
-       listings="working on this"
-    except Categories.DoesNotExist:
-        raise Http404("Categories does not exist")
+def CategoryShow_view(request, C_description):
+    d = datetime.datetime.now()
+    Cat_desctiption = C_description
+
+
+
+
 
     context= {
-            "category_id" :category_id,
-            "category_description" :category_description,
-            "Listings": listings,
             "d" :d,
+            "Cat_desctiption " :Cat_desctiption ,
+            "C_description" :Cat_desctiption,
+            "message":"working on this",
         }
     return render(request, "auctions/CategoryShow.html", context)
+
+
+
 
 """
 Listing Page: Clicking on a listing should take users to a page specific to that listing.
@@ -206,21 +229,3 @@ def  Comments_view(request):
 
     else:
         return render(request, "auctions/Comments.html")
-
-
-
-"""
-Watchlist: Users who are signed in should be able to visit a Watchlist page, which
-should display all of the listings that a user has added to their watchlist.
-Clicking on any of those listings should take the user to that listing’s page.
-"""
-
-def Watchlist_view(request):
-    d = datetime.datetime.now()
-    context={
-        "d" : d,
-        "message":"Nao entrei no Post",
-        "Watchlists": Watchlist.objects.all(),
-
-    }
-    return render(request, "auctions/WatchList.html", context)
