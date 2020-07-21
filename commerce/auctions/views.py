@@ -185,11 +185,11 @@ def CategoryShow_view(request, C_description):
         cat_filter = Categories.objects.filter(Cdescription=cat_description)
         print(f"CODIGO: ",cat_filter)
 
-        cat_code=cat_filter.Categories[0]
-        print(f"cat_code: ",cat_filter)
+        cat_code=cat_filter[0].Ccode
+        print(f"cat_code: ",cat_code)
 
 
-        cat_data = Listings.objects.filter(Ccode__unaccent__icontains=cat_code)
+        cat_data = Listings.objects.filter(Ccode=cat_code)
         print(f"DADOS : ",cat_data)
         context= {
            "d" :d,
