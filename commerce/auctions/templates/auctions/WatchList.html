@@ -10,7 +10,7 @@
 <p> {{message}}</p>
 
 <div class="form-group">
-  <form  >
+  <form action= "{% url 'auctions:Watchlist' %}" method="post" >
       {% csrf_token %}
       {% if Watchlists|length > 0 %}
 	       	<div class="form-group">
@@ -30,7 +30,7 @@
 
 					          	<td>
                       <a  href= "#" >
-                          {{Listings.Lcode.Ltitle }}</a></td>
+                          {{ Listings.Lcode.Ltitle }}</a></td>
                       <td>{{ Listings.Lcode.Lprice }}</td>
                       <td>{{ Listings.Lcode.Lstatus }}</td>
 
