@@ -180,17 +180,14 @@ def CategoryShow_view(request, C_description):
     cat_filter=[]
     cat_data =[]
     cat_description=C_description
-    print(f"PROCURAR",cat_description)
+
     try:
         cat_filter = Categories.objects.filter(Cdescription=cat_description)
-        print(f"CODIGO: ",cat_filter)
 
         cat_code=cat_filter[0].Ccode
-        print(f"cat_code: ",cat_code)
-
 
         cat_data = Listings.objects.filter(Ccode=cat_code)
-        print(f"DADOS : ",cat_data)
+    
         context= {
            "d" :d,
            "C_description" :cat_description ,
