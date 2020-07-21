@@ -4,7 +4,10 @@ from django.conf.urls.static import static
 
 
 from . import views
-from .views import index, login_view,logout_view,register,Bids_view,Categories_view,CreateListings_view,Listings_view,Comments_view,Watchlist_view
+from .views import index, login_view,logout_view,register
+from .views import CreateListings_view,Listings_view,Categories_view,Comments_view,Watchlist_view,Bids_view
+
+
 
 app_name = 'auctions'
 urlpatterns = [
@@ -15,12 +18,13 @@ urlpatterns = [
 
 
     path("index", views.index, name="index"),
-    path("Bids", views.Bids_view, name="Bids"),
-    path("Categories", views.Categories_view, name="Categories"),
-    path("CategoryShow", views.CategoryShow_view, name="CategoryShow"),
     path("CreateListings", views.CreateListings_view, name="CreateListings"),
+    path("Categories", views.Categories_view, name="Categories"),
+    path("<str:C_description>", views.CategoryShow_view, name="CategoryShow"),
     path("Listings", views.Listings_view, name="Listings"),
+    path("Bids", views.Bids_view, name="Bids"),
     path("Comments", views.Comments_view, name="Comments"), #vinculado a bids
     path("Watchlist", views.Watchlist_view, name="Watchlist"),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
