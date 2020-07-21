@@ -135,12 +135,13 @@ def Watchlist_view(request):
 
 
 
-       context={
+
+        context={
           "d" : d,
-          "Watchlists": Watchlist.objects.all(),
-          "MyListing": Listing.object.all(),
-       }
-       return render(request, "auctions/Listings.html", context)
+
+        }
+        return render(request, "auctions/Listingspage.html", context)
+
 
 
     else:
@@ -149,6 +150,7 @@ def Watchlist_view(request):
            "Watchlists": Watchlist.objects.all(),
         }
         return render(request, "auctions/Watchlist.html", context)
+
 
 
 
@@ -165,10 +167,6 @@ all of the active listings in that category.
 def Categories_view(request):
     d = datetime.datetime.now()
 
-
-
-
-
     context= {
         "d": d,
         "Categories": Categories.objects.all(),
@@ -179,20 +177,22 @@ def Categories_view(request):
 
 def CategoryShow_view(request, C_description):
     d = datetime.datetime.now()
-    Cat_desctiption = C_description
+
     if request.method == "POST":
+        Cat_desctiption = C_description
+        print(Cat_desctiption)
+
 
         context= {
            "d" :d,
            "C_description" :C_description ,
         }
-        return render(request, "auctions/CategoryShow.html", context)
+        return render(request, "auctions/Listings.html", context)
     else:
         context= {
             "d" :d,
             "C_description" :C_description ,
-            "message":"Not in CategoryShow POST",
-
+            "message":"Not in CategoryShow POST" + C_description,
         }
         return render(request, "auctions/CategoryShow.html", context)
 
@@ -224,11 +224,7 @@ def Listings_view(request):
                 "Listings": Listings.objects.all(),
                 "d": d,
         }
-        return render(request,"auctions/Listings.html", context)
-
-
-
-
+        return render(request,"auctions/Listingspage.html", context)
 
 
 
@@ -238,7 +234,7 @@ def Bids_view(request):
         return HttpResponse("bids POST")
 
     else:
-        return render(request, "auctions/Bids.html")
+        return render(request, "auctions/Listingspage.html")
 
 
 def  Comments_view(request):
@@ -246,4 +242,4 @@ def  Comments_view(request):
         return HttpResponse(" Comments POST")
 
     else:
-        return render(request, "auctions/Comments.html")
+        return render(request, "auctions/Listingspage.html")
