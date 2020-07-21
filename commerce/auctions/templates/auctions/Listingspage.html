@@ -31,17 +31,29 @@
 
                           <h5>Description</h5>
                           <p>{{  L.Ldescription }}</p>
+                          <h5>Seller:</h5>
+                          <p>{{  L.Luser }}</p>
 
                           </div>
-                          <div class="col-lg-3">
+                          <div class="col-lg-2">
                             <h5>Actual Bids</h5>
                           </div>
-                          <div class="col-lg-2">
+                          <div class="col-lg-3">
                             <h5>Status</h5>
-                            <h4>{{  L.Lstatus}}</h4>
+                            <h4 style="background-color:#004d00;color:#e6ffe6 ;">{{  L.Lstatus}}</h4>
+                            {%if user.username == L.Luser  %}
+                                 <p>Do you want to change status {{user.username}} ?</p>
+
+
+
+                            {%endif%}
                             <br><br><br>
 
                             <h5>Add to Whatchlist?</h5>
+                            <form action="">
+                                 <input type="checkbox" id="Wflag" name="Wflag" value="Wflag">
+
+                            </form >
                           </div>
                       </div>
                       <hr>
