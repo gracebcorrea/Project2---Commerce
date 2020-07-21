@@ -26,9 +26,9 @@
 	          {% for Watchlist in Watchlists %}
                 {%if user.username == Watchlist.user and Watchlist.Wflag == 1%}
 				            <tr>
-                      
+
 					          	<td>
-                      <a  href= "#" >
+                      <a  href= "{% url 'auctions:Listingspage'%}" >
                           {{ Watchlist.Lcode.Ltitle }}</a></td>
                       <td>{{ Watchlist.Lcode.Lprice }}</td>
                       <td>{{ Watchlist.Lcode.Lstatus }}</td>
