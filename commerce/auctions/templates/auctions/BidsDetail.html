@@ -6,10 +6,16 @@
 {% endblock %}
 
 {% block body %}
-<h2>Bid´s Detail for:   </h2>
+{% csrf_token %}
+<h2>Bid´s Detail for: {{Btitle}}  </h2>
 
 
 
+<p>{{message}}</p>
+
+<p>{{L_data}}</p>
+
+<p>{{B_data}}</p>
 
 
 
