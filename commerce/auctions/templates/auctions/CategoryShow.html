@@ -8,12 +8,12 @@
 {% block body %}
 
 
-<p> {{message}}</p>
+<h1>{{message}}</h1> 
 
 <div class ="flex-container" style="width: 80%">
-    <form  action= "{% url 'auctions:CategoryShow' C_description %}" method="post" >
+    <form  action=  >
       {% csrf_token %}
-
+        {{C_data}}
 
 
 
