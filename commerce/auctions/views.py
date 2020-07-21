@@ -138,7 +138,7 @@ def Watchlist_view(request):
 
         context={
           "d" : d,
-
+          "Watchlists" : Watchlist.objects.all(),
         }
         return render(request, "auctions/Listingspage.html", context)
 
@@ -218,7 +218,7 @@ Users who are signed in should be able to add comments to the listing page.
 The listing page should display all comments that have been made on the listing.
 """
 #List Listings details -  All
-def Listings_view(request):
+def Listingspage_view(request):
         d = datetime.datetime.now()
         context={
                 "Listings": Listings.objects.all(),
