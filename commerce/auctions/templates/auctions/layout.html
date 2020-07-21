@@ -39,17 +39,15 @@
                 </li>
                 {% if user.is_authenticated %}
                     <li class="nav-item"><br>
-                    <a  style="color:  #004d00;" class="nav-link" href="{% url 'auctions:Categories' %}">Categories</a>
+                    <a  style="color:  #004d00;" class="nav-link" href="{% url 'auctions:CreateListings' %}">Create Listing</a>
                     </li>
                     <li class="nav-item"><br>
                     <a  style="color:  #004d00;" class="nav-link" href="{% url 'auctions:Watchlist' %}">Watchlist</a>
                     </li>
                     <li class="nav-item"><br>
-                    <a  style="color:  #004d00;" class="nav-link" href="{% url 'auctions:CreateListings' %}">Create Listing</a>
+                    <a  style="color:  #004d00;" class="nav-link" href="{% url 'auctions:Categories' %}">Categories</a>
                     </li>
-                    <li class="nav-item"><br>
-                    <a  style="color:  #004d00;" class="nav-link" href="{% url 'auctions:Bids' %}">Bids</a>
-                    </li>
+
                     <li class="nav-item"><br>
                     <a  style="color:  #004d00;" class="nav-link" href="{% url 'auctions:Listings' %}">Listings</a>
                     </li>
