@@ -28,7 +28,7 @@
 				            <tr>
 
 					          	<td>
-                      <a  href="" >
+                      <a href="{% url 'auctions:BidsDetail' Btitle=Watchlist.Lcode.Ltitle%}" >
                           {{ Watchlist.Lcode.Ltitle }}</a></td>
                       <td>{{ Watchlist.Lcode.Lprice }}</td>
                       <td>{{ Watchlist.Lcode.Lstatus }}</td>
