@@ -130,17 +130,25 @@ Clicking on any of those listings should take the user to that listing’s page.
 
 def Watchlist_view(request):
     d = datetime.datetime.now()
+    if request.method == "POST":
 
 
 
 
+       context={
+          "d" : d,
+          "Watchlists": Watchlist.objects.all(),
+          "MyListing": Listing.object.all(),
+       }
+       return render(request, "auctions/Listings.html", context)
 
-    context={
-        "d" : d,
-        "Watchlists": Watchlist.objects.all(),
 
-    }
-    return render(request, "auctions/Watchlist.html", context)
+    else:
+        context={
+           "d" : d,
+           "Watchlists": Watchlist.objects.all(),
+        }
+        return render(request, "auctions/Watchlist.html", context)
 
 
 
@@ -156,7 +164,13 @@ all of the active listings in that category.
 #List Categories- drop down list?
 def Categories_view(request):
     d = datetime.datetime.now()
+
+
+
+
+
     context= {
+        "d": d,
         "Categories": Categories.objects.all(),
         }
     return render(request, "auctions/Categories.html", context)
@@ -168,19 +182,17 @@ def CategoryShow_view(request, C_description):
     Cat_desctiption = C_description
     if request.method == "POST":
 
-
-
         context= {
            "d" :d,
            "C_description" :C_description ,
-           "message":"Inside POST",
         }
         return render(request, "auctions/CategoryShow.html", context)
     else:
         context= {
             "d" :d,
             "C_description" :C_description ,
-            "message":"Not im POST",
+            "message":"Not in CategoryShow POST",
+
         }
         return render(request, "auctions/CategoryShow.html", context)
 
