@@ -14,46 +14,32 @@
 {% if Watchlists|length > 0 %}
    	<div class="form-group">
         <table class="table">
-           	<thead>
-			      	    <tr>
-				        	<th scope="col">Auction Title </th>
-      	          <th scope="col">Initial Price </th>
-                  <th scope="col">Status </th>
+          <thead>
+			    <tr>
+				    <th scope="col">Auction Title </th>
+      	    <th scope="col">Initial Price </th>
+            <th scope="col">Status </th>
+				  </tr>
+		      </thead>
 
-					        </tr>
-		        </thead>
-
-	          {% for Watchlist in Watchlists %}
-                {%if user.username == Watchlist.user and Watchlist.Wflag == 1%}
-				            <tr>
-
-					          	<td>
-                      <a href="{% url 'auctions:BidsDetail' Btitle=Watchlist.Lcode.Ltitle%}" >
-                          {{ Watchlist.Lcode.Ltitle }}</a></td>
-                      <td>{{ Watchlist.Lcode.Lprice }}</td>
-                      <td>{{ Watchlist.Lcode.Lstatus }}</td>
-				            </tr>
-                {%endif%}
-	          {% endfor %}
+	        {% for Watchlist in Watchlists %}
+              {%if user.username == Watchlist.user and Watchlist.Wflag == 1%}
+				        <tr>
+					       	<td>
+                   <a href="{% url 'auctions:BidsDetail' Btitle = Watchlist.Lcode.Ltitle%}">{{ Watchlist.Lcode.Ltitle }}</a></td>
+                  <td>{{ Watchlist.Lcode.Lprice }}</td>
+                  <td>{{ Watchlist.Lcode.Lstatus }}</td>
+				        </tr>
+              {%endif%}
+	        {% endfor %}
 	      </table>
     </div>
 
-    {% else %}
-       	<div class="form-group">
-	          	<output><h1>No matches found</h1></output>
-      	</div>
-	{% endif %}
-
-<script>
-  $("w").click(function() {
-    console.log("classname - " + this.className)
-    if(this.className=="" || this.className == "remove")
-        this.className = "add";
-    else
-        this.className = "remove";
-  });
-
-</script>
+{% else %}
+     	<div class="form-group">
+          	<output><h1>No matches found</h1></output>
+    	</div>
+{% endif %}
 
 
 {% endblock %}
