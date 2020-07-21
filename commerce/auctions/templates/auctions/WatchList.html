@@ -1,7 +1,7 @@
 {% extends "auctions/layout.html" %}
 
 {% block title %}
-    WhatchList
+    Watchlist
 
 {% endblock %}
 
@@ -10,29 +10,30 @@
 <p> {{message}}</p>
 
 <div class="form-group">
-  <form action= "{% url 'auctions:Watchlist' %}" method="post" >
+  <form  >
       {% csrf_token %}
       {% if Watchlists|length > 0 %}
 	       	<div class="form-group">
 		        <table class="table">
 			           	<thead>
 			      	    <tr>
-				        	<th scope="col">Auction Code </th>
+				        	<th scope="col">Auction Title </th>
       	          <th scope="col">Initial Price </th>
                   <th scope="col">Status </th>
-                  <th scope="col">Watchlist </th>
+
 					        </tr>
     			        </thead>
 
-				          {% for Whatchlist in Watchlists %}
-                    {%if user.username == Whatchlist.user and Whatchlist.Wflag == 1%}
+				          {% for Watchlist in Watchlists %}
+                    {%if user.username == Watchlist.user and Watchlist.Wflag == 1%}
 				            <tr>
 
-					          	<td> <a  href= "#" >{{ Whatchlist.Lcode.Ltitle }}</a></td>
-                      <td>{{ Whatchlist.Lcode.Lprice }}</td>
-                      <td>{{ Whatchlist.Lcode.Lstatus }}</td>
-                      <a href="">
-                      <td>{{ Whatchlist.Wflag}}</td></a>
+					          	<td>
+                      <a  href= "#" >
+                          {{Listings.Lcode.Ltitle }}</a></td>
+                      <td>{{ Listings.Lcode.Lprice }}</td>
+                      <td>{{ Listings.Lcode.Lstatus }}</td>
+
 
 				            </tr>
                     {%endif%}
