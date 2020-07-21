@@ -237,13 +237,30 @@ def Listingspage_view(request):
 
 
 
-def Bids_view(request):
+def Bids_view(request, Btitle):
     d = datetime.datetime.now()
+    B_title=Btitle
     if request.method == "POST":
-        return HttpResponse("bids POST")
+        L_data=Listings.objects.filter(Ltitle=Btitle)
+        B_data=Bids.objects.filter(Lcode__icontains=Btitle)
+
+
+
+
+        context= {
+            "Btitle" :  B_title,
+            "message": "Inside Bids POST",
+            "L_data":L_data,
+            "B_data":B_data,
+        }
+        return render(request, "auctions/BidsDetail.html", context)
 
     else:
-        return render(request, "auctions/BidsDetail.html")
+        context= {
+            "Btitle" : B_title,
+            "message": "Outside Bids POST",
+        }
+        return render(request, "auctions/BidsDetail.html", context)
 
 
 def  Comments_view(request):
