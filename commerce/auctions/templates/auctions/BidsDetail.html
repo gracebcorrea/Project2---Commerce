@@ -18,6 +18,34 @@
 <p>{{B_data}}</p>
 
 
+<form >
+    {% csrf_token %}
+    {% if Listings|length > 0 %}
+        {% for L in Listings %}
+            <div class="container" style="border:#004d00; width:90%">
+                <div class="row"  width="1700px">
+                    <div class="col-lg-3">
+                        {{message_watchmark}}
+                        <h5>Add to Whatchlist?</h5>
+                        <input type="checkbox" id="Wflag" name="Wflag">
+
+                         <br><br>
+                        {%if user.username == L.Luser  %}
+                            <p>Do you want to change Status</p>
+                            <p> {{user.username}} ?</p>
+                            <label for="Lstatus"><b>Status : </b>
+                            <select name="Lstatus" id="Lstatus" name="Lstatus" >
+                               <option value="Active"  >Active   - Bids Open</option>
+                               <option value="To Begin">To Begin - About to Start Auciton</option>
+                               <option value="Closed"  >Closed   - Give up and close Aution</option>
+                               <option value="Sold"    >Sold    - I got lucky, it is SOLD!</option>
+                            </select></label>
+                        {%endif%}
+                    </div>
+                </div>
+
+</form>
+
 
 
 {% endblock %}
