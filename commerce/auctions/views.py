@@ -165,18 +165,23 @@ def Categories_view(request):
 def CategoryShow_view(request, C_description):
     d = datetime.datetime.now()
     Cat_desctiption = C_description
+    if request.method == "POST":
 
 
 
-
-
-    context= {
-            "d" :d,
-            "Cat_desctiption " :Cat_desctiption ,
-            "C_description" :Cat_desctiption,
-            "message":"working on this",
+        context= {
+           "d" :d,
+           "C_description" :C_description ,
+           "message":"Inside POST",
         }
-    return render(request, "auctions/CategoryShow.html", context)
+        return render(request, "auctions/CategoryShow.html", context)
+    else:
+        context= {
+            "d" :d,
+            "C_description" :C_description ,
+            "message":"Not im POST",
+        }
+        return render(request, "auctions/CategoryShow.html", context)
 
 
 
