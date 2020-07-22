@@ -227,7 +227,7 @@ def Bids_view(request, Btitle):
 
         C_data = Categories.objects.filter(Ccode=Cat_code)
 
-        print("CATEGORY ARRAY",C_data)
+        print("CATEGORY ARRAY:",C_data)
 
         CatDescription=C_data[1].Cdescription
         print("CATEGORY DESCRIPTION:",CatDescription)
@@ -238,35 +238,26 @@ def Bids_view(request, Btitle):
         #Take Watchlist
         W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title)
 
-        if request.method == "POST":
-            context= {
-                "d" : d,
-                "Btitle" :  B_title,
-                "L_data":L_data,
 
-                "B_data":B_data,
-                "W_data":W_data,
-                }
-            return render(request, "auctions/BidsDetail.html", context)
+        context= {
+           "d" : d,
+           "Btitle" : B_title,
+           "L_data":L_data,
 
-        else:
-
-            context= {
-               "d" : d,
-               "Btitle" : B_title,
-               "L_data":L_data,
-            
-               "B_data":B_data,
-               "W_data":W_data,
-               "message" : "Not in POST"
-            }
-            return render(request, "auctions/BidsDetail.html", context)
+           "B_data":B_data,
+           "W_data":W_data,
+           "message" : "Not in POST",
+        }
+        return render(request, "auctions/BidsDetail.html", context)
 
     except:
         context = {
             "message" : "Problem with filters in Bids, please try again",
             "d" : d,
-            "ActiveListings": Listings.objects.all(),
+            "Btitle" : B_title,
+            "L_data":L_data,
+            "B_data":B_data,
+            "W_data":W_data,
         }
         return render(request, "auctions/BidsDetail.html", context)
 
