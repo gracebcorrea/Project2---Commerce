@@ -6,26 +6,32 @@
 {% endblock %}
 
 {% block body %}
+
 {% csrf_token %}
 <h2 style="text-align: center;">Bid´s Detail for: {{Btitle}}  </h2>
 <h4 style="color:red;"> {{message}}</h4>
 <hr>
 
-<div class ="flex-container" >
+<div class ="flex-container" style="text-align: center;">
   {% csrf_token %}
       <div class="container" style="border:#004d00; width:90%">
           <div class="row"  width="1700px">
               {%for L in L_data %}
-                  <div class="col-lg-2">
-                    <br>
-                    <h5>Status</h5>
-                    <p>{{ L.Lstatus }}</p>
-                    <br>
-                    <h5>Seller</h5>
-                    <p>{{ L.Luser }}</p>
-                    <br>
-                    <h5>Category</h5>
-                    <p>{{L.Ccode }}</p>
+                  <div class="col-lg-2" style="border:double;border-color:#004d00 ;">
+                        <br>     <br>
+                        <h5>Status</h5>
+                        <p>{{ L.Lstatus }}</p>
+                        <h5>Add to Whatchlist?</h5>
+                        {%for W in W_data %}
+                            {%if W.user ==  user.username%}
+
+                              {%if W.Wflag == 1  %}
+                                  <input type="checkbox" style=" height: 50px;width: 50px;" id="Wflag" name="Wflag"  value="1" checked>
+                              {%elif W.Wflag != 1  %}
+                                  <input type="checkbox" style=" height: 50px;width: 50px;" id="Wflag" name="Wflag" value="0">
+                              {%endif%}
+                            {%endif%}
+                        {%endfor%}
                   </div>
                   <div class="col-lg-4">
                      <br>
@@ -44,8 +50,12 @@
                      <p> {{ L.Lprice }}</p>
                   </div>
                   <div class="col-lg-2">
-                     <h5>Description</h5>
-                     <p>{{ L.Ldescription }}</p>
+                      <br>
+                      <h5>Seller</h5>
+                      <p>{{ L.Luser }}</p>
+                      <br>
+                      <h5>Description</h5>
+                      <p>{{ L.Ldescription }}</p>
                   </div>
               {%endfor%}
           <hr>
@@ -53,53 +63,44 @@
       <hr>
       </div>
 
-
-     <p>{{B_data}}</p>
-
-     <p>{{W_data}}</p>
-
-
-
-
-
-
-
-
     <form action= "#" method="post" >
 
 
-        {% if L_data|length > 0 and B_data > 0  %}
+
 
             <div class="container" style="border:#004d00; width:90%">
                 <div class="row"  width="1700px">
-                    <div class="col-lg-3">
-                        {{message_watchmark}}
-                        <h5>Add to Whatchlist?</h5>
-                        <input type="checkbox" id="Wflag" name="Wflag">
 
-                         <br><br>
-                        {%if user.username == L.Luser  %}
-                            <p>Do you want to change Status</p>
-                            <p> {{user.username}} ?</p>
-                            <label for="Lstatus"><b>Status : </b>
-                            <select name="Lstatus" id="Lstatus" name="Lstatus" >
-                               <option value="Active"  >Active   - Bids Open</option>
-                               <option value="To Begin">To Begin - About to Start Auciton</option>
-                               <option value="Closed"  >Closed   - Give up and close Aution</option>
-                               <option value="Sold"    >Sold    - I got lucky, it is SOLD!</option>
-                            </select></label>
-                        {%endif%}
+                    <div class="col-lg-3" style="border:double;border-color:#004d00 ;">
+                          <br><br>
+
+                          {%if user.username == L.Luser  %}
+                              <p>Do you want to change Status</p>
+                              <p> {{user.username}} ?</p>
+                              <label for="Lstatus"><b>Status : </b>
+                              <select name="Lstatus" id="Lstatus" name="Lstatus" >
+                                  <option value="Active"  >Active   - Bids Open</option>
+                                  <option value="To Begin">To Begin - About to Start Auciton</option>
+                                  <option value="Closed"  >Closed   - Give up and close Aution</option>
+                                  <option value="Sold"    >Sold    - I got lucky, it is SOLD!</option>
+                              </select></label>
+                          {%endif%}
+
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-4" style="border:double;border-color:#004d00 ;">
+                      <h5> How about a Bid? </h5>
+
+
+                           <p>{{B_data}}</p>
+
                     </div>
-                    <div class="col-lg-3">
-                    </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-3" style="border:double;border-color:#004d00 ;">
+                        <h5> Comments? </h5>
                     </div>
                 </div>
             </div>
 
-        {%endif%}
+
 
     </form>
 
