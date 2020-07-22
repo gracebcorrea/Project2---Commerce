@@ -123,13 +123,23 @@ def CreateListings_view(request):
 
 
 
-def Watchlist_view(request):
+def Watchlist_view(request,user):
     d = datetime.datetime.now()
-    context={
+    if request.method =="POST":
+
+        context={
+              "d" : d,
+              "Watchlists": Watchlist.objects.all(),
+        }
+        return render(request, "auctions/Watchlist.html", context)
+
+    else:
+        context={
            "d" : d,
            "Watchlists": Watchlist.objects.all(),
-    }
-    return render(request, "auctions/Watchlist.html", context)
+           "message": "Outside POST",
+        }
+        return render(request, "auctions/Watchlist.html", context)
 
 
 
@@ -209,7 +219,7 @@ def Bids_view(request, Btitle):
     if request.method == "POST":
         L_data=Listings.objects.filter(Ltitle=Btitle)
         B_data=Bids.objects.filter(Lcode__icontains=Btitle)
-
+        W_data=Watchlist.objects.filter(Lcode__icontains=Btitle)
 
 
 
@@ -218,6 +228,7 @@ def Bids_view(request, Btitle):
             "message": "Inside Bids POST",
             "L_data":L_data,
             "B_data":B_data,
+            "W_data":W_data,
         }
         return render(request, "auctions/BidsDetail.html", context)
 
