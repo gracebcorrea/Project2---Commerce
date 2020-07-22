@@ -12,7 +12,8 @@
 
 {% csrf_token %}
 {% if Watchlists|length > 0 %}
-   	<div class="form-group">
+   	<div class="form-group" >
+      <form action= "{% url 'auctions:Whatchlist' %}" method="post">
         <table class="table">
           <thead>
 			    <tr>
@@ -26,7 +27,7 @@
               {%if user.username == Watchlist.user and Watchlist.Wflag == 1%}
 				        <tr>
 					       	<td>
-                  <a href="{% url 'auctions:BidsDetail' Btitle = Watchlist.Lcode.Ltitle%}">{{ Watchlist.Lcode.Ltitle }}
+                  <a href="{% url 'auctions:BidsDetail' Btitle=Watchlist.Lcode.Ltitle %}">{{ Watchlist.Lcode.Ltitle }}
                   </a></td>
                   <td>{{ Watchlist.Lcode.Lprice }}</td>
                   <td>{{ Watchlist.Lcode.Lstatus }}</td>
@@ -34,6 +35,7 @@
               {%endif%}
 	        {% endfor %}
 	      </table>
+      </form>
     </div>
 
 {% else %}
