@@ -216,7 +216,10 @@ def Listingspage_view(request):
 def Bids_view(request, Btitle):
     B_title=Btitle
     d = datetime.datetime.now()
-
+    L_data=[]
+    C_data=[]
+    B_data=[]
+    W_data=[]
     try:
         #take data from desired listing
         L_data = Listings.objects.filter(Ltitle=B_title)
@@ -253,11 +256,7 @@ def Bids_view(request, Btitle):
     except:
         context = {
             "message" : "Problem with filters in Bids, please try again",
-            "d" : d,
-            "Btitle" : B_title,
-            "L_data":L_data,
-            "B_data":B_data,
-            "W_data":W_data,
+    
         }
         return render(request, "auctions/BidsDetail.html", context)
 
