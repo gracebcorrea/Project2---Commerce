@@ -127,19 +127,21 @@ def Watchlist_view(request):
     d = datetime.datetime.now()
 
     try:
-       W = Watchlist.objects.all(),
-       print(W)
-       context={
-         "d" : d,
-         "WatchLists": W,
-       }
-       return render(request, "auctions/Watchlist.html", context)
+
+        W = Watchlist.objects.all()
 
 
-    except IntegrityError:
+
+
+        print(W)
+        context={
+           "d" : d,
+           "Wishlists": W,
+        }
+        return render(request, "auctions/Watchlist.html", context)
+    except:
         context={
           "d" : d,
-          "message": "No data found"
         }
         return render(request, "auctions/Watchlist.html", context)
 
