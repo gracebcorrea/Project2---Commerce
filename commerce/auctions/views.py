@@ -228,7 +228,7 @@ def Bids_view(request, Btitle):
         L_data=Listings.objects.filter(Ltitle=B_title)
         print("LISTING DATA:",L_data)
         #Take category description
-        Cat_code=L_data[1].Ccode
+        Cat_code=int(L_data[1].Ccode)
         print("CATEGORY CODE:",Cat_code)
 
         C_data = Categories.objects.filter(Ccode=Cat_code)
