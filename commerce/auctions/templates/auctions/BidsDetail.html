@@ -17,11 +17,13 @@
 
 <p>{{B_data}}</p>
 
+<p>{{W_data}}</p>
 
-<form >
+  <!--
+<form action= "{% url 'auctions:BidsDetail' Btitle  %}" method="post" >
     {% csrf_token %}
-    {% if Listings|length > 0 %}
-        {% for L in Listings %}
+    {% if L_data|length > 0 and B_data > 0  %}
+
             <div class="container" style="border:#004d00; width:90%">
                 <div class="row"  width="1700px">
                     <div class="col-lg-3">
@@ -50,10 +52,10 @@
                     </div>
                 </div>
             </div>
-        {%endfor%}
-    {%endif%}    
-</form>
 
+    {%endif%}
+</form>
+  -->
 
 
 {% endblock %}
