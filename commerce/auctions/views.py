@@ -131,7 +131,7 @@ def Watchlist_view(request):
        print(W)
        context={
          "d" : d,
-         "WatchLists": Watchlist.objects.all(),
+         "WatchLists": W,
        }
        return render(request, "auctions/Watchlist.html", context)
 
