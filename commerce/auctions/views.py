@@ -123,21 +123,23 @@ def CreateListings_view(request):
 
 
 
-def Watchlist_view(request,user):
+def Watchlist_view(request):
     d = datetime.datetime.now()
-    if request.method =="POST":
 
-        context={
-              "d" : d,
-              "Watchlists": Watchlist.objects.all(),
-        }
-        return render(request, "auctions/Watchlist.html", context)
+    try:
+       W = Watchlist.objects.all(),
+       print(W)
+       context={
+         "d" : d,
+         "WatchLists": Watchlist.objects.all(),
+       }
+       return render(request, "auctions/Watchlist.html", context)
 
-    else:
+
+    except IntegrityError:
         context={
-           "d" : d,
-           "Watchlists": Watchlist.objects.all(),
-           "message": "Outside POST",
+          "d" : d,
+          "message": "No data found"
         }
         return render(request, "auctions/Watchlist.html", context)
 
@@ -218,9 +220,11 @@ def Bids_view(request, Btitle):
     B_title=Btitle
     if request.method == "POST":
         L_data=Listings.objects.filter(Ltitle=Btitle)
+        print(L_data)
         B_data=Bids.objects.filter(Lcode__icontains=Btitle)
+        print(B_data)
         W_data=Watchlist.objects.filter(Lcode__icontains=Btitle)
-
+        print(W_data)
 
 
         context= {
