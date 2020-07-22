@@ -41,7 +41,7 @@ class Listings(models.Model):
     Limage= models.ImageField(upload_to="media", blank=True) #Name of the picture saved on static folder
     Lstatus = models.CharField(max_length=8, choices=STATUS )
     def __str__(self):
-        return f"({self.Ltitle}) ({self.Lstatus}) ({self.Ccode}) ({self.Ldescription}) ({self.Lprice}) ({self.Ldatestart}) ({self.Lduration}) ({self.Luser})({self.Limage})"
+        return f"({self.Ltitle}) ({self.Ccode}) ({self.Ldescription})  ({self.Lprice}) ({self.Ldatestart}) ({self.Lduration}) ({self.Luser})({self.Limage})({self.Lstatus}) "
 
 #Properties types table auctions_Categories
 class Categories(models.Model):
