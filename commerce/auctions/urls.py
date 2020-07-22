@@ -21,12 +21,12 @@ urlpatterns = [
 
 
     path("Listingspage", views.Listingspage_view, name="Listingspage"),
-    path("Auction/<str:Btitle>", views.Bids_view, name="BidsDetail"),
+    path("Bid/<str:Btitle>", views.Bids_view, name="BidsDetail"),
     path("Comments", views.Comments_view, name="Comments"), #vinculado a bids
 
     path("Watchlist", views.Watchlist_view, name="Watchlist"),
 
     path("Categories", views.Categories_view, name="Categories"),
-    path("CAtegory/<str:C_description>", views.CategoryShow_view, name="CategoryShow"),
+    path("Category/<str:C_description>", views.CategoryShow_view, name="CategoryShow"),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
