@@ -1,7 +1,7 @@
 {% extends "auctions/layout.html" %}
 
 {% block title %}
-    Watchlist
+    Watchlist for {{user.username}}
 
 {% endblock %}
 
@@ -11,34 +11,38 @@
 
 
 
-<form>
+<form action ="{% url 'auctions:Watchlist' %}">
   {% csrf_token %}
-  <p> {{Watchlists}}</p>
-
    	<div class="form-group" >
-        <table class="table">
+
+        <table class="table" width=50%>
             <thead>
 		      	    <tr>
-				        <th scope="col">Auction Title </th>
-      	        <th scope="col">Initial Price </th>
+                <th scope="col">Auction Title </th>
                 <th scope="col">Status </th>
-				        </tr>
+      	        </tr>
 		        </thead>
 
-            {% if Watchlists|length > 0 %}
+            {% if Wishlists|length > 0  %}
 
-	              {% for W in Watchlists %}
-                   <tr>
-                   <td>  {{W}} </td>
-                  </tr>
+	              {% for W in Wishlists %}
+                  {%if user.username == W.user%}
+                      <tr>
+                      <td><a href="{% url 'auctions:BidsDetail' Btitle = W.Lcode.Ltitle%}">  {{W.Lcode.Ltitle}} </a> </td>
+                      <td>  {{W.Lcode.Lstatus}} </td>
+
+                      </tr>
+
+                  {%endif%}
                 {% endfor %}
             {% else %}
                  	<div class="form-group">
-                      	<output><h1>No matches found for your Whatchlist</h1></output>
+                      	<output><h1>No matches found for your Whatchlist   {{user.username}} </h1></output>
+                        <input type="hidden" id="u" name="username" value={{user.username}}>
                 	</div>
             {% endif %}
 
-  
+
 	      </table>
     </div>
 </form>
