@@ -12,17 +12,73 @@
 
 
 <p>{{message}}</p>
+<div class ="flex-container" >
+  {% csrf_token %}
+      <div class="container" style="border:#004d00; width:90%">
+          <div class="row"  width="1700px">
+          {%for L in L_data %}
+                <div class="col-lg-2">
+                   <br>
+                   <h5>Status</h5>
+                   <p>{{ L.Lstatus }}</p>
+                   <br>
+                   <h5>Seller</h5>
+                   <p>{{ L.Luser }}</p>
+                   <h5>Category</h5>
+                   <p>{{ C_description }}</p>
+                </div>
+                <div class="col-lg-4">
+                    <br>
+                    <h3>{{L.Ltitle }}</h3>
+                    <img src=" {{L.Limage.url}} "  width="200">
+                    <br>
+                </div>
+                <br>
+                <div class="col-lg-4">
+                <br>
+                    <h5>Auction Start Date  </h5>
+                    <p>{{ L.Ldatestart }}</p>
+                    <h5>Auction End Date  </h5>
+                    <p>{{ L.Lduration }}</p>
+                    <h5>Initial Price </h5>
+                    <p> {{ L.Lprice }}</p>
 
-<p>{{L_data}}</p>
+                </div>
+                <div class="col-lg-2">
+                   <h5>Description</h5>
+                   <p>{{ L.Ldescription }}</p>
+                </div>
+          {%endfor%}
+          </div>
+      <hr>
+      </div>
 
-<p>{{B_data}}</p>
 
-<p>{{W_data}}</p>
 
-  <!--
-<form action= "{% url 'auctions:BidsDetail' Btitle  %}" method="post" >
-    {% csrf_token %}
-    {% if L_data|length > 0 and B_data > 0  %}
+
+
+
+
+
+
+
+
+
+     <p>{{B_data}}</p>
+
+     <p>{{W_data}}</p>
+
+
+
+
+
+
+
+
+    <form action= "{% url 'auctions:BidsDetail' Btitle  %}" method="post" >
+
+
+        {% if L_data|length > 0 and B_data > 0  %}
 
             <div class="container" style="border:#004d00; width:90%">
                 <div class="row"  width="1700px">
@@ -53,9 +109,9 @@
                 </div>
             </div>
 
-    {%endif%}
-</form>
-  -->
+        {%endif%}
+    </form>
+</div>
 
 
 {% endblock %}
