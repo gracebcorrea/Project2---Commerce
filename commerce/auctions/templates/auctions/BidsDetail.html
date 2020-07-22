@@ -22,16 +22,17 @@
                         <h5>Status</h5>
                         <p>{{ L.Lstatus }}</p>
                         <h5>Add to Whatchlist?</h5>
-                        {%for W in W_data %}
-                            {%if W.user ==  user.username%}
 
-                              {%if W.Wflag == 1  %}
-                                  <input type="checkbox" style=" height: 50px;width: 50px;" id="Wflag" name="Wflag"  value="1" checked>
-                              {%elif W.Wflag != 1  %}
-                                  <input type="checkbox" style=" height: 50px;width: 50px;" id="Wflag" name="Wflag" value="0">
-                              {%endif%}
-                            {%endif%}
-                        {%endfor%}
+                        {%if W_data%}
+                            {%for W in W_data %}
+                                  {% if W.user ==  user.username %}
+                                       <input type="checkbox" style=" height: 50px;width: 50px;" id="Wflag" name="Wflag"  checked>
+                                  {% endif %}
+                            {%endfor%}
+                        {%else%}
+                             <input type="checkbox" style=" height: 50px;width: 50px;" id="Wflag" name="Wflag" >
+                        {% endif %}
+
                   </div>
                   <div class="col-lg-4">
                      <br>
@@ -108,6 +109,5 @@
 
 
 </div>
-
 
 {% endblock %}
