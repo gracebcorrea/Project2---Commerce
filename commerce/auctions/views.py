@@ -226,16 +226,19 @@ def Bids_view(request, Btitle):
     try:
         #take data from desired listing
         L_data=Listings.objects.filter(Ltitle=B_title)
+        print("LISTING DATA:",L_data)
         #Take category description
         Cat_code=L_data[1].Ccode
+        print("CATEGORY CODE:",Cat_code)
+
         C_data = Categories.objects.filter(Ccode=Cat_code)
         CatDescription=C_data[1].Cdescription
-        print(CatDescription)
+        print("CATEGORY DESCRIPTION:",CatDescription)
 
         #take all bids for this listing
         B_data=Bids.objects.filter(Lcode__Ltitle=B_title)
 
-        #Take Watchlist 
+        #Take Watchlist
         W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title)
 
         if request.method == "POST":
@@ -243,7 +246,7 @@ def Bids_view(request, Btitle):
                 "d" : d,
                 "Btitle" :  B_title,
                 "L_data":L_data,
-                "C_data":C_data,
+                "CatDescription":CatDescription,
                 "B_data":B_data,
                 "W_data":W_data,
                 }
@@ -255,7 +258,7 @@ def Bids_view(request, Btitle):
                "d" : d,
                "Btitle" : B_title,
                "L_data":L_data,
-               "C_description":C_description,
+               "CatDescription":CatDescription,
                "B_data":B_data,
                "W_data":W_data,
             }
