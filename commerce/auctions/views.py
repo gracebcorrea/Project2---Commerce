@@ -130,9 +130,6 @@ def Watchlist_view(request):
 
         W = Watchlist.objects.all()
 
-
-
-
         print(W)
         context={
            "d" : d,
@@ -218,32 +215,62 @@ def Listingspage_view(request):
 
 
 def Bids_view(request, Btitle):
-    d = datetime.datetime.now()
     B_title=Btitle
-    if request.method == "POST":
-        L_data=Listings.objects.filter(Ltitle=Btitle)
-        print(L_data)
-        B_data=Bids.objects.filter(Lcode__icontains=Btitle)
-        print(B_data)
-        W_data=Watchlist.objects.filter(Lcode__icontains=Btitle)
-        print(W_data)
+    d = datetime.datetime.now()
+    L_data=[]
+    C_data=[]
+    B_data=[]
+    W_data=[]
 
 
-        context= {
-            "Btitle" :  B_title,
-            "message": "Inside Bids POST",
-            "L_data":L_data,
-            "B_data":B_data,
-            "W_data":W_data,
+    try:
+        #take data from desired listing
+        L_data=Listings.objects.filter(Ltitle=B_title)
+        #Take category description
+        Cat_code=L_data[1].Ccode
+        C_data = Categories.objects.filter(Ccode=Cat_code)
+        CatDescription=C_data[1].Cdescription
+        print(CatDescription)
+
+        #take all bids for this listing
+        B_data=Bids.objects.filter(Lcode__Ltitle=B_title)
+
+        #Take Watchlist 
+        W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title)
+
+        if request.method == "POST":
+            context= {
+                "d" : d,
+                "Btitle" :  B_title,
+                "L_data":L_data,
+                "C_data":C_data,
+                "B_data":B_data,
+                "W_data":W_data,
+                }
+            return render(request, "auctions/BidsDetail.html", context)
+
+        else:
+
+            context= {
+               "d" : d,
+               "Btitle" : B_title,
+               "L_data":L_data,
+               "C_description":C_description,
+               "B_data":B_data,
+               "W_data":W_data,
+            }
+            return render(request, "auctions/BidsDetail.html", context)
+
+    except:
+        context = {
+            "message" : "Problem with filters in Bids, please try again",
+            "d" : d,
+            "ActiveListings": Listings.objects.all(),
         }
-        return render(request, "auctions/BidsDetail.html", context)
+        return render(request, "auctions/index.html", context)
 
-    else:
-        context= {
-            "Btitle" : B_title,
-            "message": "Outside Bids POST",
-        }
-        return render(request, "auctions/BidsDetail.html", context)
+
+
 
 
 def  Comments_view(request):
