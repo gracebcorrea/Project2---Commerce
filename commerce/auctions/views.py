@@ -130,7 +130,6 @@ def Watchlist_view(request):
 
         W = Watchlist.objects.all()
 
-        print(W)
         context={
            "d" : d,
            "Wishlists": W,
@@ -217,11 +216,6 @@ def Listingspage_view(request):
 def Bids_view(request, Btitle):
     B_title=Btitle
     d = datetime.datetime.now()
-    L_data =[]
-    C_data =[]
-    B_data =[]
-    W_data =[]
-
 
     try:
         #take data from desired listing
@@ -233,7 +227,7 @@ def Bids_view(request, Btitle):
 
         C_data = Categories.objects.filter(Ccode=Cat_code)
         print(C_data)
-        
+
         CatDescription=C_data[1].Cdescription
         print("CATEGORY DESCRIPTION:",CatDescription)
 
@@ -263,6 +257,7 @@ def Bids_view(request, Btitle):
                "CatDescription":CatDescription,
                "B_data":B_data,
                "W_data":W_data,
+               "message" : "Not in POST"
             }
             return render(request, "auctions/BidsDetail.html", context)
 
