@@ -217,23 +217,13 @@ def Bids_view(request, Btitle):
     B_title=Btitle
     d = datetime.datetime.now()
     L_data=[]
-    C_data=[]
     B_data=[]
     W_data=[]
     try:
         #take data from desired listing
         L_data = Listings.objects.filter(Ltitle=B_title)
 
-        #Take category description
-        Cat_code = L_data[1].Ccode
-        print("CATEGORY CODE:",Cat_code)
 
-        C_data = Categories.objects.filter(Ccode=Cat_code)
-
-        print("CATEGORY ARRAY:",C_data)
-
-        CatDescription=C_data[1].Cdescription
-        print("CATEGORY DESCRIPTION:",CatDescription)
 
         #take all bids for this listing
         B_data=Bids.objects.filter(Lcode__Ltitle=B_title)
@@ -255,8 +245,10 @@ def Bids_view(request, Btitle):
 
     except:
         context = {
-            "message" : "Problem with filters in Bids, please try again",
-    
+            "message": "Problem with filters in Bids, please try again",
+            "L_data" :Listings.objects.filter(Ltitle=B_title),
+            "B_data" :Bids.objects.filter(Lcode__Ltitle=B_title),
+            "W_data" :Watchlist.objects.filter(Lcode__Ltitle=B_title),
         }
         return render(request, "auctions/BidsDetail.html", context)
 
