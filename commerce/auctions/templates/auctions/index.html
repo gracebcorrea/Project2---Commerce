@@ -1,10 +1,10 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-  <h2>Active Listings</h2>
-    <h4 style="color:red;"> {{message}}</h4>
-    <hr>
-    <div class="form-group">
+  <h2 style=" text-align: center;">Active Listings</h2>
+  <h4 style="color:red;"> {{message}}</h4>
+  <hr>
+    <div class="form-group" >
       <form >
           {% csrf_token %}
           {% if ActiveListings|length > 0 %}
