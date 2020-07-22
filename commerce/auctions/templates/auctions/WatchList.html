@@ -9,44 +9,48 @@
 
 <p> {{message}}</p>
 
+
+
 <form>
   {% csrf_token %}
-  {% if WatchLists|length > 0 %}
+  <p> {{Watchlists}}</p>
+
    	<div class="form-group" >
         <table class="table">
-          <thead>
-			    <tr>
-				    <th scope="col">Auction Title </th>
-      	    <th scope="col">Initial Price </th>
-            <th scope="col">Status </th>
-				  </tr>
-		      </thead>
- <p>{{Watchlists}}</p>
+            <thead>
+		      	    <tr>
+				        <th scope="col">Auction Title </th>
+      	        <th scope="col">Initial Price </th>
+                <th scope="col">Status </th>
+				        </tr>
+		        </thead>
 
-	        {% for W in Watchlists %}
-              <tr>
-              <td>  {{W}} </td>
-              </tr>
-          {% endfor %}
-<!--
-              {%if user.username == W.user and W.Wflag == 1%}
-				        <tr>
-					       	<td>
-                  <a href="{% url 'auctions:BidsDetail' Btitle=W.Lcode.Ltitle %}">{{ W.Lcode.Ltitle }}
+            {% if Watchlists|length > 0 %}
+
+	              {% for W in Watchlists %}
+                   <tr>
+                   <td>  {{W}} </td>
+                  </tr>
+                {% endfor %}
+            {% else %}
+                 	<div class="form-group">
+                      	<output><h1>No matches found for your Whatchlist</h1></output>
+                	</div>
+            {% endif %}
+
+               <!--
+               {%if user.username == W.user and W.Wflag == 1%}
+	  			        <tr>
+	  				       	<td>
+                    <a href="{% url 'auctions:BidsDetail' Btitle=W.Lcode.Ltitle %}">{{ W.Lcode.Ltitle }}
                   </a></td>
                   <td>{{ W.Lcode.Lprice }}</td>
                   <td>{{ W.Lcode.Lstatus }}</td>
 				        </tr>
               {%endif%}
--->
+              -->
 	      </table>
     </div>
-
-  {% else %}
-     	<div class="form-group">
-          	<output><h1>No matches found</h1></output>
-    	</div>
-  {% endif %}
 </form>
 
 {% endblock %}
