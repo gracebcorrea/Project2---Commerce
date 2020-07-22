@@ -9,11 +9,10 @@
 
 <p> {{message}}</p>
 
-
-{% csrf_token %}
-{% if Watchlists|length > 0 %}
+<form>
+  {% csrf_token %}
+  {% if WatchLists|length > 0 %}
    	<div class="form-group" >
-      <form action= "{% url 'auctions:Whatchlist' %}" method="post">
         <table class="table">
           <thead>
 			    <tr>
@@ -23,26 +22,31 @@
 				  </tr>
 		      </thead>
 
-	        {% for Watchlist in Watchlists %}
-              {%if user.username == Watchlist.user and Watchlist.Wflag == 1%}
+
+	        {% for W in Watchlists %}
+              <tr>
+              <td>  {{W}} </td>
+              </tr>
+          {% endfor %}
+<!--
+              {%if user.username == W.user and W.Wflag == 1%}
 				        <tr>
 					       	<td>
-                  <a href="{% url 'auctions:BidsDetail' Btitle=Watchlist.Lcode.Ltitle %}">{{ Watchlist.Lcode.Ltitle }}
+                  <a href="{% url 'auctions:BidsDetail' Btitle=W.Lcode.Ltitle %}">{{ W.Lcode.Ltitle }}
                   </a></td>
-                  <td>{{ Watchlist.Lcode.Lprice }}</td>
-                  <td>{{ Watchlist.Lcode.Lstatus }}</td>
+                  <td>{{ W.Lcode.Lprice }}</td>
+                  <td>{{ W.Lcode.Lstatus }}</td>
 				        </tr>
               {%endif%}
-	        {% endfor %}
+-->
 	      </table>
-      </form>
     </div>
 
-{% else %}
+  {% else %}
      	<div class="form-group">
           	<output><h1>No matches found</h1></output>
     	</div>
-{% endif %}
-
+  {% endif %}
+</form>
 
 {% endblock %}
