@@ -1,15 +1,14 @@
 {% extends "auctions/layout.html" %}
 
 {% block title %}
-    Watchlist for {{user.username}}
+    Watchlist
 
 {% endblock %}
 
 {% block body %}
-
-<p> {{message}}</p>
-
-
+<h2 style=" text-align: center;">Watchlist for: {{user.username}} </h2>
+  <h4 style="color:red;"> {{message}}</h4>
+  <hr>
 
 <form action ="{% url 'auctions:Watchlist' %}">
   {% csrf_token %}
