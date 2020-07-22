@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 
 from . import views
 from .views import index, login_view,logout_view,register
-from .views import CreateListings_view, Listingspage_view, Comments_view,Bids_view
+from .views import CreateListings_view, Listingspage_view, Comments_view, Bids_view
 from .views import Watchlist_view, Categories_view, CategoryShow_view
 
 
@@ -21,12 +21,12 @@ urlpatterns = [
 
 
     path("Listingspage", views.Listingspage_view, name="Listingspage"),
-    path("<str:Btitle>", views.Bids_view, name="BidsDetail"),
+    path("Auction/<str:Btitle>", views.Bids_view, name="BidsDetail"),
     path("Comments", views.Comments_view, name="Comments"), #vinculado a bids
 
     path("Watchlist", views.Watchlist_view, name="Watchlist"),
 
     path("Categories", views.Categories_view, name="Categories"),
-    path("<str:C_description>", views.CategoryShow_view, name="CategoryShow"),
+    path("CAtegory/<str:C_description>", views.CategoryShow_view, name="CategoryShow"),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
