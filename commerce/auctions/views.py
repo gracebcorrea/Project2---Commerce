@@ -217,21 +217,23 @@ def Listingspage_view(request):
 def Bids_view(request, Btitle):
     B_title=Btitle
     d = datetime.datetime.now()
-    L_data=[]
-    C_data=[]
-    B_data=[]
-    W_data=[]
+    L_data =[]
+    C_data =[]
+    B_data =[]
+    W_data =[]
 
 
     try:
         #take data from desired listing
-        L_data=Listings.objects.filter(Ltitle=B_title)
-        print("LISTING DATA:",L_data)
+        L_data = Listings.objects.filter(Ltitle=B_title)
+
         #Take category description
-        Cat_code=int(L_data[1].Ccode)
+        Cat_code = L_data[1].Ccode
         print("CATEGORY CODE:",Cat_code)
 
         C_data = Categories.objects.filter(Ccode=Cat_code)
+        print(C_data)
+        
         CatDescription=C_data[1].Cdescription
         print("CATEGORY DESCRIPTION:",CatDescription)
 
