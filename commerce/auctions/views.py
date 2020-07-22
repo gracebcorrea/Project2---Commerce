@@ -226,7 +226,8 @@ def Bids_view(request, Btitle):
         print("CATEGORY CODE:",Cat_code)
 
         C_data = Categories.objects.filter(Ccode=Cat_code)
-        print(C_data)
+
+        print("CATEGORY ARRAY",C_data)
 
         CatDescription=C_data[1].Cdescription
         print("CATEGORY DESCRIPTION:",CatDescription)
@@ -242,7 +243,7 @@ def Bids_view(request, Btitle):
                 "d" : d,
                 "Btitle" :  B_title,
                 "L_data":L_data,
-                "CatDescription":CatDescription,
+
                 "B_data":B_data,
                 "W_data":W_data,
                 }
@@ -254,7 +255,7 @@ def Bids_view(request, Btitle):
                "d" : d,
                "Btitle" : B_title,
                "L_data":L_data,
-               "CatDescription":CatDescription,
+            
                "B_data":B_data,
                "W_data":W_data,
                "message" : "Not in POST"
@@ -267,7 +268,7 @@ def Bids_view(request, Btitle):
             "d" : d,
             "ActiveListings": Listings.objects.all(),
         }
-        return render(request, "auctions/index.html", context)
+        return render(request, "auctions/BidsDetail.html", context)
 
 
 
