@@ -7,11 +7,10 @@
 
 {% block body %}
 {% csrf_token %}
-<h2>Bid´s Detail for: {{Btitle}}  </h2>
+<h2 style=" text-align: center;">Bid´s Detail for: {{Btitle}}  </h2>
+<h4 style="color:red;"> {{message}}</h4>
+<hr>
 
-
-
-<p>{{message}}</p>
 <div class ="flex-container" >
   {% csrf_token %}
       <div class="container" style="border:#004d00; width:90%">
