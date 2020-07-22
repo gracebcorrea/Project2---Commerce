@@ -18,6 +18,7 @@
         <table class="table" width=50%>
             <thead>
 		      	    <tr>
+                <th </th>
                 <th scope="col">Auction Title </th>
                 <th scope="col">Status </th>
       	        </tr>
@@ -28,7 +29,8 @@
 	              {% for W in Wishlists %}
                   {%if user.username == W.user%}
                       <tr>
-                      <td><a href="{% url 'auctions:BidsDetail' Btitle = W.Lcode.Ltitle%}">  {{W.Lcode.Ltitle}} </a> </td>
+                      <td></td>
+                      <td><a href="{% url 'auctions:BidsDetail' Btitle=W.Lcode.Ltitle %}">  {{W.Lcode.Ltitle}} </a> </td>
                       <td>  {{W.Lcode.Lstatus}} </td>
 
                       </tr>
