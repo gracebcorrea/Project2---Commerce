@@ -80,6 +80,8 @@
                 <div class="col-lg-4" style=" border: 4px dotted #004d00 ;">
                     <h5> Actual Bids </h5>
                     {% if B_data|length > 0 %}
+
+                        <p>{{B_data}}</p>
                         {%for B in B_data %}
                           <p>User: {{B_Buser}} - Lance:{{B_Bthrow}}  </p>
                           <p>Date: {{B_Bdate}} - Offer:{{B_Bprice}}  </p>
@@ -96,7 +98,10 @@
 
                 <div class="col-lg-5" >
                     <h5> Leave your Comment </h5>
+
+
                       {%if C_data|length > 0 %}
+                        <p>{{C_data}}</p>
                         {%for C in C_data %}
                             <p> {{C_Cdate}} </p>
                             <p> {{C_Cuser}}</p>
