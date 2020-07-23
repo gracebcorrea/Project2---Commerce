@@ -236,26 +236,28 @@ def Listingspage_view(request):
 
 
 def Bids_view(request, Btitle):
-    B_title=Btitle
+    B_title =Btitle
     d = datetime.datetime.now()
-    L_data=[]
-    B_data=[]
-    W_data=[]
-    C_data=[]
+    L_data =[]
+    B_data =[]
+    W_data =[]
+    C_data =[]
 
     try:
         #take data from desired listing
         L_data = Listings.objects.filter(Ltitle=B_title)
 
-        #take all bids for this listing
-        B_data=Bids.objects.filter(Lcode__Ltitle=B_title)
-        print(f"BIDS",B_data)
         #Take Watchlist
         W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title)
 
+
+        #take all bids for this listing
+        B_data=Bids.objects.filter(Lcode__Ltitle=B_title)
+        print(f"BIDS   :",B_data)
+
         #Teke comments for this listing
         C_data=Comments.objects.filter(Lcode__Ltitle=B_title)
-        print(f"COMMENTS",C_data)
+        print(f"COMMENTS   :",C_data)
 
 
 
