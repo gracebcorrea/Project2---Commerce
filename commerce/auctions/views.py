@@ -246,18 +246,13 @@ def Bids_view(request, Btitle):
     try:
         #take data from desired listing
         L_data = Listings.objects.filter(Ltitle=B_title)
-
         #Take Watchlist
         W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title)
-
-
         #take all bids for this listing
         B_data=Bids.objects.filter(Lcode__Ltitle=B_title)
-        print(f"BIDS   :",B_data)
-
         #Teke comments for this listing
         C_data=Comments.objects.filter(Lcode__Ltitle=B_title)
-        print(f"COMMENTS   :",C_data)
+
 
 
 
