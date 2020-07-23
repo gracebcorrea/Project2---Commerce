@@ -43,17 +43,7 @@ class Migration(migrations.Migration):
                 ('Lcode', models.ForeignKey(help_text='Choose a title from listing', max_length=50, on_delete=django.db.models.deletion.CASCADE, to='auctions.Listings')),
             ],
         ),
-        migrations.CreateModel(
-            name='Comments',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('Luser', models.CharField(max_length=25)),
-                ('Lcomment', models.CharField(max_length=250)),
-                ('Buser', models.CharField(max_length=25)),
-                ('Bcomment', models.CharField(max_length=250)),
-                ('Lcode', models.ForeignKey(help_text='Choose a title from listing', max_length=50, on_delete=django.db.models.deletion.CASCADE, to='auctions.Listings')),
-            ],
-        ),
+    
         migrations.CreateModel(
             name='Bids',
             fields=[
