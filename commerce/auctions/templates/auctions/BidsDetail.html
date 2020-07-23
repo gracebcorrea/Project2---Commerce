@@ -80,11 +80,9 @@
                 <div class="col-lg-4" style=" border: 4px dotted #004d00 ;">
                     <h5> Actual Bids </h5>
                     {% if B_data|length > 0 %}
-
-                        <p>{{B_data}}</p>
                         {%for B in B_data %}
-                          <p>User: {{B_Buser}} - Lance:{{B_Bthrow}}  </p>
-                          <p>Date: {{B_Bdate}} - Offer:{{B_Bprice}}  </p>
+                          <p>User: {{B.Buser}} - Lance:{{B.Bthrow}}  </p>
+                          <p>Date: {{B.Bdate}} - Offer:{{B.Bprice}}  </p>
                         {% endfor %}
                     {%else%}
                         <h5>This Listing doesn´t have Bids Yet </h5>
@@ -99,13 +97,11 @@
                 <div class="col-lg-5" >
                     <h5> Leave your Comment </h5>
 
-
                       {%if C_data|length > 0 %}
-                        <p>{{C_data}}</p>
                         {%for C in C_data %}
-                            <p> {{C_Cdate}} </p>
-                            <p> {{C_Cuser}}</p>
-                            <p> {{C_Ccomment}}</p>
+                            <p> {{C.Cdate}} </p>
+                            <p> {{C.Cuser}}-{{C.Ccomment}}</p>
+                          
                         {%endfor%}
                       {%else%}
                           <h5>This listing doesn´t have any comments yet </h5>
