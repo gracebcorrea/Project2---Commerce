@@ -252,53 +252,6 @@ def Bids_view(request, Btitle):
         B_data=Bids.objects.filter(Lcode__Ltitle=B_title)
         #Teke comments for this listing
         C_data=Comments.objects.filter(Lcode__Ltitle=B_title)
-
-
-
-
-
-
-
-
-
-        if method.request == "POST":
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            context= {
-                "d" : d,
-                "Btitle" : B_title,
-                "L_data":L_data,
-                "B_data":B_data,
-                "W_data":W_data,
-                "C_data":C_data,
-                "message" : "Inside POST",
-            }
-            return render(request, "auctions/BidsDetail.html", context)
-        else:
-            context= {
-                "d" : d,
-                "Btitle" : B_title,
-                "L_data":L_data,
-                "B_data":B_data,
-                "W_data":W_data,
-                "C_data":C_data,
-                "message" : "Not in POST",
-            }
-            return render(request, "auctions/BidsDetail.html", context)
-
     except:
         context = {
             "message": "Problem with filters in Bids, please try again",
@@ -310,13 +263,35 @@ def Bids_view(request, Btitle):
         }
         return render(request, "auctions/BidsDetail.html", context)
 
+def Bid_add(request):
+
+    if request.method == "POST":
+
+        Lcode =request.POST["Lcode"]
+        print(Lcode)
+        #Lcode_id=Lcode[].id
+        #N_Bthrow=Bids.objects.filter(Lcode=Lcode).order_by('-id')[0]
+        #Bthrow = N_Bthrow + 1
+        Buser = request.POST["Buser"]
+        Bprice = request.POST["Bprice"]
+        Bdate = datetime.date()
+        print(Buser)
+        print(Bprice)
+        print(Bdate)
+
+        return redirect(request.META["auctions/BidsDetail.html"])
+        #return redirect(request.META['HTTP_REFERER'])
+
+    else:
+        return redirect(request.META["auctions/BidsDetail.html"])
 
 
 
 
 def  Comments_view(request):
     if request.method == "POST":
-        return HttpResponse(" Comments POST")
+
+        return redirect(request.META["auctions/BidsDetail.html"])
 
     else:
-        return render(request, "auctions/Listingspage.html")
+        return redirect(request.META["auctions/BidsDetail.html"])
