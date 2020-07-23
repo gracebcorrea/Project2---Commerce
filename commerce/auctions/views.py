@@ -125,11 +125,8 @@ def CreateListings_view(request):
 
 def Watchlist_view(request):
     d = datetime.datetime.now()
-
     try:
-
         W = Watchlist.objects.all()
-
         context={
            "d" : d,
            "Wishlists": W,
@@ -140,6 +137,31 @@ def Watchlist_view(request):
           "d" : d,
         }
         return render(request, "auctions/Watchlist.html", context)
+
+def Watchlist_add(Lcode,user):
+    W_Lcode=Lcode
+    W_user=user
+    try:
+        Watchlist_create= Watchlist.objects.create(Lcode=W_Lcode,user=W_user,Wflag=1)
+        Watchlist_create.save()
+    except IntegrityError:
+        return HttpResponse(" Integryty Error tryng to save new watchlist item")
+
+    return None
+
+def Watchlist_remove(Lcode,user):
+    W_Lcode=Lcode
+    W_user=user
+
+    try:
+        W_remove=Watchlist.objects.filter(Lcode=W_Lcode,user=W_user).delete()
+        W_remove.save()
+
+    except IntegrityError:
+        return HttpResponse(" Integryty Error tryng to delete watchlist item")
+    return None
+
+
 
 
 
