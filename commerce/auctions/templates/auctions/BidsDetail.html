@@ -81,14 +81,13 @@
                     <h5> Actual Bids </h5>
                     {% if B_data|length > 0 %}
                         {%for B in B_data %}
-
                           <p>User: {{B_Buser}} - Lance:{{B_Bthrow}}  </p>
                           <p>Date: {{B_Bdate}} - Offer:{{B_Bprice}}  </p>
                         {% endfor %}
                     {%else%}
                         <h5>This Listing doesn´t have Bids Yet </h5>
                     {%endif%}
-                      <h5> Offer a Bid: </h5>
+                    <h5> Offer a Bid: </h5>
                     <form action="#" method="post">
                         <input type="hidden" class="form-control" id="Lcode" name="Lcode" value="{{Lcode}}">
                         <input type="text" class="form-control" id="Ltitle" name="Ltitle" ></label>
@@ -105,7 +104,6 @@
                         {%endfor%}
                       {%else%}
                           <h5>This listing doesn´t have any comments yet </h5>
-
                       {%endif%}
 
                       <form action="#" method="post">
