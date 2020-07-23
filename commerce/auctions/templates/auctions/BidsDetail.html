@@ -14,17 +14,12 @@
 
 <div class ="flex-container" style="text-align: center;">
   {% csrf_token %}
-      <div class="container" style="border:#004d00; width:90%">
+      <div class="container" style="width:90%;">
           <div class="row"  width="1700px">
               {%for L in L_data %}
                   <div class="col-lg-2" style="border:double;border-color:#004d00 ;">
-                        <br>     <br>
-                        <h5>Status</h5>
-                        <p>{{ L.Lstatus }}</p>
-
-
+                        <br>
                         <h5>Add to Whatchlist?</h5>
-
                         {%if W_data%}
                             {%for W in W_data %}
                                   {% if W.user ==  user.username %}
@@ -34,8 +29,25 @@
                         {%else%}
                              <input type="checkbox" style=" height: 50px;width: 50px;" id="Wflag" name="Wflag" >
                         {% endif %}
+                        <br>
+                        <br>
+                        {%if user.username == L.Luser  %}
+                            <label for="Lstatus"><h5>Do you want to change Status?</h5>
+                            <select name="Lstatus" id="Lstatus" name="Lstatus" style="width:90%;">
+                                <option value="Active"  >Active  - Bids Open</option>
+                                <option value="To Begin">To Begin- About to Start Auciton</option>
+                                <option value="Closed"  >Closed  - Give up and close Aution</option>
+                                <option value="Sold"    >Sold    - I got lucky, it is SOLD!</option>
+                            </select></label>
+                        {%endif%}
+
+
+
+
+
 
                   </div>
+
                   <div class="col-lg-4">
                      <br>
                      <h3>{{L.Ltitle }}</h3>
@@ -48,9 +60,12 @@
                      <h5>Auction Start Date  </h5>
                      <p>{{ L.Ldatestart }}</p>
                      <h5>Auction End Date  </h5>
-                     <p>{{ L.Lduration }}</p>
+                     <p>{{ L.Lduration }} Days</p>
                      <h5>Initial Price </h5>
                      <p> {{ L.Lprice }}</p>
+                     <h5>Status</h5>
+                     <p>{{ L.Lstatus }}</p>
+
                   </div>
                   <div class="col-lg-2">
                       <br>
@@ -68,26 +83,11 @@
 
     <form action= "#" method="post" >
 
-
-
-
             <div class="container" style="border:#004d00; width:90%">
                 <div class="row"  width="1700px">
 
                     <div class="col-lg-3" style="border:double;border-color:#004d00 ;">
                           <br><br>
-
-                          {%if user.username == L.Luser  %}
-                              <p>Do you want to change Status</p>
-                              <p> {{user.username}} ?</p>
-                              <label for="Lstatus"><b>Status : </b>
-                              <select name="Lstatus" id="Lstatus" name="Lstatus" >
-                                  <option value="Active"  >Active   - Bids Open</option>
-                                  <option value="To Begin">To Begin - About to Start Auciton</option>
-                                  <option value="Closed"  >Closed   - Give up and close Aution</option>
-                                  <option value="Sold"    >Sold    - I got lucky, it is SOLD!</option>
-                              </select></label>
-                          {%endif%}
 
                     </div>
                     <div class="col-lg-4" style="border:double;border-color:#004d00 ;">
