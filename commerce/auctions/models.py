@@ -62,15 +62,6 @@ class Bids(models.Model):
     def __str__(self):
         return f"({self.Lcode})({self.Buser})({self.Bthrow}) ({self.Bprice}) ({self.Bdate})"
 
-#Comments table auctions_Comments
-class Comments(models.Model):
-    Lcode = models.ForeignKey(Listings, on_delete=models.CASCADE)
-    Luser  = models.CharField(max_length=25) #Who is selling
-    Lcomment = models.CharField(max_length=250)
-    Buser = models.CharField(max_length=25) #Who is buying
-    Bcomment = models.CharField(max_length=250)
-    def __str__(self):
-        return f"({self.Lcode}) ({self.Luser }) ({self.Lcomment}) ({self.Buser}) ({self.Bcomment})"
 
 
 #Like Faforits???  table auctions_Watchlist
@@ -80,3 +71,14 @@ class Watchlist(models.Model):
     user = models.CharField(max_length=25)
     def __str__(self):
         return f"({self.Lcode}) ({self.Wflag}) ({self.user}) "
+
+
+#Comments table auctions_Comments
+class Comments(models.Model):
+    Lcode = models.ForeignKey(Listings, on_delete=models.CASCADE)
+    Cdate=  models.DateField(help_text="Please use the following format: <em>YYYY-MM-DD</em>. for the auction start", blank=True)
+    Cuser = models.CharField(max_length=25) #Who is buying
+    Ccomment = models.CharField(max_length=250)
+    def __str__(self):
+        return f"({self.Lcode}) ({self.Cdate }) ({self.Cuser}) ({self.Ccomment})"
+        
