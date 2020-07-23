@@ -7,7 +7,6 @@
 
 {% block body %}
 
-{% csrf_token %}
 <h2 style="text-align: center;">Bid´s Detail for: {{Btitle}}  </h2>
 <h4 style="color:red;"> {{message}}</h4>
 <hr>
@@ -78,21 +77,36 @@
     <form action= "#" method="post" >
         <div class="container" style="border:#004d00; width:90%">
             <div class="row"  width="1700px">
-                  {%if B_data and C_data%}
-                    <div class="col-lg-4" style=" border: 4px dotted #004d00 ;">
-                      <h5> How about a Bid? </h5>
+                {%for B in B_data %}
+                <div class="col-lg-4" style=" border: 4px dotted #004d00 ;">
+                    <h5> How about a Bid? </h5>
+                          <p>{{B_Buser}}  </p>
+                          <p>{{B_Bthrow}}  </p>
+                          <p>{{B_Bprice}}  </p>
+                          <p>{{B_Bdate}}  </p>
 
 
-                           <p>{{B_data}}</p>
+                </div>
+                <div class="col-lg-3" style="border:double;border-color:#004d00 ;">
+                <h5> Who is Winning? </h5>
 
-                    </div>
-                    <div class="col-lg-5" >
-                        <h5> Comments? </h5>
-                    </div>
-                    <div class="col-lg-3" style="border:double;border-color:#004d00 ;">
-                        <h5> Who is Winning? </h5>
-                    </div>
-                    {% endif %}
+
+
+                </div>
+                {% endfor %}
+
+                <div class="col-lg-5" >
+                    <h5> Comments? </h5>
+                        {%for C in C_data %}
+                            <p> {{C_Luser}}</p>
+                            <p> {{C_Lcomment}}</p>
+                            <p> {{C_Buser}}</p>
+                            <p> {{C_Bcomment}}</p>
+
+
+                        {%endfor%}
+                </div>
+
               </div>
 
 
