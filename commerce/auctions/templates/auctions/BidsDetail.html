@@ -77,35 +77,50 @@
     <form action= "#" method="post" >
         <div class="container" style="border:#004d00; width:90%">
             <div class="row"  width="1700px">
-                {%for B in B_data %}
                 <div class="col-lg-4" style=" border: 4px dotted #004d00 ;">
-                    <h5> How about a Bid? </h5>
-                          <p>{{B_Buser}}  </p>
-                          <p>{{B_Bthrow}}  </p>
-                          <p>{{B_Bprice}}  </p>
-                          <p>{{B_Bdate}}  </p>
+                    <h5> Actual Bids </h5>
+                    {% if B_data|length > 0 %}
+                        {%for B in B_data %}
 
+                          <p>User: {{B_Buser}} - Lance:{{B_Bthrow}}  </p>
+                          <p>Date: {{B_Bdate}} - Offer:{{B_Bprice}}  </p>
+                        {% endfor %}
+                    {%else%}
+                        <h5>This Listing doesn´t have Bids Yet </h5>
+                    {%endif%}
+                      <h5> Offer a Bid: </h5>
+                    <form action="#" method="post">
+                        <input type="hidden" class="form-control" id="Lcode" name="Lcode" value="{{Lcode}}">
+                        <input type="text" class="form-control" id="Ltitle" name="Ltitle" ></label>
+                    </form>
+                </div>
 
+                <div class="col-lg-5" >
+                    <h5> Leave your Comment </h5>
+                      {%if C_data|length > 0 %}
+                        {%for C in C_data %}
+                            <p> {{C_Cdate}} </p>
+                            <p> {{C_Cuser}}</p>
+                            <p> {{C_Ccomment}}</p>
+                        {%endfor%}
+                      {%else%}
+                          <h5>This listing doesn´t have any comments yet </h5>
+
+                      {%endif%}
+
+                      <form action="#" method="post">
+                          <input  type="hidden" class="form-control" id="Cuser" name="Cuser" value={{C_Cuser}}>
+                          <textarea type="text" class="form-control" id="Ccomment" name="Ccomment" ></textarea>
+                      </form>
                 </div>
                 <div class="col-lg-3" style="border:double;border-color:#004d00 ;">
                 <h5> Who is Winning? </h5>
-
+                      {{best_bid}}
+                      {{user}}
 
 
                 </div>
-                {% endfor %}
 
-                <div class="col-lg-5" >
-                    <h5> Comments? </h5>
-                        {%for C in C_data %}
-                            <p> {{C_Luser}}</p>
-                            <p> {{C_Lcomment}}</p>
-                            <p> {{C_Buser}}</p>
-                            <p> {{C_Bcomment}}</p>
-
-
-                        {%endfor%}
-                </div>
 
               </div>
 
