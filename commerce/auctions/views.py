@@ -241,6 +241,7 @@ def Bids_view(request, Btitle):
     L_data=[]
     B_data=[]
     W_data=[]
+    C_data=[]
 
     try:
         #take data from desired listing
@@ -252,6 +253,8 @@ def Bids_view(request, Btitle):
         #Take Watchlist
         W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title)
 
+        #Teke comments for this listing
+        C_data=Comments.objects.filter(Lcode__Ltitle=B_title)
 
 
 
@@ -283,6 +286,7 @@ def Bids_view(request, Btitle):
                 "L_data":L_data,
                 "B_data":B_data,
                 "W_data":W_data,
+                "C_data":C_data,
                 "message" : "Inside POST",
             }
             return render(request, "auctions/BidsDetail.html", context)
@@ -293,6 +297,7 @@ def Bids_view(request, Btitle):
                 "L_data":L_data,
                 "B_data":B_data,
                 "W_data":W_data,
+                "C_data":C_data,
                 "message" : "Not in POST",
             }
             return render(request, "auctions/BidsDetail.html", context)
@@ -304,6 +309,7 @@ def Bids_view(request, Btitle):
             "L_data" :L_data,
             "B_data" :B_data,
             "W_data" :W_data,
+            "C_data":C_data,
         }
         return render(request, "auctions/BidsDetail.html", context)
 
