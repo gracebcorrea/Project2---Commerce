@@ -241,11 +241,10 @@ def Bids_view(request, Btitle):
     L_data=[]
     B_data=[]
     W_data=[]
+
     try:
         #take data from desired listing
         L_data = Listings.objects.filter(Ltitle=B_title)
-
-
 
         #take all bids for this listing
         B_data=Bids.objects.filter(Lcode__Ltitle=B_title)
@@ -254,23 +253,57 @@ def Bids_view(request, Btitle):
         W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title)
 
 
-        context= {
-           "d" : d,
-           "Btitle" : B_title,
-           "L_data":L_data,
 
-           "B_data":B_data,
-           "W_data":W_data,
-           "message" : "Not in POST",
-        }
-        return render(request, "auctions/BidsDetail.html", context)
+
+
+
+
+
+
+
+        if method.request == "POST":
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            context= {
+                "d" : d,
+                "Btitle" : B_title,
+                "L_data":L_data,
+                "B_data":B_data,
+                "W_data":W_data,
+                "message" : "Inside POST",
+            }
+            return render(request, "auctions/BidsDetail.html", context)
+        else:
+            context= {
+                "d" : d,
+                "Btitle" : B_title,
+                "L_data":L_data,
+                "B_data":B_data,
+                "W_data":W_data,
+                "message" : "Not in POST",
+            }
+            return render(request, "auctions/BidsDetail.html", context)
 
     except:
         context = {
             "message": "Problem with filters in Bids, please try again",
-            "L_data" :Listings.objects.filter(Ltitle=B_title),
-            "B_data" :Bids.objects.filter(Lcode__Ltitle=B_title),
-            "W_data" :Watchlist.objects.filter(Lcode__Ltitle=B_title),
+            "Btitle" : B_title,
+            "L_data" :L_data,
+            "B_data" :B_data,
+            "W_data" :W_data,
         }
         return render(request, "auctions/BidsDetail.html", context)
 
