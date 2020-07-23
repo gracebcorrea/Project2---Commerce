@@ -81,8 +81,8 @@
                     <h5> Actual Bids </h5>
                     {% if B_data|length > 0 %}
                         {%for B in B_data %}
-                          <p>User: {{B.Buser}} - Lance:{{B.Bthrow}}  </p>
-                          <p>Date: {{B.Bdate}} - Offer:{{B.Bprice}}  </p>
+                          <p>Date: {{B.Bdate}} - User: {{B.Buser}} </p>
+                          <p>Offer:{{B.Bprice}}  </p>
                         {% endfor %}
                     {%else%}
                         <h5>This Listing doesn´t have Bids Yet </h5>
@@ -100,8 +100,8 @@
                       {%if C_data|length > 0 %}
                         {%for C in C_data %}
                             <p> {{C.Cdate}} </p>
-                            <p> {{C.Cuser}}-{{C.Ccomment}}</p>
-                          
+                            <p> <b>{{C.Cuser}}</b>-{{C.Ccomment}}</p>
+
                         {%endfor%}
                       {%else%}
                           <h5>This listing doesn´t have any comments yet </h5>
