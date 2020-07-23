@@ -82,7 +82,7 @@
                     {% if B_data|length > 0 %}
                         {%for B in B_data %}
                           <p>Date: {{B.Bdate}} - User: {{B.Buser}} </p>
-                          <p>Offer:{{B.Bprice}}  </p>
+                          <p>Offer: {{B.Bprice}}  </p>
                         {% endfor %}
                     {%else%}
                         <h5>This Listing doesn´t have Bids Yet </h5>
@@ -91,6 +91,7 @@
                     <form action="#" method="post">
                         <input type="hidden" class="form-control" id="Lcode" name="Lcode" value="{{Lcode}}">
                         <input type="text" class="form-control" id="Ltitle" name="Ltitle" ></label>
+                        <button type="button" name="button">Offer</button>
                     </form>
                 </div>
 
@@ -110,6 +111,7 @@
                       <form action="#" method="post">
                           <input  type="hidden" class="form-control" id="Cuser" name="Cuser" value={{C_Cuser}}>
                           <textarea type="text" class="form-control" id="Ccomment" name="Ccomment" ></textarea>
+                          <button type="button" name="button">Offer</button>
                       </form>
                 </div>
                 <div class="col-lg-3" style="border:double;border-color:#004d00 ;">
