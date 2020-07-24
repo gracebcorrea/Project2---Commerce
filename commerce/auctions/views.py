@@ -264,8 +264,9 @@ def Bids_view(request, Btitle):
         return render(request, "auctions/BidsDetail.html", context)
     except:
         context = {
-            "d":d,
             "message": "Problem with filters in Bids, please try again",
+            "d":d,
+
             "Btitle" : B_title,
             "L_data" :L_data,
             "B_data" :B_data,
@@ -279,23 +280,42 @@ def Bid_add(request):
     if request.method == "POST":
 
         Lcode =request.POST["Lcode"]
+        Lcode_title=Lcode[0].Ltitle
+        print(Lcode_title)
+        translate = {"Ltitle" : Lcode_title }
+        for L in Listing.objects.raw('SELECT id FROM Listings WHERE Ltitle = : Ltitle',translate):
+            Lcode_id = L
 
-        print(Lcode)
-        #Lcode_id=Lcode[pk].id
-        #N_Bthrow=Bids.objects.filter(Lcode=Lcode).order_by('-id')[0]
-        #Bthrow = N_Bthrow + 1
-        Buser = request.POST["Buser"]
-        Bprice = request.POST["Bprice"]
-        Bdate = datetime.date()
+        N_Bthrow=Bids.objects.filter(Lcode_id=Lcode_id).order_by('-id')[0]
+        B_throw = N_Bthrow + 1
+        B_user = request.POST["Buser"]
+        B_price = request.POST["Bprice"]
+        B_date = datetime.date()
         print(Buser)
         print(Bprice)
         print(Bdate)
+        try:
+            Bids_create = Bids.objects.create(Lcode=Lcode_id , Buser=B_user , Bthrow=B_throw, Bprice=B_price   ,Bdate=B_date )
+            Bids_create.save()
 
-        #return redirect(request.META["auctions/BidsDetail.html"])
-        return redirect(request.META['HTTP_REFERER'])
+
+            return redirect(request.META['HTTP_REFERER'])
+
+        except IntegrityError:
+            context={
+                "msgbids": "Error Creating BID",
+                "d" : d ,
+                "Btitle" : Lcode_title  ,
+                "L_data" : Listings.objects.filter(Ltitle=Lcode_title),
+                "B_data" : Bids.objects.filter(Lcode__Ltitle=Lcode_title) ,
+                "W_data" : Watchlist.objects.filter(Lcode__Ltitle=Lcode_title),
+                "C_data" : Comments.objects.filter(Lcode__Ltitle=B_title),
+            }
+            #return redirect(request.META["auctions/BidsDetail.html"])
+            return redirect(request.META['HTTP_REFERER'],context)
 
     else:
-        return redirect(request.META['HTTP_REFERER'])
+        return redirect(request.META['HTTP_REFERER'],{"msgbids":"Didn´t get post for bid_add"})
 
 
 
