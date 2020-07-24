@@ -246,19 +246,26 @@ def Bids_view(request, Btitle):
     try:
         #take data from desired listing
         L_data = Listings.objects.filter(Ltitle=B_title)
-        print(L_data)
         #Take Watchlist
         W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title)
         #take all bids for this listing
         B_data=Bids.objects.filter(Lcode__Ltitle=B_title)
         #Teke comments for this listing
         C_data=Comments.objects.filter(Lcode__Ltitle=B_title)
+
+        #if add bid save new bid offer
+        BidAdd= Bid_add(Btitle=B_title )
+        if BidAdd:
+           B_data=Bids.objects.filter(Lcode__Ltitle=B_title)
+           print ("BID ADDED:",B_data)
+
+
         context = {
             "d":d,
-            "Btitle" : B_title,
-            "L_data" :L_data,
-            "B_data" :B_data,
-            "W_data" :W_data,
+            "Btitle":B_title,
+            "L_data":L_data,
+            "B_data":B_data,
+            "W_data":W_data,
             "C_data":C_data,
         }
         return render(request, "auctions/BidsDetail.html", context)
@@ -275,19 +282,20 @@ def Bids_view(request, Btitle):
         }
         return render(request, "auctions/BidsDetail.html", context)
 
-def Bid_add(request):
+def Bid_add(Btitle ):
 
     if request.method == "POST":
 
         Lcode =request.POST["Lcode"]
         Lcode_title=Lcode[0].Ltitle
-        print(Lcode_title)
+        print("Bid_add",Lcode_title)
         translate = {"Ltitle" : Lcode_title }
         for L in Listing.objects.raw('SELECT id FROM Listings WHERE Ltitle = : Ltitle',translate):
             Lcode_id = L
-
+        print("Bid_add  Id do LCODE",Lcode_title)
         N_Bthrow=Bids.objects.filter(Lcode_id=Lcode_id).order_by('-id')[0]
         B_throw = N_Bthrow + 1
+        print("Bid_add  New Throw",Lcode_title)
         B_user = request.POST["Buser"]
         B_price = request.POST["Bprice"]
         B_date = datetime.date()
@@ -299,7 +307,8 @@ def Bid_add(request):
             Bids_create.save()
 
 
-            return redirect(request.META['HTTP_REFERER'])
+            DEFAULT_URL= "auctions/BidsDetail.html"
+            return redirect(request.META.get('HTTP_REFERER', DEFAULT_URL) )
 
         except IntegrityError:
             context={
