@@ -83,16 +83,17 @@
                         {%for B in B_data %}
                           <p>Date: {{B.Bdate}} - User: {{B.Buser}} </p>
                           <p>Offer: {{B.Bprice}}  </p>
+
+                          
                         {% endfor %}
                     {%else%}
                         <h5>This Listing doesn´t have Bids Yet </h5>
                     {%endif%}
                     <h5> Offer a Bid: </h5>
-                  <!--  <form action="{% url 'auctions:Bid_add'  %}" method="post">-->
-                  <form action="#" method="post">
+
                         <input type="text" class="form-control" id="Bprice" name="Bprice" >
                         <button type="button" name="button">Send</button>
-                    </form>
+
                 </div>
 
                 <div class="col-lg-5" >
