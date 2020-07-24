@@ -253,8 +253,18 @@ def Bids_view(request, Btitle):
         B_data=Bids.objects.filter(Lcode__Ltitle=B_title)
         #Teke comments for this listing
         C_data=Comments.objects.filter(Lcode__Ltitle=B_title)
+        context = {
+            "d":d,
+            "Btitle" : B_title,
+            "L_data" :L_data,
+            "B_data" :B_data,
+            "W_data" :W_data,
+            "C_data":C_data,
+        }
+        return render(request, "auctions/BidsDetail.html", context)
     except:
         context = {
+            "d":d,
             "message": "Problem with filters in Bids, please try again",
             "Btitle" : B_title,
             "L_data" :L_data,
@@ -269,6 +279,7 @@ def Bid_add(request):
     if request.method == "POST":
 
         Lcode =request.POST["Lcode"]
+
         print(Lcode)
         #Lcode_id=Lcode[pk].id
         #N_Bthrow=Bids.objects.filter(Lcode=Lcode).order_by('-id')[0]
