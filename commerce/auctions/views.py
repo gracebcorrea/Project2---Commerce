@@ -282,11 +282,11 @@ def Bids_view(request, Btitle):
         }
         return render(request, "auctions/BidsDetail.html", context)
 
-def Bid_add(Btitle ):
+def Bid_add(Btitle):
 
     if request.method == "POST":
 
-        Lcode =request.POST["Lcode"]
+        Lcode =request.POST["B.Lcode"]
         Lcode_title=Lcode[0].Ltitle
         print("Bid_add",Lcode_title)
         translate = {"Ltitle" : Lcode_title }
@@ -296,8 +296,8 @@ def Bid_add(Btitle ):
         N_Bthrow=Bids.objects.filter(Lcode_id=Lcode_id).order_by('-id')[0]
         B_throw = N_Bthrow + 1
         print("Bid_add  New Throw",Lcode_title)
-        B_user = request.POST["Buser"]
-        B_price = request.POST["Bprice"]
+        B_user = request.POST["B.Buser"]
+        B_price = request.POST["B.Buser"]
         B_date = datetime.date()
         print(Buser)
         print(Bprice)
