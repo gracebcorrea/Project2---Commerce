@@ -246,6 +246,7 @@ def Bids_view(request, Btitle):
     try:
         #take data from desired listing
         L_data = Listings.objects.filter(Ltitle=B_title)
+        print(L_data)
         #Take Watchlist
         W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title)
         #take all bids for this listing
@@ -269,7 +270,7 @@ def Bid_add(request):
 
         Lcode =request.POST["Lcode"]
         print(Lcode)
-        #Lcode_id=Lcode[].id
+        #Lcode_id=Lcode[pk].id
         #N_Bthrow=Bids.objects.filter(Lcode=Lcode).order_by('-id')[0]
         #Bthrow = N_Bthrow + 1
         Buser = request.POST["Buser"]
@@ -279,11 +280,11 @@ def Bid_add(request):
         print(Bprice)
         print(Bdate)
 
-        return redirect(request.META["auctions/BidsDetail.html"])
-        #return redirect(request.META['HTTP_REFERER'])
+        #return redirect(request.META["auctions/BidsDetail.html"])
+        return redirect(request.META['HTTP_REFERER'])
 
     else:
-        return redirect(request.META["auctions/BidsDetail.html"])
+        return redirect(request.META['HTTP_REFERER'])
 
 
 
