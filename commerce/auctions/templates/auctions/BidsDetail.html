@@ -43,7 +43,7 @@
                       <p>{{ L.Ldescription }}</p>
               </div>
               <div class="col-lg-2" style="border:double;border-color:#004d00 ;">
-                  <form action=""  method="post">
+                  <form action="#"  method="post">
                         {% csrf_token %}
                        <br>
                        <h5>Add to Whatchlist?</h5>
@@ -84,25 +84,20 @@
                 <h5> Actual Bids </h5>
                 {% if B_data|length > 0 %}
                     {%for B in B_data %}
-                        <p hidden>{{B.Lcode.Ltitle}} </p>
-                        <p>Date: {{B.Bdate}} - User: {{B.Buser}} </p>
+                        <p>Date : {{B.Bdate}} - User: {{B.Buser}} </p>
                         <p>Offer: {{B.Bprice}}  </p>
                     {% endfor %}
                 {%else%}
                       <h5>This Listing doesn´t have Bids Yet </h5>
                 {%endif%}
                 <h5> Offer a Bid: </h5>
-
-                <form action="{% url 'auctions:Bid_add' Btitle=B.Lcode.Ltitle %}" method="post">
-                      {% csrf_token %}
-                      {{ form }}
-                        <input type="hidden" class="form-control" id="B.Lcode" name="B.Lcode" value={{B.Lcode}}>
-                        <input type="hidden" class="form-control" id="B.Buser" name="B.Buser" value={{user.username}}>
-                        <input type="text" class="form-control" id="B.Buser" name="B.Buser" >
-                        <button type="Submit" name="Submitprice">Send</button>
-                        {{msgbids}}
+                <form action="{% url BidsDetail Btitle=Btitle  %}" method="post">
+                    <input type="hidden" class="form-control" id="B.Buser" name="B.Buser" value={{user.username}}>
+                    <input type="text" class="form-control" id="B.Bprice" name="B.Bprice" >
+                    <button type="Submit" name="Submitprice">Send</button>
+                    <p>{{msgbids}}</p>
                 </form>
-                
+
             </div>
 
             <div class="col-lg-5" >
