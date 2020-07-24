@@ -243,24 +243,61 @@ def Bids_view(request, Btitle):
     W_data =[]
     C_data =[]
 
-    try:
-        #take data from desired listing
-        L_data = Listings.objects.filter(Ltitle=B_title)
-        #Take Watchlist
-        W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title)
-        #take all bids for this listing
-        B_data=Bids.objects.filter(Lcode__Ltitle=B_title)
-        #Teke comments for this listing
-        C_data=Comments.objects.filter(Lcode__Ltitle=B_title)
+    #take data from desired listing
+    L_data = Listings.objects.filter(Ltitle=B_title)
+    #Take Watchlist
+    W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title)
+    #take all bids for this listing
+    B_data=Bids.objects.filter(Lcode__Ltitle=B_title)
+    #Teke comments for this listing
+    C_data=Comments.objects.filter(Lcode__Ltitle=B_title)
 
-        #if add bid save new bid offer
-        BidAdd= Bid_add(Btitle=B_title )
-        if BidAdd:
-           B_data=Bids.objects.filter(Lcode__Ltitle=B_title)
-           print ("BID ADDED:",B_data)
+    if request.method == "POST":
+        print("Entrei no post da BID")
+        B_user = request.POST["B.Buser"]
+        B_price = request.POST["B.Bprice"]
+        B_date = datetime.date()
 
+        translate = {"Ltitle" : Btitle }
+        for L in Listing.objects.raw('SELECT id FROM Listings WHERE Ltitle = : Ltitle',translate):
+            Lcode_id = L
+            print("Bid_add  Id do LCODE",Lcode_title)
 
+        N_Bthrow=Bids.objects.filter(Lcode_id=Lcode_id).order_by('-id')[0]
+        B_throw = N_Bthrow + 1
+        print("Bid_add  New Throw",B_throw)
+
+        try:
+            print("I will try to save new BID")
+            Bids_create = Bids.objects.create(Lcode=Lcode_id , Buser=B_user , Bthrow=B_throw, Bprice=B_price   ,Bdate=B_date )
+            Bids_create.save()
+            #get data with new bid to show on form
+            B_data=Bids.objects.filter(Lcode__Ltitle=B_title)
+
+            context={
+                "msgbids": "New Bid Saved",
+                "d":d,
+                "Btitle" : Btitle,
+                "L_data" :L_data,
+                "B_data" :B_data,
+                "W_data" :W_data,
+                "C_data":C_data,
+            }
+            return render(request, "auctions/BidsDetail.html", context)
+        except:
+            context = {
+                "msgbids" : "Problem Trying to save BID",
+                "d":d,
+                "Btitle":B_title,
+                "L_data":L_data,
+                "B_data":B_data,
+                "W_data":W_data,
+                "C_data":C_data,
+            }
+            return render(request, "auctions/BidsDetail.html", context)
+    else:
         context = {
+            "message" : "Not in BID POST",
             "d":d,
             "Btitle":B_title,
             "L_data":L_data,
@@ -269,62 +306,7 @@ def Bids_view(request, Btitle):
             "C_data":C_data,
         }
         return render(request, "auctions/BidsDetail.html", context)
-    except:
-        context = {
-            "message": "Problem with filters in Bids, please try again",
-            "d":d,
 
-            "Btitle" : B_title,
-            "L_data" :L_data,
-            "B_data" :B_data,
-            "W_data" :W_data,
-            "C_data":C_data,
-        }
-        return render(request, "auctions/BidsDetail.html", context)
-
-def Bid_add(Btitle):
-
-    if request.method == "POST":
-
-        Lcode =request.POST["B.Lcode"]
-        Lcode_title=Lcode[0].Ltitle
-        print("Bid_add",Lcode_title)
-        translate = {"Ltitle" : Lcode_title }
-        for L in Listing.objects.raw('SELECT id FROM Listings WHERE Ltitle = : Ltitle',translate):
-            Lcode_id = L
-        print("Bid_add  Id do LCODE",Lcode_title)
-        N_Bthrow=Bids.objects.filter(Lcode_id=Lcode_id).order_by('-id')[0]
-        B_throw = N_Bthrow + 1
-        print("Bid_add  New Throw",Lcode_title)
-        B_user = request.POST["B.Buser"]
-        B_price = request.POST["B.Buser"]
-        B_date = datetime.date()
-        print(Buser)
-        print(Bprice)
-        print(Bdate)
-        try:
-            Bids_create = Bids.objects.create(Lcode=Lcode_id , Buser=B_user , Bthrow=B_throw, Bprice=B_price   ,Bdate=B_date )
-            Bids_create.save()
-
-
-            DEFAULT_URL= "auctions/BidsDetail.html"
-            return redirect(request.META.get('HTTP_REFERER', DEFAULT_URL) )
-
-        except IntegrityError:
-            context={
-                "msgbids": "Error Creating BID",
-                "d" : d ,
-                "Btitle" : Lcode_title  ,
-                "L_data" : Listings.objects.filter(Ltitle=Lcode_title),
-                "B_data" : Bids.objects.filter(Lcode__Ltitle=Lcode_title) ,
-                "W_data" : Watchlist.objects.filter(Lcode__Ltitle=Lcode_title),
-                "C_data" : Comments.objects.filter(Lcode__Ltitle=B_title),
-            }
-            #return redirect(request.META["auctions/BidsDetail.html"])
-            return redirect(request.META['HTTP_REFERER'],context)
-
-    else:
-        return redirect(request.META['HTTP_REFERER'],{"msgbids":"Didn´t get post for bid_add"})
 
 
 
