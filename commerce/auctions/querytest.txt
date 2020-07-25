@@ -1,24 +1,3 @@
-        if request.method == "POST":
-           print("Entrei no post da BID")
-           B_user = request.POST["B_Buser"]
-           B_price = request.POST["B_Bprice"]
-           B_date = datetime.date()
-           print(B_user,B_price,B_date)
-   
-        
-        context = {
-            "message" : "Inside BID POST",
-            "d":d,
-            "Btitle":B_title,
-            "L_data":L_data,
-            "B_data":B_data,
-            "W_data":W_data,
-            "C_data":C_data,
-        }
-        return render(request, "auctions/BidsDetail.html", context)
-
-
-    else:
 
 
 
