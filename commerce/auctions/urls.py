@@ -25,6 +25,7 @@ urlpatterns = [
     path('Comments', views.Comments_view, name='Comments'), #vinculado a bids
 
     path('Watchlist', views.Watchlist_view, name='Watchlist'),
+    path('Watchlist/<str:Btitle>/<str:user>', views.ChangeWhatchlist, name='ChangeWhatchlist'),
     path('Categories', views.Categories_view, name='Categories'),
     path('Category/<str:C_description>', views.CategoryShow_view, name='CategoryShow'),
 
