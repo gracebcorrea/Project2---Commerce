@@ -92,7 +92,7 @@
                 {%endif%}
                 <h5> Offer a Bid: </h5>
                 <form action="{% url BidsDetail Btitle=Btitle %}" method="post">
-                    <input type="hidden" class="form-control" id="B_Buser" name="B_Buser" value="{{user.username}}">
+                    <input type="hidden" class="form-control" id="B_Buser" name="B_Buser" value={{user.username}}>
                     <input type="text" class="form-control" id="B_Bprice" name="B.Bprice" >
                     <button type="Submit" name="Submitprice">Send</button>
                     <p>{{msgbids}}</p>
