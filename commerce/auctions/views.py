@@ -139,7 +139,23 @@ def Watchlist_view(request):
         }
         return render(request, "auctions/Watchlist.html", context)
 
-def Watchlist_add(Lcode,user):
+def ChangeWhatchlist(Btitle,user):
+
+
+    context={
+        "d":d,
+        "Btitle" : Btitle,
+        "L_data" :L_data,
+        "B_data" :B_data,
+        "W_data" :W_data,
+        "C_data":C_data,
+    }
+    return render(request, "auctions/BidsDetail.html", context)
+
+
+
+
+def Watchlist_add(Btitle,user):
     W_Lcode=Lcode
     W_user=user
     try:
@@ -150,7 +166,7 @@ def Watchlist_add(Lcode,user):
 
     return None
 
-def Watchlist_remove(Lcode,user):
+def Watchlist_remove(Btitle,user):
     W_Lcode=Lcode
     W_user=user
 
@@ -259,7 +275,7 @@ def Bids_view(request, Btitle):
         Lfilter = Listings.objects.filter(Ltitle=B_title).values('id' , 'Lprice')
 
         for Search_id in Lfilter:
-            Lid_value = Search_id['id']
+            Lid_value = int(Search_id['id'])
             Lprice = float(Search_id['Lprice'])
 
         Lances= Bids.objects.filter(Lcode_id=Lid_value).values('Bthrow', 'Bprice').order_by('Bthrow')
@@ -275,7 +291,7 @@ def Bids_view(request, Btitle):
             N_Bprice= Lprice
 
         if (B_price <  Lprice) or (B_price <  N_Bprice):
-            msgbids= "A bid must be greater than or equal to the original amount and greater than the last bid, if any."
+            msgbids= "EROR: A bid must be greater than or equal to the original amount and greater than the last bid, if any."
             context={
             "msgbids":msgbids ,
             "d":d,
@@ -295,8 +311,8 @@ def Bids_view(request, Btitle):
             print(B_date)
 
 
-            Bids_create = Bids.objects.create(Lcode=Lid_value , Buser=B_user , Bthrow=B_throw, Bprice=B_price ,Bdate=B_date )
-            Bids_create.save()
+            NewBid = Bids(Lcode_id=Lid_value , Buser=B_user , Bthrow=B_throw, Bprice=B_price ,Bdate=B_date )
+            NewBid.save()
 
             #get data with new bid to show on form
             B_data=Bids.objects.filter(Lcode__Ltitle=B_title)
@@ -313,7 +329,7 @@ def Bids_view(request, Btitle):
              }
             return render(request, "auctions/BidsDetail.html", context)
 
-        except:
+        except ValueError:
             context={
                 "msgbids": "Could not save Bid, please try again",
                 "d":d,
@@ -328,7 +344,6 @@ def Bids_view(request, Btitle):
 
     else:
         context = {
-            "message" : "Not in BID POST",
             "d":d,
             "Btitle":B_title,
             "L_data":L_data,
