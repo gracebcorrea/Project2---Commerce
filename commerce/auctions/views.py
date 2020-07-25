@@ -238,8 +238,10 @@ def Listingspage_view(request):
 def Bids_view(request, Btitle):
     B_title =Btitle
     d = datetime.datetime.now()
-
-
+    L_data =[]
+    W_data=[]
+    B_data=[]
+    C_data=[]
     #take data from desired listing
     L_data = Listings.objects.filter(Ltitle=B_title)
     #Take Watchlist
@@ -249,19 +251,17 @@ def Bids_view(request, Btitle):
     #Teke comments for this listing
     C_data=Comments.objects.filter(Lcode__Ltitle=B_title)
 
-    if request.method == "POST":
 
-    else:
-        context = {
-            "message" : "Not in BID POST",
-            "d":d,
-            "Btitle":B_title,
-            "L_data":L_data,
-            "B_data":B_data,
-            "W_data":W_data,
-            "C_data":C_data,
-        }
-        return render(request, "auctions/BidsDetail.html", context)
+    context = {
+        "message" : "Not in BID POST",
+        "d":d,
+        "Btitle":B_title,
+        "L_data":L_data,
+        "B_data":B_data,
+        "W_data":W_data,
+        "C_data":C_data,
+    }
+    return render(request, "auctions/BidsDetail.html", context)
 
 
 
