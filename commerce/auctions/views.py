@@ -1,5 +1,6 @@
 import sqlite3, datetime, os, os.path
-
+import time
+from datetime import datetime
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
@@ -15,7 +16,7 @@ from .models import User, Listings, Categories, Bids, Comments, Watchlist
 
 
 def index(request):
-    d = datetime.datetime.now()
+    d = datetime.now()
     context={
             "d" : d,
             "ActiveListings": Listings.objects.all(),
@@ -83,7 +84,7 @@ def register(request):
 #Create Listing
 
 def CreateListings_view(request):
-    d = datetime.datetime.now()
+    d = datetime.now()
     if request.method == "POST":
         Ltitle=request.POST["Ltitle"]
         Ccode= int(request.POST["Ccode"])
@@ -124,7 +125,7 @@ def CreateListings_view(request):
 
 
 def Watchlist_view(request):
-    d = datetime.datetime.now()
+    d = datetime.now()
     try:
         W = Watchlist.objects.all()
         context={
@@ -166,7 +167,7 @@ def Watchlist_remove(Lcode,user):
 
 
 def Categories_view(request):
-    d = datetime.datetime.now()
+    d = datetime.now()
 
     context= {
         "d": d,
@@ -177,7 +178,7 @@ def Categories_view(request):
 #resolver problema
 
 def CategoryShow_view(request, C_description):
-    d = datetime.datetime.now()
+    d = datetime.now()
     cat_filter=[]
     cat_data =[]
     cat_description=C_description
@@ -224,7 +225,7 @@ The listing page should display all comments that have been made on the listing.
 """
 #List Listings details -  All
 def Listingspage_view(request):
-    d = datetime.datetime.now()
+    d = datetime.now()
     context={
        "d": d,
        "Listings": Listings.objects.all(),
@@ -237,7 +238,7 @@ def Listingspage_view(request):
 
 def Bids_view(request, Btitle):
     B_title =Btitle
-    d = datetime.datetime.now()
+    d = datetime.now()
     L_data =[]
     W_data=[]
     B_data=[]
@@ -251,17 +252,52 @@ def Bids_view(request, Btitle):
     #Teke comments for this listing
     C_data=Comments.objects.filter(Lcode__Ltitle=B_title)
 
+    if request.method == "POST":
+        B_user = request.POST["B_Buser"]
+        B_price =float(request.POST["B_Bprice"].replace(',', '.'))
+        B_date = time.strftime("%Y-%m-%d")
 
-    context = {
-        "message" : "Not in BID POST",
-        "d":d,
-        "Btitle":B_title,
-        "L_data":L_data,
-        "B_data":B_data,
-        "W_data":W_data,
-        "C_data":C_data,
-    }
-    return render(request, "auctions/BidsDetail.html", context)
+        translate = {"Ltitle" : Btitle }
+        for L in Listings.objects.raw('SELECT * FROM auctions_listings WHERE Ltitle = Ltitle',translate)
+            Lcode= L
+            Search_id =Lcode.id
+            print ("LCODE ID IS:", Search_id )
+
+        translateid = {"Lcode_id" : Search_id }
+        for N in Bids.objects.raw('SELECT Bthrow FROM auctions_bids WHERE Lcode_id = Lcode_id '):
+            N_Bthrow = N
+            print ("N_Bthrow IS:", N_Bthrow )
+        else:
+            N_Bthrow = 1
+
+        print(N_Bthrow)
+
+
+
+
+        context = {
+            "message" : "Inside BID POST",
+            "d":d,
+            "Btitle":B_title,
+            "L_data":L_data,
+            "B_data":B_data,
+            "W_data":W_data,
+            "C_data":C_data,
+        }
+        return render(request, "auctions/BidsDetail.html", context)
+
+
+    else:
+        context = {
+            "message" : "Not in BID POST",
+            "d":d,
+            "Btitle":B_title,
+            "L_data":L_data,
+            "B_data":B_data,
+            "W_data":W_data,
+            "C_data":C_data,
+        }
+        return render(request, "auctions/BidsDetail.html", context)
 
 
 
