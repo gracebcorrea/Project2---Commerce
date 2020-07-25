@@ -43,7 +43,7 @@
                       <p>{{ L.Ldescription }}</p>
               </div>
               <div class="col-lg-2" style="border:double;border-color:#004d00 ;">
-                  <form action="#"  method="post">
+                  <form   method="post">
                         {% csrf_token %}
                        <br>
                        <h5>Add to Whatchlist?</h5>
@@ -91,9 +91,9 @@
                       <h5>This Listing doesn´t have Bids Yet </h5>
                 {%endif%}
                 <h5> Offer a Bid: </h5>
-                <form action="{% url BidsDetail Btitle=Btitle  %}" method="post">
-                    <input type="hidden" class="form-control" id="B.Buser" name="B.Buser" value={{user.username}}>
-                    <input type="text" class="form-control" id="B.Bprice" name="B.Bprice" >
+                <form action="{% url BidsDetail Btitle=Btitle %}" method="post">
+                    <input type="hidden" class="form-control" id="B_Buser" name="B_Buser" value="{{user.username}}">
+                    <input type="text" class="form-control" id="B_Bprice" name="B.Bprice" >
                     <button type="Submit" name="Submitprice">Send</button>
                     <p>{{msgbids}}</p>
                 </form>
@@ -113,7 +113,7 @@
                           <h5>This listing doesn´t have any comments yet </h5>
                       {%endif%}
 
-                      <form action="#" method="post">
+                      <form  method="post">
                           {% csrf_token %}
                           <input  type="hidden" class="form-control" id="Lcode" name="Lcode" value={{C_Lcode}}>
                           <input  type="hidden" class="form-control" id="Cuser" name="Cuser" value={{C_Cuser}}>
