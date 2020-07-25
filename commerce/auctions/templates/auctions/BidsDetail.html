@@ -43,21 +43,27 @@
                       <p>{{ L.Ldescription }}</p>
               </div>
               <div class="col-lg-2" style="border:double;border-color:#004d00 ;">
-                  <form   method="post">
-                        {% csrf_token %}
+                  <form  action="{% url 'auctions:ChangeWhatchlist' Btitle=Btitle user=user.username  %}" method="post">
+                    {% csrf_token %}
                        <br>
                        <h5>Add to Whatchlist?</h5>
                        {%if W_data%}
+                            <input type="hidden" id="user" name="user" value={{user.username}}>
                             {%for W in W_data %}
+                                <input type="hidden" id="Lcode" name="Lcode" value={{W.Lcode}}>
                                 {% if W.user ==  user.username %}
-                                      <input type="checkbox" style=" height: 50px;width: 50px;" id="Wflaged" name="Wflaged"  checked>
+                                      <input type="checkbox" style=" height: 50px;width: 50px;" id="Wflag" name="Wflag"  checked>
                                 {% endif %}
                             {%endfor%}
                         {%else%}
-                             <input type="checkbox" style=" height: 50px;width: 50px;" id="Wflag" name="Wflag" >
+                             <input type="checkbox" style=" height: 50px;width: 50px;" id="NewWflag" name="NewWflag" >
                         {% endif %}
-                       <br>
-                       <br>
+
+                        <input type="submit" value="Save">
+                  </form>
+                  <br>
+                  <br>
+                  <form action="" method="post">
                        {%if user.username == L.Luser  %}
                             <input type="hidden" class="form-control" id="L.Ltitle" name="L.Ltitle" value={{L.Ltitle}}>
                             <label for="Lstatus"><h5>Do you want to change Status?</h5>
