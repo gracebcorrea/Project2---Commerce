@@ -258,13 +258,14 @@ def Bids_view(request, Btitle):
         B_date = time.strftime("%Y-%m-%d")
         Lfilter = Listings.objects.filter(Ltitle=B_title).values('id')
 
-        Search_id =Lfilter[0]
+        for Search_id in Lfilter:
+            Search_id_value = Search_id['id']
 
-        print ("LCODE ID IS:", Search_id )
+        print ("LCODE ID IS:", Search_id_value)
+        Bthrow_filter = Bids.objects.filter(Lcode=Search_id_value).value('Bthrow').orderby('Bthrow')
 
-        translateid = {"Lcode_id" : Search_id }
-        for N in Bids.objects.raw('SELECT Bthrow FROM auctions_bids WHERE Lcode_id = Lcode_id ',translateid):
-            N_Bthrow = N
+        for Bthrow in Bthrow_filter
+            N_Bthrow =Bthrow
             print ("N_Bthrow IS:", N_Bthrow )
         else:
             N_Bthrow = 1
