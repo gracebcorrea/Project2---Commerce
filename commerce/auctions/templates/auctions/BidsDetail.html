@@ -85,19 +85,20 @@
                 {% if B_data|length > 0 %}
                     {%for B in B_data %}
                         <p>Date : {{B.Bdate |date:"Y-m-d"}} - User: {{B.Buser}} </p>
-                        <p>Offer: {{B.Bprice }}  </p>
+                        <p>Offer: {{B.Bprice  }}  </p>
                     {% endfor %}
                 {%else%}
                       <h5>This Listing doesn´t have Bids Yet </h5>
                 {%endif%}
                 <h5> Offer a Bid: </h5>
+                <p style='color:red;'>{{msgbids}}</p>
                 <form action="{% url 'auctions:BidsDetail' Btitle=Btitle %}" method="post">
                     {% csrf_token %}
                     {{form}}
                     <input type="hidden" class="form-control" id="B_Buser" name="B_Buser" value={{user.username}}>
-                    <input type="text" class="form-control" id="B_Bprice" name="B_Bprice" >
-                    <button type="Submit" name="Submitprice">Send</button>
-                    <p style='color:red;'>{{msgbids}}</p>
+                    <input type="number" class="form-control" data-inputmask="___,___,___.__" id="B_Bprice" name="B_Bprice"  data-mask-selectonfocus="true" >
+                    <button type="Submit" name="Submitprice">Send an Offer</button>
+
                 </form>
 
             </div>
