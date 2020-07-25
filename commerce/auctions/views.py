@@ -256,15 +256,14 @@ def Bids_view(request, Btitle):
         B_user = request.POST["B_Buser"]
         B_price =float(request.POST["B_Bprice"].replace(',', '.'))
         B_date = time.strftime("%Y-%m-%d")
+        Lfilter = Listings.objects.filter(Ltitle=B_title).values('id')
 
-        translate = {"Ltitle" : Btitle }
-        for L in Listings.objects.raw('SELECT * FROM auctions_listings WHERE Ltitle = Ltitle',translate)
-            Lcode= L
-            Search_id =Lcode.id
-            print ("LCODE ID IS:", Search_id )
+        Search_id =Lfilter[0]
+
+        print ("LCODE ID IS:", Search_id )
 
         translateid = {"Lcode_id" : Search_id }
-        for N in Bids.objects.raw('SELECT Bthrow FROM auctions_bids WHERE Lcode_id = Lcode_id '):
+        for N in Bids.objects.raw('SELECT Bthrow FROM auctions_bids WHERE Lcode_id = Lcode_id ',translateid):
             N_Bthrow = N
             print ("N_Bthrow IS:", N_Bthrow )
         else:
