@@ -256,35 +256,60 @@ def Bids_view(request, Btitle):
         B_user = request.POST["B_Buser"]
         B_price =float(request.POST["B_Bprice"].replace(',', '.'))
         B_date = time.strftime("%Y-%m-%d")
-        Lfilter = Listings.objects.filter(Ltitle=B_title).values('id')
+        Lfilter = Listings.objects.filter(Ltitle=B_title).values('id' , 'Lprice')
 
         for Search_id in Lfilter:
-            Search_id_value = Search_id['id']
+            Lid_value = Search_id['id']
+            Lprice = Search_id['Lprice']
 
-        print ("LCODE ID IS:", Search_id_value)
-        Bthrow_filter = Bids.objects.filter(Lcode=Search_id_value).value('Bthrow').orderby('Bthrow')
+        Lances= Bids.objects.filter(Lcode_id=Lid_value).values('Bthrow', 'Bprice').order_by('Bthrow')
+        if len(Lances):
+            for L in Lances:
+               N_Bthrow = L['Bthrow']
+               N_Bprice = L['Bprice']
 
-        for Bthrow in Bthrow_filter
-            N_Bthrow =Bthrow
-            print ("N_Bthrow IS:", N_Bthrow )
+            B_throw = N_Bthrow + 1
+            print ("B_Bthrow IS:", B_Bthrow )
         else:
-            N_Bthrow = 1
+            B_throw = 1
 
-        print(N_Bthrow)
+        if B_price < Lprice:
+            msgbids= "A new bid must be higher from the original price"
+
+        if B_price <  N_Bprice :
+            msgbids= "A new bid must be higher Than the highest Bid"
 
 
+        try:
+            print("I will try to save new BID")
+            Bids_create = Bids.objects.create(Lcode=Lcode_id , Buser=B_user , Bthrow=B_throw, Bprice=B_price   ,Bdate=B_date )
+            Bids_create.save()
+            #get data with new bid to show on form
+            B_data=Bids.objects.filter(Lcode__Ltitle=B_title)
 
-
-        context = {
-            "message" : "Inside BID POST",
+            msgbids ="New Bid Saved"
+            context={
+            "msgbids":msgbids ,
             "d":d,
-            "Btitle":B_title,
-            "L_data":L_data,
-            "B_data":B_data,
-            "W_data":W_data,
+            "Btitle" : Btitle,
+            "L_data" :L_data,
+            "B_data" :B_data,
+            "W_data" :W_data,
             "C_data":C_data,
-        }
-        return render(request, "auctions/BidsDetail.html", context)
+             }
+            return render(request, "auctions/BidsDetail.html", context)
+
+        except:
+            context={
+                "msgbids": "Could not save Bid, please try agaiu",
+                "d":d,
+                "Btitle" : Btitle,
+                "L_data" :L_data,
+                "B_data" :B_data,
+                "W_data" :W_data,
+                "C_data":C_data,
+            }
+            return render(request, "auctions/BidsDetail.html", context)
 
 
     else:
