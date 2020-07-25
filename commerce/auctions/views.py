@@ -260,34 +260,22 @@ def Bids_view(request, Btitle):
 
         for Search_id in Lfilter:
             Lid_value = Search_id['id']
-            Lprice = Search_id['Lprice']
+            Lprice = float(Search_id['Lprice'])
 
         Lances= Bids.objects.filter(Lcode_id=Lid_value).values('Bthrow', 'Bprice').order_by('Bthrow')
         if len(Lances):
             for L in Lances:
                N_Bthrow = L['Bthrow']
-               N_Bprice = L['Bprice']
+               N_Bprice = float(L['Bprice'])
 
             B_throw = N_Bthrow + 1
-        
+
         else:
             B_throw = 1
+            N_Bprice= Lprice
 
-        if B_price < Lprice:
-            msgbids= "A new bid must be higher from the original price"
-            context={
-            "msgbids":msgbids ,
-            "d":d,
-            "Btitle" : Btitle,
-            "L_data" :L_data,
-            "B_data" :B_data,
-            "W_data" :W_data,
-            "C_data":C_data,
-             }
-            return render(request, "auctions/BidsDetail.html", context)
-
-        if B_price <  N_Bprice :
-            msgbids= "A new bid must be higher Than the highest Bid"
+        if (B_price <  Lprice) or (B_price <  N_Bprice):
+            msgbids= "A bid must be greater than or equal to the original amount and greater than the last bid, if any."
             context={
             "msgbids":msgbids ,
             "d":d,
@@ -301,13 +289,19 @@ def Bids_view(request, Btitle):
 
 
         try:
-            print("I will try to save new BID")
-            Bids_create = Bids.objects.create(Lcode=Lcode_id , Buser=B_user , Bthrow=B_throw, Bprice=B_price   ,Bdate=B_date )
+            print("I will try to save new BID", B_price)
+            print(Lid_value,B_user)
+            print(B_throw,B_price )
+            print(B_date)
+
+
+            Bids_create = Bids.objects.create(Lcode=Lid_value , Buser=B_user , Bthrow=B_throw, Bprice=B_price ,Bdate=B_date )
             Bids_create.save()
+
             #get data with new bid to show on form
             B_data=Bids.objects.filter(Lcode__Ltitle=B_title)
 
-            msgbids ="New Bid Saved"
+            msgbids ="New Bid Saved, Good Luck!"
             context={
             "msgbids":msgbids ,
             "d":d,
@@ -321,7 +315,7 @@ def Bids_view(request, Btitle):
 
         except:
             context={
-                "msgbids": "Could not save Bid, please try agaiu",
+                "msgbids": "Could not save Bid, please try again",
                 "d":d,
                 "Btitle" : Btitle,
                 "L_data" :L_data,
