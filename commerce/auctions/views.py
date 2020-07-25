@@ -269,15 +269,35 @@ def Bids_view(request, Btitle):
                N_Bprice = L['Bprice']
 
             B_throw = N_Bthrow + 1
-            print ("B_Bthrow IS:", B_Bthrow )
+        
         else:
             B_throw = 1
 
         if B_price < Lprice:
             msgbids= "A new bid must be higher from the original price"
+            context={
+            "msgbids":msgbids ,
+            "d":d,
+            "Btitle" : Btitle,
+            "L_data" :L_data,
+            "B_data" :B_data,
+            "W_data" :W_data,
+            "C_data":C_data,
+             }
+            return render(request, "auctions/BidsDetail.html", context)
 
         if B_price <  N_Bprice :
             msgbids= "A new bid must be higher Than the highest Bid"
+            context={
+            "msgbids":msgbids ,
+            "d":d,
+            "Btitle" : Btitle,
+            "L_data" :L_data,
+            "B_data" :B_data,
+            "W_data" :W_data,
+            "C_data":C_data,
+             }
+            return render(request, "auctions/BidsDetail.html", context)
 
 
         try:
