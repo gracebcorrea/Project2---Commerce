@@ -28,7 +28,7 @@
                           <h5>Auction Start Date  </h5>
                           <p>{{  L.Ldatestart }}</p>
                           <h5>Initial Price </h5>
-                          <p> {{  L.Lprice }}</p>
+                          <p> {{  L.Lprice |floatformat:2 }}</p>
 
                           <h5>Description</h5>
                           <p>{{  L.Ldescription }}</p>
@@ -43,7 +43,7 @@
                       {{  L.Lstatus}} </h4>
                       <br>
                       <br>
-          
+
                       <br>
                           <p style="color:  #004d00; border:double;" >
                           <a href="{% url 'auctions:BidsDetail' Btitle=L.Ltitle%}" >
