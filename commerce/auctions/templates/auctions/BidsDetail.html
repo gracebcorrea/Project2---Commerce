@@ -7,7 +7,7 @@
 
 {% block body %}
 
-<h2 style="text-align: center;">Bid´s Detail for: {{Btitle}}  </h2>
+<h2 style="text-align: center;">Bid´s Detail for: {{Btitle}} , {{user.username}}  </h2>
 <h4 style="color:red;"> {{message}}</h4>
 <hr>
 
@@ -29,7 +29,7 @@
                      <h5>Auction End Date  </h5>
                      <p>{{ L.Lduration }} Days</p>
                      <h5>Initial Price </h5>
-                     <p> {{ L.Lprice }}</p>
+                     <p> {{ L.Lprice |floatformat:2 }}</p>
                      <h5>Status</h5>
                      <p>{{ L.Lstatus }}</p>
 
@@ -43,30 +43,25 @@
                       <p>{{ L.Ldescription }}</p>
               </div>
               <div class="col-lg-2" style="border:double;border-color:#004d00 ;">
-                  <form  action="{% url 'auctions:ChangeWhatchlist' Wtitle=Btitle  %}" method="post">
+                  <form  action="" method="post">
                       <input type="hidden" id="wuser" name="wuser" value={{user.username}}>
                       {% csrf_token %}
                       <br>
                       <h5>Add to Whatchlist?</h5>
                       {% if W_data|length > 0 %}
                           {% for W in W_data %}
-                                
-                             {% if W.user == user.username %}
+                              {% if W.user == user.username %}
                                   <br>
                                   <button style="font-size:20px; " id="Removewatch" name="Removewatch" value="0">
                                       Remove from Watch?<i class="fa fa-shopping-cart"></i></button>
-                             {% endif %}
-                             {% if W.user != user.username %}
-                                <br>
-                                <button style="font-size:20px background-color:green" id="Addwatch" name="Addwatch" value="1">
-                                   Add to Watch<i class="fa fa-shopping-cart"></i></button>
-                             {% endif %}
+                              {% endif %}
                           {% endfor %}
-                      {%else%}
-                          <br>
-                          <button style="font-size:20px background-color:green" id="Newwatch" name="Newwatch" value="1">
-                          Add to Watch<i class="fa fa-shopping-cart"></i></button>
+                      {% else %}
+                            <br>
+                            <button style="font-size:20px background-color:green" id="Addwatch" name="Addwatch" value="1">
+                             Add to Watch<i class="fa fa-shopping-cart"></i></button>
                       {% endif %}
+
 
                       <br>
                   </form>
@@ -100,14 +95,14 @@
                 {% if B_data|length > 0 %}
                     {%for B in B_data %}
                         <p>Date : {{B.Bdate |date:"Y-m-d"}} - User: {{B.Buser}} </p>
-                        <p>Offer: {{B.Bprice  }}  </p>
+                        <p>Offer: {{B.Bprice |floatformat:2 }}  </p>
                     {% endfor %}
                 {%else%}
                       <h5>This Listing doesn´t have Bids Yet </h5>
                 {%endif%}
                 <h5> Offer a Bid: </h5>
                 <p style='color:red;'>{{msgbids}}</p>
-                <form action="{% url 'auctions:BidsDetail' Btitle=Btitle %}" method="post">
+                <form action="{% url 'auctions:BidsDetail' Ctitle=Btitle %}" method="post">
                     {% csrf_token %}
                     {{form}}
                     <input type="hidden" class="form-control" id="B_Buser" name="B_Buser" value={{user.username}}>
@@ -131,9 +126,9 @@
                           <h5>This listing doesn´t have any comments yet </h5>
                       {%endif%}
 
-                      <form  method="post">
+                      <form action="{% url 'auctions:Comments' Ctitle=Btitle %}"" method="post">
                           {% csrf_token %}
-                          <input  type="hidden" class="form-control" id="Lcode" name="Lcode" value={{C_Lcode}}>
+                          <input  type="hidden" class="form-control" id="CLcode" name="CLcode" value={{C_Lcode}}>
                           <input  type="hidden" class="form-control" id="Cuser" name="Cuser" value={{C_Cuser}}>
                           <textarea type="text" class="form-control" id="Ccomment" name="Ccomment" ></textarea>
                           <button type="button" name="button">Send</button>
