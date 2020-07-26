@@ -139,7 +139,7 @@ def Watchlist_view(request):
         }
         return render(request, "auctions/Watchlist.html", context)
 
-def ChangeWhatchlist(Btitle,user):
+def ChangeWhatchlist(Btitle):
     B_title =Btitle
     d = datetime.now()
     L_data =[]
@@ -159,7 +159,7 @@ def ChangeWhatchlist(Btitle,user):
     if request.method=="POST":
         OldFlag= request.POST['Wflag']
         NewFlag= request.POST['NewWflag']
-
+        user=request.POST['wuser']
         print("OldFlag is:" , OldFlag )
         print("NewFlag is:" , NewFlag )
 
