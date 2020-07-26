@@ -18,15 +18,16 @@ urlpatterns = [
 
     path('index', views.index, name='index'),
     path('CreateListings', views.CreateListings_view, name='CreateListings'),
-
     path('Listingspage', views.Listingspage_view, name='Listingspage'),
     path('Bid/<str:Btitle>', views.Bids_view, name='BidsDetail'),
-
-    path('Comments', views.Comments_view, name='Comments'), #vinculado a bids
-
-    path('Watchlist', views.Watchlist_view, name='Watchlist'),
-    path('Watchlist/<str:Wtitle>', views.ChangeWhatchlist, name='ChangeWhatchlist'),
     path('Categories', views.Categories_view, name='Categories'),
     path('Category/<str:C_description>', views.CategoryShow_view, name='CategoryShow'),
+
+    path('Bid/<str:Ctitle>', views.Comments_view, name='Comments'), #vinculado a bids
+
+    path('Watchlist', views.Watchlist_view, name='Watchlist'),
+
+
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
