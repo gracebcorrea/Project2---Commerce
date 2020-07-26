@@ -50,20 +50,21 @@
                       <h5>Add to Whatchlist?</h5>
                       {% if W_data|length > 0 %}
                           {% for W in W_data %}
+                                
                              {% if W.user == user.username %}
                                   <br>
-                                  <button style="font-size:20px; " id="Removewatch" name="Removewatch">
+                                  <button style="font-size:20px; " id="Removewatch" name="Removewatch" value="0">
                                       Remove from Watch?<i class="fa fa-shopping-cart"></i></button>
                              {% endif %}
                              {% if W.user != user.username %}
                                 <br>
-                                <button style="font-size:20px background-color:green" id="Addwatch" name="Addwatch">
+                                <button style="font-size:20px background-color:green" id="Addwatch" name="Addwatch" value="1">
                                    Add to Watch<i class="fa fa-shopping-cart"></i></button>
                              {% endif %}
                           {% endfor %}
                       {%else%}
                           <br>
-                          <button style="font-size:20px background-color:green" id="Newwatch" name="Newwatch">
+                          <button style="font-size:20px background-color:green" id="Newwatch" name="Newwatch" value="1">
                           Add to Watch<i class="fa fa-shopping-cart"></i></button>
                       {% endif %}
 
