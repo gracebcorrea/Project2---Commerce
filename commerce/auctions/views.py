@@ -140,17 +140,49 @@ def Watchlist_view(request):
         return render(request, "auctions/Watchlist.html", context)
 
 def ChangeWhatchlist(Btitle,user):
+    B_title =Btitle
+    d = datetime.now()
+    L_data =[]
+    W_data=[]
+    B_data=[]
+    C_data=[]
+    #take data from desired listing
+    L_data = Listings.objects.filter(Ltitle=B_title)
+    #Take Watchlist
+    W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title)
+    #take all bids for this listing
+    B_data=Bids.objects.filter(Lcode__Ltitle=B_title)
+    #Teke comments for this listing
+    C_data=Comments.objects.filter(Lcode__Ltitle=B_title)
 
 
-    context={
-        "d":d,
-        "Btitle" : Btitle,
-        "L_data" :L_data,
-        "B_data" :B_data,
-        "W_data" :W_data,
-        "C_data":C_data,
-    }
-    return render(request, "auctions/BidsDetail.html", context)
+    if request.method=="POST":
+        OldFlag= request.POST['Wflag']
+        NewFlag= request.POST['NewWflag']
+
+        print("OldFlag is:" , OldFlag )
+        print("NewFlag is:" , NewFlag )
+
+
+        context={
+           "d":d,
+           "Btitle" : Btitle,
+           "L_data" :L_data,
+           "B_data" :B_data,
+           "W_data" :W_data,
+           "C_data":C_data,
+        }
+        return render(request, "auctions/BidsDetail.html", context)
+    else:
+        context={
+           "d":d,
+           "Btitle" : Btitle,
+           "L_data" :L_data,
+           "B_data" :B_data,
+           "W_data" :W_data,
+           "C_data":C_data,
+        }
+        return render(request, "auctions/BidsDetail.html", context)
 
 
 
