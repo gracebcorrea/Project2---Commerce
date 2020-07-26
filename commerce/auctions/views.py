@@ -139,51 +139,6 @@ def Watchlist_view(request):
         }
         return render(request, "auctions/Watchlist.html", context)
 
-def ChangeWhatchlist(Wtitle):
-    W_title =Wtitle
-    d = datetime.now()
-    L_data =[]
-    W_data=[]
-    B_data=[]
-    C_data=[]
-    #take data from desired listing
-    L_data = Listings.objects.filter(Ltitle=Wtitle)
-    #Take Watchlist
-    W_data=Watchlist.objects.filter(Lcode__Ltitle=Wtitle)
-    #take all bids for this listing
-    B_data=Bids.objects.filter(Lcode__Ltitle=Wtitle)
-    #Teke comments for this listing
-    C_data=Comments.objects.filter(Lcode__Ltitle=Wtitle)
-
-
-    if request.method=="POST":
-        OldFlag= request.POST['Wflag']
-        NewFlag= request.POST['NewWflag']
-        user=request.POST['wuser']
-        print("OldFlag is:" , OldFlag )
-        print("NewFlag is:" , NewFlag )
-
-
-        context={
-           "d":d,
-           "Btitle" : Btitle,
-           "L_data" :L_data,
-           "B_data" :B_data,
-           "W_data" :W_data,
-           "C_data":C_data,
-        }
-        return render(request, "auctions/BidsDetail.html", context)
-    else:
-        context={
-           "d":d,
-           "Btitle" : Btitle,
-           "L_data" :L_data,
-           "B_data" :B_data,
-           "W_data" :W_data,
-           "C_data":C_data,
-        }
-        return render(request, "auctions/BidsDetail.html", context)
-
 
 
 
@@ -203,7 +158,7 @@ def Watchlist_remove(Btitle,user):
     W_user=user
 
     try:
-        W_remove=Watchlist.objects.filter(Lcode=W_Lcode,user=W_user).delete()
+        W_remove=Watchlist.objects.delete(Lcode=W_Lcode,user=W_user).delete()
         W_remove.save()
 
     except IntegrityError:
@@ -277,7 +232,6 @@ def Listingspage_view(request):
     context={
        "d": d,
        "Listings": Listings.objects.all(),
-       "Watchlist":Watchlist.objects.all(),
     }
     return render(request,"auctions/Listingspage.html", context)
 
@@ -296,11 +250,13 @@ def Bids_view(request, Btitle):
     #Take Watchlist
     W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title)
     #take all bids for this listing
+    print(W_data)
     B_data=Bids.objects.filter(Lcode__Ltitle=B_title)
     #Teke comments for this listing
     C_data=Comments.objects.filter(Lcode__Ltitle=B_title)
 
     if request.method == "POST":
+
         B_user = request.POST["B_Buser"]
         B_price =float(request.POST["B_Bprice"].replace(',', '.'))
         B_date = time.strftime("%Y-%m-%d")
@@ -337,11 +293,6 @@ def Bids_view(request, Btitle):
 
 
         try:
-            print("I will try to save new BID", B_price)
-            print(Lid_value,B_user)
-            print(B_throw,B_price )
-            print(B_date)
-
 
             NewBid = Bids(Lcode_id=Lid_value , Buser=B_user , Bthrow=B_throw, Bprice=B_price ,Bdate=B_date )
             NewBid.save()
@@ -389,10 +340,41 @@ def Bids_view(request, Btitle):
 
 
 
-def  Comments_view(request):
-    if request.method == "POST":
+def  Comments_view(request,Ctitle):
+    d = datetime.now()
+    #take data from desired listing
+    L_data = Listings.objects.filter(Ltitle=B_title)
+    #Take Watchlist
+    W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title)
+    #take all bids for this listing
+    B_data=Bids.objects.filter(Lcode__Ltitle=B_title)
+    #Teke comments for this listing
+    C_data=Comments.objects.filter(Lcode__Ltitle=B_title)
 
-        return redirect(request.META["auctions/BidsDetail.html"])
+    if request.method == "POST":
+        Lcode= request.POST["CLcode"]
+        Cdate= time.strftime("%Y-%m-%d")
+        Cuser = request.POST["Cuser"]
+        Ccomment =request.POST["Ccomment"]
+
+
+        context = {
+                "d":d,
+                "Btitle":B_title,
+                "L_data":L_data,
+                "B_data":B_data,
+                "W_data":W_data,
+                "C_data":C_data,
+        }
+        return render(request, "auctions/BidsDetail.html", context)
 
     else:
-        return redirect(request.META["auctions/BidsDetail.html"])
+            context = {
+                "d":d,
+                "Btitle":B_title,
+                "L_data":L_data,
+                "B_data":B_data,
+                "W_data":W_data,
+                "C_data":C_data,
+            }
+            return render(request, "auctions/BidsDetail.html", context)
