@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 
 from . import views
 from .views import index, login_view,logout_view,register
-from .views import CreateListings_view, Listingspage_view, Comments_view, Bids_view
+from .views import CreateListings_view, Listingspage_view,  Bids_view
 from .views import Watchlist_view, Categories_view, CategoryShow_view
 
 
@@ -23,7 +23,6 @@ urlpatterns = [
     path('Categories', views.Categories_view, name='Categories'),
     path('Category/<str:C_description>', views.CategoryShow_view, name='CategoryShow'),
 
-    path('Bid/<str:Ctitle>', views.Comments_view, name='Comments'), #vinculado a bids
 
     path('Watchlist', views.Watchlist_view, name='Watchlist'),
 
