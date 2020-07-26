@@ -139,21 +139,21 @@ def Watchlist_view(request):
         }
         return render(request, "auctions/Watchlist.html", context)
 
-def ChangeWhatchlist(Btitle):
-    B_title =Btitle
+def ChangeWhatchlist(Wtitle):
+    W_title =Wtitle
     d = datetime.now()
     L_data =[]
     W_data=[]
     B_data=[]
     C_data=[]
     #take data from desired listing
-    L_data = Listings.objects.filter(Ltitle=B_title)
+    L_data = Listings.objects.filter(Ltitle=Wtitle)
     #Take Watchlist
-    W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title)
+    W_data=Watchlist.objects.filter(Lcode__Ltitle=Wtitle)
     #take all bids for this listing
-    B_data=Bids.objects.filter(Lcode__Ltitle=B_title)
+    B_data=Bids.objects.filter(Lcode__Ltitle=Wtitle)
     #Teke comments for this listing
-    C_data=Comments.objects.filter(Lcode__Ltitle=B_title)
+    C_data=Comments.objects.filter(Lcode__Ltitle=Wtitle)
 
 
     if request.method=="POST":
