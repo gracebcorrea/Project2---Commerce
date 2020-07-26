@@ -48,9 +48,7 @@
                        <br>
                        <h5>Add to Whatchlist?</h5>
                        {%if W_data%}
-                            <input type="hidden" id="user" name="user" value={{user.username}}>
                             {%for W in W_data %}
-                                <input type="hidden" id="Lcode" name="Lcode" value={{W.Lcode}}>
                                 {% if W.user ==  user.username %}
                                       <input type="checkbox" style=" height: 50px;width: 50px;" id="Wflag" name="Wflag"  checked>
                                 {% endif %}
@@ -59,7 +57,7 @@
                              <input type="checkbox" style=" height: 50px;width: 50px;" id="NewWflag" name="NewWflag" >
                         {% endif %}
 
-                        <input type="submit" value="Save">
+                        <p><input type="submit" value="Save"></p>
                   </form>
                   <br>
                   <br>
