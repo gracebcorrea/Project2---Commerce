@@ -50,10 +50,7 @@
                     <p>  {{BestOffer|floatformat:2}} </p>
                     {% if Winner == user.username %}
                        <h3 style="background-color:#004d00;color:#e6ffe6 ;">   Congrats! you won the aution  </h3>
-
                     {%endif%}
-
-
                  {% else %}
                     <h5> Who is Winning? </h5>
                     <p>  {{Winner}} </p>
@@ -62,7 +59,6 @@
                 {% endif %}
                   <br>
                   <br>
-
           {%endfor%}
         </div>
         <hr>
@@ -73,15 +69,12 @@
 
 
   <div class="container" style="border:#004d00; width:90%">
-    <form action="{% url 'auctions:BidsDetail' Btitle %}"  method="post">
-        {% csrf_token %}
-        <input type="hidden" class="form-control" id="BUser" name="BUser" value={{user.username}}>
-
+    <form action="{% url 'auctions:BidsDetail' Btitle %}" method="post">{% csrf_token %}
+          <!--BID-->
         <div class="row"  width="1700px">
             <div class="col-lg-4" style=" border: 4px dotted #004d00 ;">
-               <form class="form-control" method="post">
-                  {% csrf_token %}
-                  <h5> Actual Bids </h5>
+               <form class="form-control"  method="post" >{% csrf_token %}
+                        <h5> Actual Bids </h5>
                   {% if B_data|length > 0 %}
                       {%for B in B_data %}
                           <p>Date : {{B.Bdate |date:"Y-m-d"}} - User: {{B.Buser}}</p>
@@ -93,16 +86,19 @@
                   <p style='color:red;'>{{msgbids}}</p>
                   <br>
                   {%if Status != "Sold" %}
+
                     <b>  {{ BidForm }}  </b>
                     <br>
-                    <button type="Submit" name="SubmitBid">Send an Offer</button>
+                    <p>{{msgcomment}}</p>
+                    <input type="hidden" class="form-control" id="User" name="User" value="{{user.username}}">
+                    <button type="Submit" name="SubmitBid">Send an Offer  {{user.username}}</button>
                   {%endif%}
                 </form>
             </div>
 
-            <div class="col-lg-4"  >
-                <form class="form-control" method="post">
-                {% csrf_token %}
+            <!--COMMENTS-->
+            <div class="col-lg-4"   >
+                <form class="form-control" method="post">{% csrf_token %}
                 <h5> Leave your Comment </h5>
                 {%if C_data|length > 0 %}
                     {%for C in C_data %}
@@ -112,17 +108,19 @@
                 {%else%}
                       <h5>This listing doesn´t have any comments yet </h5>
                 {%endif%}
-                {% if Status != "Sold" %}
+                {%if Status != "Sold" %}
                    <b>   {{ CommentForm}}   </b>
                    <br>
+                   <input type="hidden" class="form-control" id="User" name="User" value={{user.username}}>
                    <button type="Submit" name="SubmitComment">Send your comment</button>
                 {% endif %}
                 </form>
             </div>
 
+            <!--CHANGE STATUS-->
             <div class="col-lg-4" style=" border: 4px dotted #004d00 ;">
-                <form class="form-control" >
-                {% csrf_token %}
+                <form class="form-control" >{% csrf_token %}
+
                     {%if user.username == L.Luser  %}
                         <input type="hidden" class="form-control" id="L.Ltitle" name="L.Ltitle" value={{L.Ltitle}}>
                         <label for="Lstatus"><h5>Do you want to change Status?</h5>
@@ -135,6 +133,7 @@
                     {%endif%}
                 </form>
                 <br>
+                <!--WATCH LIST-->
                 <form  class="form-control" >
                   {% csrf_token %}
                   <br>
