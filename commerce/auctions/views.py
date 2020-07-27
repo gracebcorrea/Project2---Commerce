@@ -283,7 +283,7 @@ def Bids_view(request, Btitle):
             Lprice = float(Search_id['Lprice'])
 
         if FB.is_valid():
-
+            B_user = BUser
             B_price =FB.cleaned_data["Bid_price"]
             B_date = time.strftime("%Y-%m-%d")
             Lances= Bids.objects.filter(Lcode_id=Lid_value).values('Bthrow', 'Bprice').order_by('Bthrow')
@@ -318,7 +318,7 @@ def Bids_view(request, Btitle):
 
             try:
 
-                NewBid = Bids(Lcode_id=Lid_value , Buser=BUser , Bthrow=B_throw, Bprice=B_price ,Bdate=B_date )
+                NewBid = Bids(Lcode_id=Lid_value , Buser=B_user , Bthrow=B_throw, Bprice=B_price ,Bdate=B_date )
                 NewBid.save()
 
                 #get data with new bid to show on form
@@ -341,20 +341,23 @@ def Bids_view(request, Btitle):
 
             except :
                 return HttpResponse(" Something Wrong tyring to save Bid")
-                
+
         if FC.is_valid():
-            Ccomment =  FC.cleaned_data["C_Ccomment"]
-            Lcode = Lid_value
-            Cdate = time.strftime("%Y-%m-%d")
-            Cuser = BUser
+
+            C_comment =  FC.cleaned_data["C_Ccomment"]
+            C_Lcode = Lid_value
+            C_Cdate = time.strftime("%Y-%m-%d")
+            C_Cuser = BUser
+            
             print ("Vou salvar novo comentario :", Lcode, Cdate, Cuser ,Ccomment)
 
             try:
-                NewComment = Comments(Lcode=Lid_value,Cdate=Cdate,Cuser=Cuser,Ccomment=Ccomment )
+                NewComment = Comments(Lcode=C_Lcode,Cdate=C_Cdate,Cuser=C_Cuser,Ccomment=C_comment )
                 NewComment.user()
 
                 NewC_data=Comments.objects.filter(Lcode__Ltitle=B_title)
-                context={
+
+                context = {
                     "d":d,
                     "Btitle" : Btitle,
                     "L_data" :L_data,
@@ -365,7 +368,6 @@ def Bids_view(request, Btitle):
                     "W_data" :W_data,
                     "C_data":NewC_data,
                     "CommentForm": FC,
-
                 }
                 return render(request, "auctions/BidsDetail.html", context)
 
@@ -375,29 +377,9 @@ def Bids_view(request, Btitle):
 
 
 
-
-
-
-
-        else:
-            context = {
-                "d":d,
-                "Btitle":B_title,
-                "L_data":L_data,
-                "Status":Status,
-                "B_data":B_data,
-                "W_data":W_data,
-                "C_data":C_data,
-                "BidForm":BidForm(),
-                "CommentForm": CommentForm(),
-                "BestOffer":BestOffer,
-                "Winner":Winner,
-            }
-            return render(request, "auctions/BidsDetail.html", context)
-
-
     else:
         context = {
+            "message": "Not in POST",
             "d":d,
             "Btitle":B_title,
             "L_data":L_data,
