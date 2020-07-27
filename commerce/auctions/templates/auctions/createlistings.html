@@ -32,7 +32,7 @@
                 <label for="Ccode" ><b>Select the Category: *</b>
                   <select  class="form-control" id="Ccode" name="Ccode">
                       {% for Category in Categories %}
-                          <option value={{Category.object.id}}>  {{ Category.id }} - {{ Category.Cdescription }}</option>
+                          <option id="Ccode" name="Ccode" value= "{{ Category.Ccode }}" >  {{ Category.Ccode }} - {{ Category.Cdescription }}</option>
                       {% endfor %}
                   </select>
                 </label>
