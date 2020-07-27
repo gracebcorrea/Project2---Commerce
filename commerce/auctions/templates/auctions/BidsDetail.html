@@ -77,41 +77,41 @@
                         <h5> Actual Bids </h5>
                   {% if B_data|length > 0 %}
                       {%for B in B_data %}
-                          <p>Date : {{B.Bdate |date:"Y-m-d"}} - User: {{B.Buser}}</p>
-                          <p>Offer: {{B.Bprice |floatformat:2 }}   </p>
+                          <p style='text-align: left;'>Date : {{B.Bdate |date:"Y-m-d"}} - User: {{B.Buser}}</p>
+                          <p style='text-align: left;'>Offer: {{B.Bprice |floatformat:2 }}   </p>
                       {% endfor %}
                   {%else%}
                       <h5>This Listing doesn´t have Bids Yet </h5>
                   {%endif%}
                   <p style='color:red;'>{{msgbids}}</p>
                   <br>
-                  {%if Status != "Sold" %}
-
-                    <b>  {{ BidForm }}  </b>
+                    <b >  {{ BidForm }}  </b>
                     <br>
-                    <p>{{msgcomment}}</p>
-                    <input type="hidden" class="form-control" id="User" name="User" value="{{user.username}}">
-                    <button type="Submit" name="SubmitBid">Send an Offer  {{user.username}}</button>
+                    <p>{{ msgbids }}</p>
+                    <input type="hidden" class="form-control" id="User" name="User" value={{user.username}}>
+                  {%if Status != "Sold" %}
+                    <br>
+                    <button type="Submit" name="SubmitBid">Send your Offer</button>
                   {%endif%}
                 </form>
             </div>
 
             <!--COMMENTS-->
             <div class="col-lg-4"   >
-                <form class="form-control" method="post">{% csrf_token %}
-                <h5> Leave your Comment </h5>
+                <form class="form-control" method="post" style="border: 4px solid #004d00 ;">{% csrf_token %}
+                <h5  > Leave your Comment </h5>
                 {%if C_data|length > 0 %}
                     {%for C in C_data %}
-                        <p> {{C.Cdate}} </p>
-                        <p> <b>{{C.Cuser}}</b>-{{C.Ccomment}}</p>
+                       <p style='text-align: left;'> {{C.Cdate}} - <b>{{C.Cuser}}</b>-{{C.Ccomment}}</p>
                     {%endfor%}
                 {%else%}
                       <h5>This listing doesn´t have any comments yet </h5>
                 {%endif%}
-                {%if Status != "Sold" %}
+
                    <b>   {{ CommentForm}}   </b>
                    <br>
                    <input type="hidden" class="form-control" id="User" name="User" value={{user.username}}>
+                {%if Status != "Sold" %}
                    <button type="Submit" name="SubmitComment">Send your comment</button>
                 {% endif %}
                 </form>
