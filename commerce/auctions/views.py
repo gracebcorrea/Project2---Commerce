@@ -2,7 +2,7 @@ import sqlite3, datetime, os, os.path
 import time
 from datetime import datetime
 from django.contrib.auth import authenticate, login, logout
-from django.db import IntegrityError
+from django.db import IntegrityError, models
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import render
 from django.urls import reverse,include, path
@@ -18,7 +18,11 @@ class BidForm(forms.Form):
     Bid_price= forms.FloatField(label="Your Offer")
 
 class CommentForm(forms.Form):
-    C_Ccomment = forms.CharField(label='Your Comment')
+    C_Ccomment = forms.CharField(label='Your Comment',widget=forms.Textarea)
+
+class ChangeStatusForm(forms.Form):
+    CHOICES = [('Active','Active - Receiving Bids'), ('To Begin','To Begin - De Auction didn´t start yet'),('Closed','Closed - The seller gave up the auction'), ('Sold','Sold')]
+    L_Lstatus = forms.ChoiceField(label='Change Status',widget=forms.RadioSelect, choices=CHOICES)
 
 
 def index(request):
@@ -278,6 +282,7 @@ def Bids_view(request, Btitle):
         #User= request.POST.get('User')
         FB = BidForm(request.POST)
         FC = CommentForm(request.POST)
+        FChange = ChangeStatusForm(request.POST)
 
         if FB.is_valid():
             User= request.POST["User"]
@@ -312,6 +317,7 @@ def Bids_view(request, Btitle):
                 "C_data":C_data,
                 "BidForm": FB,
                 "CommentForm": CommentForm(),
+                "ChangeStatusForm" :ChangeStatusForm(),
                  }
                 return render(request, "auctions/BidsDetail.html", context)
 
@@ -336,6 +342,7 @@ def Bids_view(request, Btitle):
                     "C_data":C_data,
                     "BidForm": FB,
                     "CommentForm": CommentForm(),
+                    "ChangeStatusForm" :ChangeStatusForm(),
 
                 }
                 return render(request, "auctions/BidsDetail.html", context)
@@ -373,12 +380,32 @@ def Bids_view(request, Btitle):
                     "C_data":NewC_data,
                     "CommentForm": FC,
                     "BidForm":BidForm(),
+                    "ChangeStatusForm" :ChangeStatusForm(),
 
                 }
                 return render(request, "auctions/BidsDetail.html", context)
 
             except  :
                 return HttpResponse( "ERROR trying to save new comment :", C_Lcode, C_Cdate, C_Cuser ,C_comment  )
+        if FChange.is_valid():
+
+
+            context = {
+                    "msgcomment" :"New comment saved!",
+                    "d":d,
+                    "Btitle" : Btitle,
+                    "L_data" :L_data,
+                    "Status":Status,
+                    "B_data" :B_data,
+                    "BestOffer":BestOffer,
+                    "Winner":Winner,
+                    "W_data" :W_data,
+                    "C_data":NewC_data,
+                    "CommentForm": FC,
+                    "BidForm":BidForm(),
+                    "CommentForm": CommentForm(),
+            }
+            return render(request, "auctions/BidsDetail.html", context)
 
 
 
@@ -393,9 +420,10 @@ def Bids_view(request, Btitle):
             "B_data":B_data,
             "W_data":W_data,
             "C_data":C_data,
-            "BidForm":BidForm(),
-            "CommentForm": CommentForm(),
             "BestOffer":BestOffer,
             "Winner":Winner,
+            "BidForm":BidForm(),
+            "CommentForm": CommentForm(),
+            "ChangeStatusForm" :ChangeStatusForm(),
         }
         return render(request, "auctions/BidsDetail.html", context)
