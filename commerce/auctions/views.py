@@ -359,8 +359,6 @@ def Bids_view(request, Btitle):
 
             try:
 
-                print ("TRYING TO SAVE COMMENT:", C_Lcode, C_Cdate, C_Cuser ,C_comment )
-
                 NewComment = Comments(Cdate=C_Cdate, Cuser=C_Cuser,Ccomment=C_comment, Lcode_id=C_Lcode )
                 NewComment.save()
 
@@ -387,12 +385,18 @@ def Bids_view(request, Btitle):
 
             except  :
                 return HttpResponse( "ERROR trying to save new comment :", C_Lcode, C_Cdate, C_Cuser ,C_comment  )
+
         if FChange.is_valid():
             New_Status =FB.cleaned_data["L_Lstatus"]
 
+            try:
+                Updatelistings = Listings.objects.filter(Ltitle=B_title)
+                Updatelistings.Lstatus = New_Status
+                Updatelistings.save()
 
+                L_data = Listings.objects.filter(Ltitle=B_title)
 
-            context = {
+                context = {
                     "msgcomment" :"New comment saved!",
                     "d":d,
                     "Btitle" : Btitle,
@@ -403,12 +407,13 @@ def Bids_view(request, Btitle):
                     "Winner":Winner,
                     "W_data" :W_data,
                     "C_data":NewC_data,
-                    "CommentForm": FC,
+                    "ChangeStatusForm": FChange,
                     "BidForm":BidForm(),
                     "CommentForm": CommentForm(),
-            }
-            return render(request, "auctions/BidsDetail.html", context)
-
+                }
+                return render(request, "auctions/BidsDetail.html", context)
+            except:
+                return HttpResponse( "ERROR trying to update Listing Status :", C_Lcode, C_Cdate, C_Cuser ,C_comment  )
 
 
 
