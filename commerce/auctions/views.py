@@ -388,6 +388,8 @@ def Bids_view(request, Btitle):
             except  :
                 return HttpResponse( "ERROR trying to save new comment :", C_Lcode, C_Cdate, C_Cuser ,C_comment  )
         if FChange.is_valid():
+            New_Status =FB.cleaned_data["L_Lstatus"]
+
 
 
             context = {
