@@ -119,19 +119,15 @@
 
             <!--CHANGE STATUS-->
             <div class="col-lg-4" style=" border: 4px dotted #004d00 ;">
-                <form class="form-control" >{% csrf_token %}
-
-                    {%if user.username == L.Luser  %}
-                        <input type="hidden" class="form-control" id="L.Ltitle" name="L.Ltitle" value={{L.Ltitle}}>
-                        <label for="Lstatus"><h5>Do you want to change Status?</h5>
-                        <select name="Lstatus" id="Lstatus" name="Lstatus" style="width:90%;">
-                            <option value="Active"  >Active  - Bids Open</option>
-                            <option value="To Begin">To Begin- About to Start Auciton</option>
-                            <option value="Closed"  >Closed  - Give up and close Aution</option>
-                            <option value="Sold"    >Sold    - I got lucky, it is SOLD!</option>
-                        </select></label>
-                    {%endif%}
+                <form class="form-control" method="post" >{% csrf_token %}
+                    {% for L in L_data %}
+                        {% if user.username == L.Luser  %}
+                           <h5>Do You Want to change status?</h5>
+                           <p> {{ChangeStatusForm}} </p>
+                        {% endif %}
+                   {% endfor %}
                 </form>
+
                 <br>
                 <!--WATCH LIST-->
                 <form  class="form-control" >
