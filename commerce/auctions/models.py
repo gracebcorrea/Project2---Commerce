@@ -78,7 +78,6 @@ class Comments(models.Model):
     Lcode = models.ForeignKey(Listings, on_delete=models.CASCADE)
     Cdate=  models.DateField(help_text="Please use the following format: <em>YYYY-MM-DD</em>. for the auction start", blank=True)
     Cuser = models.CharField(max_length=25) #Who is buying
-    Ccomment = models.CharField(max_length=250)
+    Ccomment = models.TextField(max_length=250)
     def __str__(self):
         return f"({self.Lcode}) ({self.Cdate }) ({self.Cuser}) ({self.Ccomment})"
-        
