@@ -22,7 +22,7 @@ class CommentForm(forms.Form):
 
 class ChangeStatusForm(forms.Form):
     CHOICES = [('Active','Active - Receiving Bids'), ('To Begin','To Begin - De Auction didn´t start yet'),('Closed','Closed - The seller gave up the auction'), ('Sold','Sold')]
-    L_Lstatus = forms.ChoiceField(label='Change Status',widget=forms.RadioSelect, choices=CHOICES)
+    L_Lstatus = forms.ChoiceField(label='Do You Want to Change Status?',widget=forms.Select, choices=CHOICES)
 
 
 def index(request):
