@@ -14,6 +14,12 @@ from . import views
 from .models import User, Listings, Categories, Bids, Comments, Watchlist
 
 
+class BidForm(forms.Form):
+    Bid_price= forms.FloatField(label="Offer a Bid")
+
+class CommentForm(forms.Form):
+    C_Ccomment = forms.CharField(label = "Write a comment:")
+
 
 def index(request):
     d = datetime.now()
@@ -247,80 +253,145 @@ def Bids_view(request, Btitle):
     C_data=[]
     #take data from desired listing
     L_data = Listings.objects.filter(Ltitle=B_title)
+    Status = L_data[0].Lstatus
+
     #Take Watchlist
     W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title)
-    #take all bids for this listing
-    print(W_data)
-    B_data=Bids.objects.filter(Lcode__Ltitle=B_title)
-    #Teke comments for this listing
+
+    #Take comments for this listing
     C_data=Comments.objects.filter(Lcode__Ltitle=B_title)
 
+    #take all bids for this listing
+    B_data = Bids.objects.filter(Lcode__Ltitle=B_title)
+    Last_Bid = Bids.objects.filter(Lcode__Ltitle=B_title).order_by('-Bprice')[:1]
+    if Last_Bid:
+        BestOffer = Last_Bid[0].Bprice
+        Winner = Last_Bid[0].Buser
+    else:
+        BestOffer = 0
+        Winner = "No Offers Yet"
+
+
     if request.method == "POST":
+        BUser=request.POST["BUser"]
+        FB = BidForm(request.POST)
+        FC = CommentForm(request.POST)
 
-        B_user = request.POST["B_Buser"]
-        B_price =float(request.POST["B_Bprice"].replace(',', '.'))
-        B_date = time.strftime("%Y-%m-%d")
         Lfilter = Listings.objects.filter(Ltitle=B_title).values('id' , 'Lprice')
-
         for Search_id in Lfilter:
             Lid_value = int(Search_id['id'])
             Lprice = float(Search_id['Lprice'])
 
-        Lances= Bids.objects.filter(Lcode_id=Lid_value).values('Bthrow', 'Bprice').order_by('Bthrow')
-        if len(Lances):
-            for L in Lances:
-               N_Bthrow = L['Bthrow']
-               N_Bprice = float(L['Bprice'])
+        if FB.is_valid():
 
-            B_throw = N_Bthrow + 1
+            B_price =FB.cleaned_data["Bid_price"]
+            B_date = time.strftime("%Y-%m-%d")
+            Lances= Bids.objects.filter(Lcode_id=Lid_value).values('Bthrow', 'Bprice').order_by('Bthrow')
+            if len(Lances):
+                for L in Lances:
+                   N_Bthrow = L['Bthrow']
+                   N_Bprice = float(L['Bprice'])
 
-        else:
-            B_throw = 1
-            N_Bprice= Lprice
+                B_throw = N_Bthrow + 1
 
-        if (B_price <  Lprice) or (B_price <  N_Bprice):
-            msgbids= "EROR: A bid must be greater than or equal to the original amount and greater than the last bid, if any."
-            context={
-            "msgbids":msgbids ,
-            "d":d,
-            "Btitle" : Btitle,
-            "L_data" :L_data,
-            "B_data" :B_data,
-            "W_data" :W_data,
-            "C_data":C_data,
-             }
-            return render(request, "auctions/BidsDetail.html", context)
+            else:
+                B_throw = 1
+                N_Bprice= Lprice
 
+            if (B_price <  Lprice) or (B_price <  N_Bprice):
+                msgbids= "EROR: A bid must be greater than or equal to the original amount and greater than the last bid, if any."
 
-        try:
-
-            NewBid = Bids(Lcode_id=Lid_value , Buser=B_user , Bthrow=B_throw, Bprice=B_price ,Bdate=B_date )
-            NewBid.save()
-
-            #get data with new bid to show on form
-            B_data=Bids.objects.filter(Lcode__Ltitle=B_title)
-
-            msgbids ="New Bid Saved, Good Luck!"
-            context={
-            "msgbids":msgbids ,
-            "d":d,
-            "Btitle" : Btitle,
-            "L_data" :L_data,
-            "B_data" :B_data,
-            "W_data" :W_data,
-            "C_data":C_data,
-             }
-            return render(request, "auctions/BidsDetail.html", context)
-
-        except ValueError:
-            context={
-                "msgbids": "Could not save Bid, please try again",
+                context={
+                "msgbids":msgbids ,
                 "d":d,
                 "Btitle" : Btitle,
                 "L_data" :L_data,
+                "Status":Status,
                 "B_data" :B_data,
+                "BestOffer":BestOffer,
+                "Winner":Winner,
                 "W_data" :W_data,
                 "C_data":C_data,
+                "BidForm": FB,
+                 }
+                return render(request, "auctions/BidsDetail.html", context)
+
+            try:
+
+                NewBid = Bids(Lcode_id=Lid_value , Buser=BUser , Bthrow=B_throw, Bprice=B_price ,Bdate=B_date )
+                NewBid.save()
+
+                #get data with new bid to show on form
+                B_data=Bids.objects.filter(Lcode__Ltitle=B_title)
+                msgbids ="New Bid Saved, Good Luck!"
+                context={
+                    "msgbids":msgbids ,
+                    "d":d,
+                    "Btitle" : Btitle,
+                    "L_data" :L_data,
+                    "Status":Status,
+                    "B_data" :B_data,
+                    "BestOffer":BestOffer,
+                    "Winner":Winner,
+                    "W_data" :W_data,
+                    "C_data":C_data,
+                    "BidForm": FB,
+                }
+                return render(request, "auctions/BidsDetail.html", context)
+
+            except :
+                return HttpResponse(" Something Wrong tyring to save Bid")
+                
+        if FC.is_valid():
+            Ccomment =  FC.cleaned_data["C_Ccomment"]
+            Lcode = Lid_value
+            Cdate = time.strftime("%Y-%m-%d")
+            Cuser = BUser
+            print ("Vou salvar novo comentario :", Lcode, Cdate, Cuser ,Ccomment)
+
+            try:
+                NewComment = Comments(Lcode=Lid_value,Cdate=Cdate,Cuser=Cuser,Ccomment=Ccomment )
+                NewComment.user()
+
+                NewC_data=Comments.objects.filter(Lcode__Ltitle=B_title)
+                context={
+                    "d":d,
+                    "Btitle" : Btitle,
+                    "L_data" :L_data,
+                    "Status":Status,
+                    "B_data" :B_data,
+                    "BestOffer":BestOffer,
+                    "Winner":Winner,
+                    "W_data" :W_data,
+                    "C_data":NewC_data,
+                    "CommentForm": FC,
+
+                }
+                return render(request, "auctions/BidsDetail.html", context)
+
+
+            except:
+                return HttpResponse(" Something Wrong tyring to save Comment")
+
+
+
+
+
+
+
+        else:
+            context = {
+                "d":d,
+                "Btitle":B_title,
+                "L_data":L_data,
+                "Status":Status,
+                "B_data":B_data,
+                "W_data":W_data,
+                "C_data":C_data,
+                "BidForm":BidForm(),
+                "CommentForm": CommentForm(),
+                "BestOffer":BestOffer,
+                "Winner":Winner,
             }
             return render(request, "auctions/BidsDetail.html", context)
 
@@ -330,8 +401,13 @@ def Bids_view(request, Btitle):
             "d":d,
             "Btitle":B_title,
             "L_data":L_data,
+            "Status":Status,
             "B_data":B_data,
             "W_data":W_data,
             "C_data":C_data,
+            "BidForm":BidForm(),
+            "CommentForm": CommentForm(),
+            "BestOffer":BestOffer,
+            "Winner":Winner,
         }
         return render(request, "auctions/BidsDetail.html", context)
