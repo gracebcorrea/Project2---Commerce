@@ -43,42 +43,26 @@
                       <p>{{ L.Ldescription }}</p>
               </div>
               <div class="col-lg-2" style="border:double;border-color:#004d00 ;">
-                  <form  action="" method="post">
-                      <input type="hidden" id="wuser" name="wuser" value={{user.username}}>
-                      {% csrf_token %}
-                      <br>
-                      <h5>Add to Whatchlist?</h5>
-                      {% if W_data|length > 0 %}
-                          {% for W in W_data %}
-                              {% if W.user == user.username %}
-                                  <br>
-                                  <button style="font-size:20px; " id="Removewatch" name="Removewatch" value="0">
-                                      Remove from Watch?<i class="fa fa-shopping-cart"></i></button>
-                              {% endif %}
-                          {% endfor %}
-                      {% else %}
-                            <br>
-                            <button style="font-size:20px background-color:green" id="Addwatch" name="Addwatch" value="1">
-                             Add to Watch<i class="fa fa-shopping-cart"></i></button>
-                      {% endif %}
+                <br>  <br>  <br>  <br>
+                 {% if Status == "Sold" %}
+                    <h5> Sold To: </h5>
+                    <p>  {{Winner}} </p>
+                    <p>  {{BestOffer|floatformat:2}} </p>
+                    {% if Winner == user.username %}
+                       <h3 style="background-color:#004d00;color:#e6ffe6 ;">   Congrats! you won the aution  </h3>
+
+                    {%endif%}
 
 
-                      <br>
-                  </form>
+                 {% else %}
+                    <h5> Who is Winning? </h5>
+                    <p>  {{Winner}} </p>
+                    <p>  {{BestOffer|floatformat:2}} </p>
+
+                {% endif %}
                   <br>
                   <br>
-                  <form action="" method="post">
-                       {%if user.username == L.Luser  %}
-                            <input type="hidden" class="form-control" id="L.Ltitle" name="L.Ltitle" value={{L.Ltitle}}>
-                            <label for="Lstatus"><h5>Do you want to change Status?</h5>
-                            <select name="Lstatus" id="Lstatus" name="Lstatus" style="width:90%;">
-                                <option value="Active"  >Active  - Bids Open</option>
-                                <option value="To Begin">To Begin- About to Start Auciton</option>
-                                <option value="Closed"  >Closed  - Give up and close Aution</option>
-                                <option value="Sold"    >Sold    - I got lucky, it is SOLD!</option>
-                            </select></label>
-                       {%endif%}
-                  </form>
+
           {%endfor%}
         </div>
         <hr>
@@ -88,60 +72,92 @@
     </div>
 
 
-    <div class="container" style="border:#004d00; width:90%">
+  <div class="container" style="border:#004d00; width:90%">
+    <form action="{% url 'auctions:BidsDetail' Btitle %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" class="form-control" id="BUser" name="BUser" value={{user.username}}>
+
         <div class="row"  width="1700px">
             <div class="col-lg-4" style=" border: 4px dotted #004d00 ;">
-                <h5> Actual Bids </h5>
-                {% if B_data|length > 0 %}
-                    {%for B in B_data %}
-                        <p>Date : {{B.Bdate |date:"Y-m-d"}} - User: {{B.Buser}} </p>
-                        <p>Offer: {{B.Bprice |floatformat:2 }}  </p>
-                    {% endfor %}
-                {%else%}
+               <form class="form-control">
+                  <h5> Actual Bids </h5>
+                  {% if B_data|length > 0 %}
+                      {%for B in B_data %}
+                          <p>Date : {{B.Bdate |date:"Y-m-d"}} - User: {{B.Buser}}</p>
+                          <p>Offer: {{B.Bprice |floatformat:2 }}   </p>
+                      {% endfor %}
+                  {%else%}
                       <h5>This Listing doesn´t have Bids Yet </h5>
-                {%endif%}
-                <h5> Offer a Bid: </h5>
-                <p style='color:red;'>{{msgbids}}</p>
-                <form action="{% url 'auctions:BidsDetail' Btitle %}" method="post">
-                    {% csrf_token %}
-                    {{form}}
-                    <input type="hidden" class="form-control" id="B_Buser" name="B_Buser" value={{user.username}}>
-                    <input type="number" class="form-control" data-inputmask="___,___,___.__" id="B_Bprice" name="B_Bprice"  data-mask-selectonfocus="true" >
-                    <button type="Submit" name="Submitprice">Send an Offer</button>
-
+                  {%endif%}
+                  <p style='color:red;'>{{msgbids}}</p>
+                  <br>
+                  {%if Status != "Sold" %}
+                    <b>  {{ BidForm }}  </b>
+                    <br>
+                    <button type="Submit" name="SubmitBid">Send an Offer</button>
+                  {%endif%}
                 </form>
-
             </div>
 
-            <div class="col-lg-5" >
-                    <h5> Leave your Comment </h5>
+            <div class="col-lg-4"  >
+                <form class="form-control">
+                <h5> Leave your Comment </h5>
+                {%if C_data|length > 0 %}
+                    {%for C in C_data %}
+                        <p> {{C.Cdate}} </p>
+                        <p> <b>{{C.Cuser}}</b>-{{C.Ccomment}}</p>
+                    {%endfor%}
+                {%else%}
+                      <h5>This listing doesn´t have any comments yet </h5>
+                {%endif%}
+                {% if Status != "Sold" %}
+                   <b>
+                   {{ CommentForm}}
+                   </b>
+                   <button type="Submit" name="SubmitComment">Send</button>
+                {% endif %}
+                </form>
+            </div>
 
-                      {%if C_data|length > 0 %}
-                        {%for C in C_data %}
-                            <p> {{C.Cdate}} </p>
-                            <p> <b>{{C.Cuser}}</b>-{{C.Ccomment}}</p>
+            <div class="col-lg-4" style=" border: 4px dotted #004d00 ;">
+                <form class="form-control" >
 
-                        {%endfor%}
-                      {%else%}
-                          <h5>This listing doesn´t have any comments yet </h5>
-                      {%endif%}
+                    {%if user.username == L.Luser  %}
+                        <input type="hidden" class="form-control" id="L.Ltitle" name="L.Ltitle" value={{L.Ltitle}}>
+                        <label for="Lstatus"><h5>Do you want to change Status?</h5>
+                        <select name="Lstatus" id="Lstatus" name="Lstatus" style="width:90%;">
+                            <option value="Active"  >Active  - Bids Open</option>
+                            <option value="To Begin">To Begin- About to Start Auciton</option>
+                            <option value="Closed"  >Closed  - Give up and close Aution</option>
+                            <option value="Sold"    >Sold    - I got lucky, it is SOLD!</option>
+                        </select></label>
+                    {%endif%}
+                </form>
+                <br>
+                <form  class="form-control" >
+                  <br>
+                      <h5>Add to Whatchlist?</h5>
+                      {% if W_data|length > 0 %}
+                             {% for W in W_data %}
+                                 {% if W.user == user.username %}
+                                     <br>
+                                     <button style="font-size:20px; " id="Removewatch" name="Removewatch" value="0">
+                                         Remove from Watch?<i class="fa fa-shopping-cart"></i></button>
+                                 {% endif %}
+                             {% endfor %}
+                         {% else %}
+                               <br>
+                               <button style="font-size:20px background-color:green" id="Addwatch" name="Addwatch" value="1">
+                                Add to Watch<i class="fa fa-shopping-cart"></i></button>
+                         {% endif %}
 
-                      <form action="" method="post">
-                          {% csrf_token %}
-                          {{form}}
-                          <input  type="hidden" class="form-control" id="CLcode" name="CLcode" value={{C_Lcode}}>
-                          <input  type="hidden" class="form-control" id="Cuser" name="Cuser" value={{C_Cuser}}>
-                          <textarea type="text" class="form-control" id="Ccomment" name="Ccomment" ></textarea>
-                          <button type="Submit" name="SubmitComment">Send</button>
-                      </form>
-                </div>
-            <div class="col-lg-3" style="border:double;border-color:#004d00 ;">
-                     <h5> Who is Winning? </h5>
 
-
+                         <br>
+                </form>
             </div>
         </div>
-    </div>
+    </form>
+  </div>
 
 
 
