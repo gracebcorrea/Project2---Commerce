@@ -115,22 +115,25 @@
                    <button type="Submit" name="SubmitComment">Send your comment</button>
                 {% endif %}
                 </form>
+                <br>
             </div>
 
             <!--CHANGE STATUS-->
             <div class="col-lg-4" style=" border: 4px dotted #004d00 ;">
-                <form class="form-control" method="post" >{% csrf_token %}
+                <form  method="post" >
+                  {% csrf_token %}
                     {% for L in L_data %}
                         {% if user.username == L.Luser  %}
-                           <h5>Do You Want to change status?</h5>
-                           <p> {{ChangeStatusForm}} </p>
+                          <b>
+                          <b><p style="font-size:18px"> {{ChangeStatusForm}} </p></b>
+                          <br>
                         {% endif %}
                    {% endfor %}
                 </form>
 
                 <br>
                 <!--WATCH LIST-->
-                <form  class="form-control" >
+                <form   >
                   {% csrf_token %}
                   <br>
                       <h5>Add to Whatchlist?</h5>
