@@ -93,7 +93,7 @@ def CreateListings_view(request):
     d = datetime.now()
     if request.method == "POST":
         Ltitle=request.POST["Ltitle"]
-        Ccode= int(request.POST["Ccode"])
+        Ccode=int(request.POST["Ccode"])
         Ldescription=request.POST["Ldescription"]
         Lprice=float(request.POST["Lprice"].replace(',', '.'))
         Ldatestart=request.POST["Ldatestart"]
@@ -101,7 +101,7 @@ def CreateListings_view(request):
         Luser=request.POST["Luser"]
         Lstatus=request.POST["Lstatus"]
         Limage="media/"+str(request.POST["Limage"])
-        #Lastid = Listings.objects.latest('id')
+
 
         try:
             Listings_create = Listings.objects.create(Ltitle=Ltitle, Ccode=Ccode, Ldescription=Ldescription, Lprice= Lprice, Ldatestart=Ldatestart, Lduration=Lduration, Luser=Luser, Limage=Limage, Lstatus=Lstatus )
@@ -247,13 +247,15 @@ def Listingspage_view(request):
 def Bids_view(request, Btitle):
     B_title =Btitle
     d = datetime.now()
-    L_data =[]
-    W_data=[]
-    B_data=[]
-    C_data=[]
+
     #take data from desired listing
     L_data = Listings.objects.filter(Ltitle=B_title)
     Status = L_data[0].Lstatus
+
+    Lfilter = Listings.objects.filter(Ltitle=B_title).values('id' , 'Lprice','Lstatus')
+    for Search_id in Lfilter:
+        Lid_value = int(Search_id['id'])
+        Lprice = float(Search_id['Lprice'])
 
     #Take Watchlist
     W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title)
@@ -271,19 +273,14 @@ def Bids_view(request, Btitle):
         BestOffer = 0
         Winner = "No Offers Yet"
 
-
     if request.method == "POST":
-        BUser=request.POST["BUser"]
+        #User= request.POST["User"]
+        User= request.POST.get('User')
         FB = BidForm(request.POST)
         FC = CommentForm(request.POST)
 
-        Lfilter = Listings.objects.filter(Ltitle=B_title).values('id' , 'Lprice')
-        for Search_id in Lfilter:
-            Lid_value = int(Search_id['id'])
-            Lprice = float(Search_id['Lprice'])
-
         if FB.is_valid():
-            B_user = BUser
+            B_user = User
             B_price =FB.cleaned_data["Bid_price"]
             B_date = time.strftime("%Y-%m-%d")
             Lances= Bids.objects.filter(Lcode_id=Lid_value).values('Bthrow', 'Bprice').order_by('Bthrow')
@@ -343,21 +340,23 @@ def Bids_view(request, Btitle):
                 return HttpResponse(" Something Wrong tyring to save Bid")
 
         if FC.is_valid():
-
+            C_Cuser= User
             C_comment =  FC.cleaned_data["C_Ccomment"]
             C_Lcode = Lid_value
             C_Cdate = time.strftime("%Y-%m-%d")
-            C_Cuser = BUser
-            
-            print ("Vou salvar novo comentario :", Lcode, Cdate, Cuser ,Ccomment)
 
             try:
-                NewComment = Comments(Lcode=C_Lcode,Cdate=C_Cdate,Cuser=C_Cuser,Ccomment=C_comment )
+
+                print ("Vou salvar novo comentario :", C_Lcode, C_Cdate, C_Cuser ,C_comment )
+
+                NewComment = Comments(Cdate=C_Cdate, Cuser=C_Cuser,Ccomment=C_comment, Lcode_id=C_Lcode )
                 NewComment.user()
 
                 NewC_data=Comments.objects.filter(Lcode__Ltitle=B_title)
+                print(NewC_data)
 
                 context = {
+                    "msgcomment" :"New comment saved!",
                     "d":d,
                     "Btitle" : Btitle,
                     "L_data" :L_data,
@@ -371,15 +370,15 @@ def Bids_view(request, Btitle):
                 }
                 return render(request, "auctions/BidsDetail.html", context)
 
-
-            except:
-                return HttpResponse(" Something Wrong tyring to save Comment")
+            except FieldError:
+                return HttpResponse(" Something Wrong FieldError New Comment")
+        
 
 
 
     else:
         context = {
-            "message": "Not in POST",
+
             "d":d,
             "Btitle":B_title,
             "L_data":L_data,
