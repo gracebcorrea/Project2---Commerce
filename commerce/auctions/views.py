@@ -15,10 +15,10 @@ from .models import User, Listings, Categories, Bids, Comments, Watchlist
 
 
 class BidForm(forms.Form):
-    Bid_price= forms.FloatField(label="Offer a Bid")
+    Bid_price= forms.FloatField(label="Your Offer")
 
 class CommentForm(forms.Form):
-    C_Ccomment = forms.CharField(label = "Write a comment:")
+    C_Ccomment = forms.CharField(label='Your Comment')
 
 
 def index(request):
@@ -252,7 +252,7 @@ def Bids_view(request, Btitle):
     L_data = Listings.objects.filter(Ltitle=B_title)
     Status = L_data[0].Lstatus
 
-    Lfilter = Listings.objects.filter(Ltitle=B_title).values('id' , 'Lprice','Lstatus')
+    Lfilter = Listings.objects.filter(Ltitle=B_title).values('id' , 'Lprice')
     for Search_id in Lfilter:
         Lid_value = int(Search_id['id'])
         Lprice = float(Search_id['Lprice'])
@@ -274,12 +274,13 @@ def Bids_view(request, Btitle):
         Winner = "No Offers Yet"
 
     if request.method == "POST":
-        #User= request.POST["User"]
-        User= request.POST.get('User')
+
+        #User= request.POST.get('User')
         FB = BidForm(request.POST)
         FC = CommentForm(request.POST)
 
         if FB.is_valid():
+            User= request.POST["User"]
             B_user = User
             B_price =FB.cleaned_data["Bid_price"]
             B_date = time.strftime("%Y-%m-%d")
@@ -310,6 +311,7 @@ def Bids_view(request, Btitle):
                 "W_data" :W_data,
                 "C_data":C_data,
                 "BidForm": FB,
+                "CommentForm": CommentForm(),
                  }
                 return render(request, "auctions/BidsDetail.html", context)
 
@@ -333,6 +335,8 @@ def Bids_view(request, Btitle):
                     "W_data" :W_data,
                     "C_data":C_data,
                     "BidForm": FB,
+                    "CommentForm": CommentForm(),
+
                 }
                 return render(request, "auctions/BidsDetail.html", context)
 
@@ -340,20 +344,21 @@ def Bids_view(request, Btitle):
                 return HttpResponse(" Something Wrong tyring to save Bid")
 
         if FC.is_valid():
+            User= request.POST["User"]
             C_Cuser= User
             C_comment =  FC.cleaned_data["C_Ccomment"]
-            C_Lcode = Lid_value
+            C_Lcode = int(Lid_value)
             C_Cdate = time.strftime("%Y-%m-%d")
 
             try:
 
-                print ("Vou salvar novo comentario :", C_Lcode, C_Cdate, C_Cuser ,C_comment )
+                print ("TRYING TO SAVE COMMENT:", C_Lcode, C_Cdate, C_Cuser ,C_comment )
 
                 NewComment = Comments(Cdate=C_Cdate, Cuser=C_Cuser,Ccomment=C_comment, Lcode_id=C_Lcode )
-                NewComment.user()
+                NewComment.save()
 
                 NewC_data=Comments.objects.filter(Lcode__Ltitle=B_title)
-                print(NewC_data)
+
 
                 context = {
                     "msgcomment" :"New comment saved!",
@@ -367,12 +372,14 @@ def Bids_view(request, Btitle):
                     "W_data" :W_data,
                     "C_data":NewC_data,
                     "CommentForm": FC,
+                    "BidForm":BidForm(),
+
                 }
                 return render(request, "auctions/BidsDetail.html", context)
 
-            except FieldError:
-                return HttpResponse(" Something Wrong FieldError New Comment")
-        
+            except  :
+                return HttpResponse( "ERROR trying to save new comment :", C_Lcode, C_Cdate, C_Cuser ,C_comment  )
+
 
 
 
