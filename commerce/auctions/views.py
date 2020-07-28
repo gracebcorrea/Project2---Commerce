@@ -273,21 +273,21 @@ def Bids_view(request, Btitle):
                 msgbids= "EROR: A bid must be greater than or equal to the original amount and greater than the last bid, if any."
 
                 context={
-                   "msgbids":msgbids ,
-                   "d":d,
-                   "Btitle":B_title,
-                   "L_data":L_data,
-                   "B_data":B_data,
-                   "W_data":W_data,
-                   "C_data":C_data,
-                   "BestOffer":BestOffer,
-                   "Status":Status,
-                   "Winner":Winner,
-                   "BidForm": FB,
-                   "CommentForm": CommentForm(),
-                   "ChangeStatusForm" :ChangeStatusForm(),
-                   "AddWatch" : AddWatch(),
-                   "RemoveWatch": RemoveWatch(),
+                    "msgbids":msgbids ,
+                    "d":d,
+                    "Btitle":B_title,
+                    "L_data":L_data,
+                    "B_data":B_data,
+                    "W_data":W_data,
+                    "C_data":C_data,
+                    "BestOffer":BestOffer,
+                    "Status":Status,
+                    "Winner":Winner,
+                    "CommentForm": CommentForm(),
+                    "BidForm":BidForm(),
+                    "ChangeStatusForm":ChangeStatusForm(),
+                    "AddWatch":AddWatch(),
+                    "RemoveWatch":RemoveWatch(),
                  }
                 return render(request, "auctions/BidsDetail.html", context)
 
@@ -310,11 +310,11 @@ def Bids_view(request, Btitle):
                     "BestOffer":BestOffer,
                     "Status":Status,
                     "Winner":Winner,
-                    "BidForm": FB,
                     "CommentForm": CommentForm(),
-                    "ChangeStatusForm" :ChangeStatusForm(),
-                    "AddWatch" : AddWatch(),
-                    "RemoveWatch": RemoveWatch(),
+                    "BidForm":BidForm(),
+                    "ChangeStatusForm":ChangeStatusForm(),
+                    "AddWatch":AddWatch(),
+                    "RemoveWatch":RemoveWatch(),
 
                 }
                 return render(request, "auctions/BidsDetail.html", context)
@@ -346,7 +346,7 @@ def Bids_view(request, Btitle):
                     "BestOffer":BestOffer,
                     "Status":Status,
                     "Winner":Winner,
-                    "CommentForm": FC,
+                    "CommentForm": CommentForm(),
                     "BidForm":BidForm(),
                     "ChangeStatusForm":ChangeStatusForm(),
                     "AddWatch":AddWatch(),
@@ -382,11 +382,11 @@ def Bids_view(request, Btitle):
                     "BestOffer":BestOffer,
                     "Status":Status,
                     "Winner":Winner,
-                    "ChangeStatusForm": FChange,
-                    "BidForm":BidForm(),
                     "CommentForm": CommentForm(),
-                    "AddWatch" : AddWatch(),
-                    "RemoveWatch": RemoveWatch(),
+                    "BidForm":BidForm(),
+                    "ChangeStatusForm":ChangeStatusForm(),
+                    "AddWatch":AddWatch(),
+                    "RemoveWatch":RemoveWatch(),
 
                 }
                 return render(request, "auctions/BidsDetail.html", context)
@@ -394,16 +394,17 @@ def Bids_view(request, Btitle):
                 return HttpResponse( "ERROR trying to update Listing Status" )
 
         if FAW.is_valid():
-            print("ACTUAL USER :",Username)
+
             Add_W = FAW.cleaned_data
 
-            print ("Trying to save Watchlist:", Lid_value, Username )
             try:
+                if W_data:
+                   message = "This Item is already Watched."
 
-                Watchlist_create= Watchlist.objects.create(Lcode_id=Lid_value,user=Username,Wflag=1)
-                Watchlist_create.save()
-
-                W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title,user=Username)
+                else:
+                    Watchlist_create= Watchlist.objects.create(Lcode_id=Lid_value,user=Username,Wflag=1)
+                    Watchlist_create.save()
+                    W_data = Watchlist.objects.filter(Lcode__Ltitle=B_title,user=Username)
 
                 context = {
                     "d":d,
@@ -415,11 +416,11 @@ def Bids_view(request, Btitle):
                     "BestOffer":BestOffer,
                     "Status":Status,
                     "Winner":Winner,
-                    "AddWatch" :FAW,
-                    "ChangeStatusForm": ChangeStatusForm(),
-                    "BidForm":BidForm(),
                     "CommentForm": CommentForm(),
-                    "RemoveWatch": RemoveWatch(),
+                    "BidForm":BidForm(),
+                    "ChangeStatusForm":ChangeStatusForm(),
+                    "AddWatch":AddWatch(),
+                    "RemoveWatch":RemoveWatch(),
                 }
                 return render(request, "auctions/BidsDetail.html", context)
             except:
@@ -433,6 +434,7 @@ def Bids_view(request, Btitle):
             try:
                 W_remove=Watchlist.objects.delete(Lcode_id=Lid_value,user=Username).delete()
                 W_remove.save()
+
                 W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title,user=Username)
                 context = {
                     "d":d,
@@ -444,11 +446,11 @@ def Bids_view(request, Btitle):
                     "BestOffer":BestOffer,
                     "Status":Status,
                     "Winner":Winner,
-                    "RemoveWatch":FRW,
-                    "ChangeStatusForm":ChangeStatusForm(),
-                    "BidForm":BidForm(),
                     "CommentForm": CommentForm(),
-                    "AddWatch" : AddWatch(),
+                    "BidForm":BidForm(),
+                    "ChangeStatusForm":ChangeStatusForm(),
+                    "AddWatch":AddWatch(),
+                    "RemoveWatch":RemoveWatch(),
                 }
                 return render(request, "auctions/BidsDetail.html", context)
             except:
