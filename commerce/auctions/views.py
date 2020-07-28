@@ -359,7 +359,7 @@ def Bids_view(request, Btitle):
                 return render(request, "auctions/BidsDetail.html", context)
 
             except  :
-                return HttpResponse( "ERROR trying to save new comment :", C_Lcode, C_Cdate, C_Cuser ,C_comment  )
+                return HttpResponse( "ERROR trying to save new comment :"  )
 
         if FChange.is_valid():
             #New_Status =FB.cleaned_data["L_Lstatus"]
@@ -402,12 +402,17 @@ def Bids_view(request, Btitle):
                 return HttpResponse( "ERROR trying to update Listing Status" )
 
             if FAW.is_valid():
-
+                Add_W = FC.cleaned_data["AddWatch"]
 
 
                 try:
-                    context = {
+                    print ("Saving Watchlist:", Lid_value, Username )
+                    Watchlist_create= Watchlist.objects.create(Lcode=Lid_value,user=Username,Wflag=1)
+                    Watchlist_create.save()
 
+                    W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title,user=Username)
+
+                    context = {
                         "d":d,
                         "Btitle":B_title,
                         "L_data":L_data,
@@ -425,17 +430,17 @@ def Bids_view(request, Btitle):
                     }
                     return render(request, "auctions/BidsDetail.html", context)
                 except:
-                    return HttpResponse( "ERROR trying Add to WatchList" )
+                    return HttpResponse( "ERROR trying to ADD to Whatchlist"  )
 
 
             if FRW.is_valid():
 
-
-
                 try:
-
+                    W_remove=Watchlist.objects.delete(Lcode=Lid_value,user=Username).delete()
+                    W_remove.save()
 
                     context = {
+                        "d":d,
                         "Btitle":B_title,
                         "L_data":L_data,
                         "B_data":B_data,
@@ -494,29 +499,3 @@ def Watchlist_view(request):
           "d" : d,
         }
         return render(request, "auctions/Watchlist.html", context)
-
-
-
-
-def Watchlist_add(Btitle,user):
-    W_Lcode=Lcode
-    W_user=user
-    try:
-        Watchlist_create= Watchlist.objects.create(Lcode=W_Lcode,user=W_user,Wflag=1)
-        Watchlist_create.save()
-    except IntegrityError:
-        return HttpResponse(" Integryty Error tryng to save new watchlist item")
-
-    return True
-
-def Watchlist_remove(Btitle,user):
-    W_Lcode=Lcode
-    W_user=user
-
-    try:
-        W_remove=Watchlist.objects.delete(Lcode=W_Lcode,user=W_user).delete()
-        W_remove.save()
-
-    except IntegrityError:
-        return HttpResponse(" Integryty Error tryng to delete watchlist item")
-    return True
