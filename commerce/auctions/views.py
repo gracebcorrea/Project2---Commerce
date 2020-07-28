@@ -391,7 +391,7 @@ def Bids_view(request, Btitle):
             New_Status =FChange.cleaned_data
             SelectedStatus = request.POST.getlist('L_Lstatus')
             for S in SelectedStatus:
-                NewStatus = SelectedStatus
+                NewStatus = S[0:8]
 
             print("Selected Status:",SelectedStatus, NewStatus)
 
@@ -414,7 +414,7 @@ def Bids_view(request, Btitle):
                     "BestOffer":BestOffer,
                     "Winner":Winner,
                     "W_data" :W_data,
-                    "C_data":NewC_data,
+                    "C_data": C_data,
                     "ChangeStatusForm": FChange,
                     "BidForm":BidForm(),
                     "CommentForm": CommentForm(),
