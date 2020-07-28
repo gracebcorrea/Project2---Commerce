@@ -387,17 +387,25 @@ def Bids_view(request, Btitle):
                 return HttpResponse( "ERROR trying to save new comment :", C_Lcode, C_Cdate, C_Cuser ,C_comment  )
 
         if FChange.is_valid():
-            New_Status =FB.cleaned_data["L_Lstatus"]
+            #New_Status =FB.cleaned_data["L_Lstatus"]
+            New_Status =FChange.cleaned_data
+            SelectedStatus = request.POST.getlist('L_Lstatus')
+            for S in SelectedStatus:
+                NewStatus = SelectedStatus
+
+            print("Selected Status:",SelectedStatus, NewStatus)
 
             try:
-                Updatelistings = Listings.objects.filter(Ltitle=B_title)
-                Updatelistings.Lstatus = New_Status
+                Updatelistings = Listings.objects.get(Ltitle=B_title)
+                print(Updatelistings)
+                Updatelistings.Lstatus = NewStatus
                 Updatelistings.save()
 
                 L_data = Listings.objects.filter(Ltitle=B_title)
+                Status= L_data[0].Lstatus
 
                 context = {
-                    "msgcomment" :"New comment saved!",
+                    "msgstatus" :"New Status saved!",
                     "d":d,
                     "Btitle" : Btitle,
                     "L_data" :L_data,
@@ -413,7 +421,7 @@ def Bids_view(request, Btitle):
                 }
                 return render(request, "auctions/BidsDetail.html", context)
             except:
-                return HttpResponse( "ERROR trying to update Listing Status :", C_Lcode, C_Cdate, C_Cuser ,C_comment  )
+                return HttpResponse( "ERROR trying to update Listing Status" )
 
 
 
