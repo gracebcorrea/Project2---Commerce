@@ -98,7 +98,7 @@
             <!--COMMENTS-->
             <div class="col-lg-4"   >
                 <form class="form-control" method="post" style="border: 4px solid #004d00 ;">{% csrf_token %}
-                <h5  > Comments </h5>
+                <h5> Comments </h5>
                 {%if C_data|length > 0 %}
                     {%for C in C_data %}
                        <p style='text-align: left;'> {{C.Cdate}} - <b>{{C.Cuser}}</b>-{{C.Ccomment}}</p>
@@ -118,27 +118,32 @@
             <!--CHANGE STATUS-->
             <div class="col-lg-4" style=" border: 4px dotted #004d00 ;">
               <!--WATCH LIST-->
-              <form  method="post" >
-                {% csrf_token %}
-                <br>
+
+
                     {% if W_data|length > 0 %}
                          {% for W in W_data %}
                                {% if W.user == user.username %}
-                                    <h5>Remove from Whatchlist?</h5>
-                                    <br>
-                                    <p> {{ RemoveWatch }}</p>
-                                    <button type="Submit" class="btn btn-danger" name="Remove" value="0">
-                                     Remove from Watch?<i class="fa fa-shopping-cart"></i></button>
-                                     <p>{{msgwatch}}</p>
+                                    <form method="post" >
+                                        {% csrf_token %}
+                                        <h5>Remove from Whatchlist?</h5>
+                                        <br>
+                                        <p> {{ RemoveWatch }}</p>
+                                        <button type="Submit" class="btn btn-danger" name="Remove" value="0">
+                                        Remove from Watch? <i class="fa fa-shopping-cart"></i></button>
+                                        <p>{{msgwatch}}</p>
+                                    </form >
                                {% endif %}
                          {% endfor %}
                     {% else %}
-                          <h5>Add To Whatchlist?</h5>
-                          <br>
-                          <p>{{ AddWatch }}</p>
-                          <button type="Submit" class="btn btn-success" name="Add" value="1">
-                          Add to Watch<i class="fa fa-shopping-cart"></i></button>
-                           <p>{{msgwatch}}</p>
+                          <form  method="post" >
+                              {% csrf_token %}
+                              <h5>Add To Whatchlist?</h5>
+                              <br>
+                              <p>{{ AddWatch }}</p>
+                              <button type="Submit" class="btn btn-success" name="Add" value="1">
+                              Add to Watch <i class="fa fa-shopping-cart"></i></button>
+                              <p>{{msgwatch}}</p>
+                          </form>
                      {% endif %}
 
 
