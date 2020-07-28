@@ -88,7 +88,7 @@
                     <b >  {{ BidForm }}  </b>
                     <br>
                     <p>{{ msgbids }}</p>
-                    <input type="hidden" class="form-control" id="User" name="User" value={{user.username}}>
+
                   {%if Status != "Sold" %}
                     <br>
                     <button type="Submit" name="SubmitBid">Send your Offer</button>
@@ -110,7 +110,7 @@
 
                    <b>   {{ CommentForm}}   </b>
                    <br>
-                   <input type="hidden" class="form-control" id="User" name="User" value={{user.username}}>
+
                 {%if Status != "Sold" %}
                    <button type="Submit" name="SubmitComment">Send your comment</button>
                 {% endif %}
@@ -136,25 +136,27 @@
 
                 <br>
                 <!--WATCH LIST-->
-                <form  method="post" ><h5>Whatchlist?</h5>
+                <form  method="post" >
                   {% csrf_token %}
                   <br>
 
-                      {% if W_data  %}
-                             {% for W in W_data %}
+                      {% if W_data|length > 0 %}
+                           {% for W in W_data %}
                                  {% if W.user == user.username %}
-                                     <br>
-                                     {{ RemoveWatch }}
-                                     <button style="font-size:20px; " id="RemoveWatch" name="RemoveWatch" value="0">
-                                         Remove from Watch?<i class="fa fa-shopping-cart"></i></button>
+                                      <h5>Remove from Whatchlist?</h5>
+                                      <br>
+                                      <p> {{ RemoveWatch }}</p>
+                                      <button style="font-size:20px; " id="RemoveWatch" name="RemoveWatch" value="0">
+                                       Remove from Watch?<i class="fa fa-shopping-cart"></i></button>
                                  {% endif %}
-                             {% endfor %}
+                           {% endfor %}
                       {% else %}
-                               <br>
-                               {{ AddWatch }}
-                               <button style="font-size:20px background-color:green" id="AddWatch" name="AddWatch" value="1">
-                                Add to Watch<i class="fa fa-shopping-cart"></i></button>
-                         {% endif %}
+                            <h5>Add To Whatchlist?</h5>
+                            <br>
+                            <p>{{ AddWatch }}
+                            <button style="font-size:20px background-color:green" id="AddWatch" name="AddWatch" value="1">
+                            Add to Watch<i class="fa fa-shopping-cart"></i></button>
+                       {% endif %}
 
 
                          <br>
