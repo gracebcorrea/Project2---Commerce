@@ -26,10 +26,10 @@ class ChangeStatusForm(forms.Form):
     L_Lstatus = forms.ChoiceField(label='Do You Want to Change Status?',widget=forms.Select, choices=CHOICES)
 
 class AddWatch(forms.Form):
-    AddWatch = forms.IntegerField(initial=1,widget=forms.HiddenInput)
+    AddWatch = forms.IntegerField(initial=1,widget=forms.HiddenInput,required=False)
 
 class RemoveWatch(forms.Form):
-    RemoveWatch = forms.IntegerField(initial=0,widget=forms.HiddenInput)
+    RemoveWatch = forms.IntegerField(initial=0,widget=forms.HiddenInput,required=False)
 
 
 def index(request):
@@ -218,7 +218,7 @@ def Bids_view(request, Btitle):
 
     if request.user.is_authenticated:
         Username= request.user.username
-        print("ACTUAL USER :",Username)
+
 
     #take data from desired listing
     L_data = Listings.objects.filter(Ltitle=B_title)
@@ -265,13 +265,10 @@ def Bids_view(request, Btitle):
                 for L in Lances:
                    N_Bthrow = L['Bthrow']
                    N_Bprice = float(L['Bprice'])
-
                 B_throw = N_Bthrow + 1
-
             else:
                 B_throw = 1
                 N_Bprice= Lprice
-
             if (B_price <  Lprice) or (B_price <  N_Bprice):
                 msgbids= "EROR: A bid must be greater than or equal to the original amount and greater than the last bid, if any."
 
@@ -351,15 +348,13 @@ def Bids_view(request, Btitle):
                     "Winner":Winner,
                     "CommentForm": FC,
                     "BidForm":BidForm(),
-                    "ChangeStatusForm" :ChangeStatusForm(),
-                    "AddWatch" : AddWatch(),
-                    "RemoveWatch": RemoveWatch(),
-
+                    "ChangeStatusForm":ChangeStatusForm(),
+                    "AddWatch":AddWatch(),
+                    "RemoveWatch":RemoveWatch(),
                 }
                 return render(request, "auctions/BidsDetail.html", context)
-
             except  :
-                return HttpResponse( "ERROR trying to save new comment :"  )
+                return HttpResponse( "ERROR trying to save new comment."  )
 
         if FChange.is_valid():
             #New_Status =FB.cleaned_data["L_Lstatus"]
@@ -368,11 +363,8 @@ def Bids_view(request, Btitle):
             for S in SelectedStatus:
                 NewStatus = S[0:8]
 
-            print("Selected Status:",SelectedStatus, NewStatus)
-
             try:
                 Updatelistings = Listings.objects.get(Ltitle=B_title)
-                print(Updatelistings)
                 Updatelistings.Lstatus = NewStatus
                 Updatelistings.save()
 
@@ -401,63 +393,66 @@ def Bids_view(request, Btitle):
             except:
                 return HttpResponse( "ERROR trying to update Listing Status" )
 
-            if FAW.is_valid():
-                Add_W = FC.cleaned_data["AddWatch"]
+        if FAW.is_valid():
+            print("ACTUAL USER :",Username)
+            Add_W = FAW.cleaned_data
+
+            print ("Trying to save Watchlist:", Lid_value, Username )
+            try:
+
+                Watchlist_create= Watchlist.objects.create(Lcode_id=Lid_value,user=Username,Wflag=1)
+                Watchlist_create.save()
+
+                W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title,user=Username)
+
+                context = {
+                    "d":d,
+                    "Btitle":B_title,
+                    "L_data":L_data,
+                    "B_data":B_data,
+                    "W_data":W_data,
+                    "C_data":C_data,
+                    "BestOffer":BestOffer,
+                    "Status":Status,
+                    "Winner":Winner,
+                    "AddWatch" :FAW,
+                    "ChangeStatusForm": ChangeStatusForm(),
+                    "BidForm":BidForm(),
+                    "CommentForm": CommentForm(),
+                    "RemoveWatch": RemoveWatch(),
+                }
+                return render(request, "auctions/BidsDetail.html", context)
+            except:
+                return HttpResponse( "ERROR trying to ADD to Whatchlist"  )
 
 
-                try:
-                    print ("Saving Watchlist:", Lid_value, Username )
-                    Watchlist_create= Watchlist.objects.create(Lcode=Lid_value,user=Username,Wflag=1)
-                    Watchlist_create.save()
+        if FRW.is_valid():
+            print("ACTUAL USER :",Username)
+            Remove_W =FRW.cleaned_data
 
-                    W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title,user=Username)
-
-                    context = {
-                        "d":d,
-                        "Btitle":B_title,
-                        "L_data":L_data,
-                        "B_data":B_data,
-                        "W_data":W_data,
-                        "C_data":C_data,
-                        "BestOffer":BestOffer,
-                        "Status":Status,
-                        "Winner":Winner,
-                        "AddWatch" :FAW,
-                        "ChangeStatusForm": ChangeStatusForm(),
-                        "BidForm":BidForm(),
-                        "CommentForm": CommentForm(),
-                        "RemoveWatch": RemoveWatch(),
-                    }
-                    return render(request, "auctions/BidsDetail.html", context)
-                except:
-                    return HttpResponse( "ERROR trying to ADD to Whatchlist"  )
-
-
-            if FRW.is_valid():
-
-                try:
-                    W_remove=Watchlist.objects.delete(Lcode=Lid_value,user=Username).delete()
-                    W_remove.save()
-
-                    context = {
-                        "d":d,
-                        "Btitle":B_title,
-                        "L_data":L_data,
-                        "B_data":B_data,
-                        "W_data":W_data,
-                        "C_data":C_data,
-                        "BestOffer":BestOffer,
-                        "Status":Status,
-                        "Winner":Winner,
-                        "RemoveWatch":FRW,
-                        "ChangeStatusForm":ChangeStatusForm(),
-                        "BidForm":BidForm(),
-                        "CommentForm": CommentForm(),
-                        "AddWatch" : AddWatch(),
-                    }
-                    return render(request, "auctions/BidsDetail.html", context)
-                except:
-                    return HttpResponse( "ERROR trying Remove from Watchlist" )
+            try:
+                W_remove=Watchlist.objects.delete(Lcode_id=Lid_value,user=Username).delete()
+                W_remove.save()
+                W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title,user=Username)
+                context = {
+                    "d":d,
+                    "Btitle":B_title,
+                    "L_data":L_data,
+                    "B_data":B_data,
+                    "W_data":W_data,
+                    "C_data":C_data,
+                    "BestOffer":BestOffer,
+                    "Status":Status,
+                    "Winner":Winner,
+                    "RemoveWatch":FRW,
+                    "ChangeStatusForm":ChangeStatusForm(),
+                    "BidForm":BidForm(),
+                    "CommentForm": CommentForm(),
+                    "AddWatch" : AddWatch(),
+                }
+                return render(request, "auctions/BidsDetail.html", context)
+            except:
+                return HttpResponse( "ERROR trying Remove from Watchlist" )
 
 
 
@@ -478,7 +473,6 @@ def Bids_view(request, Btitle):
             "ChangeStatusForm" :ChangeStatusForm(),
             "AddWatch" : AddWatch(),
             "RemoveWatch": RemoveWatch(),
-
         }
         return render(request, "auctions/BidsDetail.html", context)
 
