@@ -74,7 +74,7 @@
         <div class="row"  width="1700px">
             <div class="col-lg-4" style=" border: 4px dotted #004d00 ;">
                <form class="form-control"  method="post" >{% csrf_token %}
-                        <h5> Actual Bids </h5>
+                  <h5> Actual Bids </h5>
                   {% if B_data|length > 0 %}
                       {%for B in B_data %}
                           <p style='text-align: left;'>Date : {{B.Bdate |date:"Y-m-d"}} - User: {{B.Buser}}</p>
@@ -85,13 +85,12 @@
                   {%endif%}
                   <p style='color:red;'>{{msgbids}}</p>
                   <br>
-                    <b >  {{ BidForm }}  </b>
-                    <br>
-                    <p>{{ msgbids }}</p>
-
                   {%if Status != "Sold" %}
-                    <br>
-                    <button type="Submit" name="SubmitBid">Send your Offer</button>
+                       <b >  {{ BidForm }}  </b>
+                       <br>
+                       <p>{{ msgbids }}</p>
+                       <br>
+                       <button type="Submit" name="SubmitBid">Send your Offer</button>
                   {%endif%}
                 </form>
             </div>
@@ -99,7 +98,7 @@
             <!--COMMENTS-->
             <div class="col-lg-4"   >
                 <form class="form-control" method="post" style="border: 4px solid #004d00 ;">{% csrf_token %}
-                <h5  > Leave your Comment </h5>
+                <h5  > Comments </h5>
                 {%if C_data|length > 0 %}
                     {%for C in C_data %}
                        <p style='text-align: left;'> {{C.Cdate}} - <b>{{C.Cuser}}</b>-{{C.Ccomment}}</p>
@@ -107,11 +106,9 @@
                 {%else%}
                       <h5>This listing doesn´t have any comments yet </h5>
                 {%endif%}
-
+                {%if Status != "Sold" %}
                    <b>   {{ CommentForm}}   </b>
                    <br>
-
-                {%if Status != "Sold" %}
                    <button type="Submit" name="SubmitComment">Send your comment</button>
                 {% endif %}
                 </form>
@@ -120,7 +117,33 @@
 
             <!--CHANGE STATUS-->
             <div class="col-lg-4" style=" border: 4px dotted #004d00 ;">
-                <form  method="post" >
+              <!--WATCH LIST-->
+              <form  method="post" >
+                {% csrf_token %}
+                <br>
+                    {% if W_data|length > 0 %}
+                         {% for W in W_data %}
+                               {% if W.user == user.username %}
+                                    <h5>Remove from Whatchlist?</h5>
+                                    <br>
+                                    <p> {{ RemoveWatch }}</p>
+                                    <button type="Submit" class="btn btn-danger" name="Remove" value="0">
+                                     Remove from Watch?<i class="fa fa-shopping-cart"></i></button>
+                               {% endif %}
+                         {% endfor %}
+                    {% else %}
+                          <h5>Add To Whatchlist?</h5>
+                          <br>
+                          <p>{{ AddWatch }}</p>
+                          <button type="Submit" class="btn btn-success" name="Add" value="1">
+                          Add to Watch<i class="fa fa-shopping-cart"></i></button>
+                     {% endif %}
+
+
+                       <br>
+              </form>
+              <br>
+              <form  method="post" >
                   {% csrf_token %}
                     {% for L in L_data %}
                         {% if user.username == L.Luser  %}
@@ -132,35 +155,9 @@
                           <br>
                         {% endif %}
                    {% endfor %}
-                </form>
-
-                <br>
-                <!--WATCH LIST-->
-                <form  method="post" >
-                  {% csrf_token %}
-                  <br>
-
-                      {% if W_data|length > 0 %}
-                           {% for W in W_data %}
-                                 {% if W.user == user.username %}
-                                      <h5>Remove from Whatchlist?</h5>
-                                      <br>
-                                      <p> {{ RemoveWatch }}</p>
-                                      <button type="Submit" class="btn btn-danger" name="Remove" value="0">
-                                       Remove from Watch?<i class="fa fa-shopping-cart"></i></button>
-                                 {% endif %}
-                           {% endfor %}
-                      {% else %}
-                            <h5>Add To Whatchlist?</h5>
-                            <br>
-                            <p>{{ AddWatch }}</p>
-                            <button type="Submit" class="btn btn-success" name="Add" value="1">
-                            Add to Watch<i class="fa fa-shopping-cart"></i></button>
-                       {% endif %}
+              </form>
 
 
-                         <br>
-                </form>
             </div>
         </div>
     </form>
