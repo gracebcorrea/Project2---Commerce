@@ -26,10 +26,10 @@ class ChangeStatusForm(forms.Form):
     L_Lstatus = forms.ChoiceField(label='Do You Want to Change Status?',widget=forms.Select, choices=CHOICES)
 
 class AddWatch(forms.Form):
-    AddWatch = forms.IntegerField()
+    AddWatch = forms.IntegerField(initial=1,widget=forms.HiddenInput)
 
 class RemoveWatch(forms.Form):
-    RemoveWatch = forms.IntegerField()
+    RemoveWatch = forms.IntegerField(initial=0,widget=forms.HiddenInput)
 
 
 def index(request):
@@ -218,7 +218,7 @@ def Bids_view(request, Btitle):
 
     if request.user.is_authenticated:
         Username= request.user.username
-        print(Username)
+        print("ACTUAL USER :",Username)
 
     #take data from desired listing
     L_data = Listings.objects.filter(Ltitle=B_title)
@@ -230,7 +230,7 @@ def Bids_view(request, Btitle):
         Lprice = float(Search_id['Lprice'])
 
     #Take Watchlist
-    W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title)
+    W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title,user=Username)
 
     #Take comments for this listing
     C_data=Comments.objects.filter(Lcode__Ltitle=B_title)
@@ -254,9 +254,10 @@ def Bids_view(request, Btitle):
         FAW = AddWatch(request.POST)
         FRW = RemoveWatch(request.POST)
 
+        #New BID
         if FB.is_valid():
-            User= request.POST["User"]
-            B_user = User
+
+            B_user = Username
             B_price =FB.cleaned_data["Bid_price"]
             B_date = time.strftime("%Y-%m-%d")
             Lances= Bids.objects.filter(Lcode_id=Lid_value).values('Bthrow', 'Bprice').order_by('Bthrow')
@@ -275,19 +276,21 @@ def Bids_view(request, Btitle):
                 msgbids= "EROR: A bid must be greater than or equal to the original amount and greater than the last bid, if any."
 
                 context={
-                "msgbids":msgbids ,
-                "d":d,
-                "Btitle" : Btitle,
-                "L_data" :L_data,
-                "Status":Status,
-                "B_data" :B_data,
-                "BestOffer":BestOffer,
-                "Winner":Winner,
-                "W_data" :W_data,
-                "C_data":C_data,
-                "BidForm": FB,
-                "CommentForm": CommentForm(),
-                "ChangeStatusForm" :ChangeStatusForm(),
+                   "msgbids":msgbids ,
+                   "d":d,
+                   "Btitle":B_title,
+                   "L_data":L_data,
+                   "B_data":B_data,
+                   "W_data":W_data,
+                   "C_data":C_data,
+                   "BestOffer":BestOffer,
+                   "Status":Status,
+                   "Winner":Winner,
+                   "BidForm": FB,
+                   "CommentForm": CommentForm(),
+                   "ChangeStatusForm" :ChangeStatusForm(),
+                   "AddWatch" : AddWatch(),
+                   "RemoveWatch": RemoveWatch(),
                  }
                 return render(request, "auctions/BidsDetail.html", context)
 
@@ -302,17 +305,19 @@ def Bids_view(request, Btitle):
                 context={
                     "msgbids":msgbids ,
                     "d":d,
-                    "Btitle" : Btitle,
-                    "L_data" :L_data,
-                    "Status":Status,
-                    "B_data" :B_data,
-                    "BestOffer":BestOffer,
-                    "Winner":Winner,
-                    "W_data" :W_data,
+                    "Btitle":B_title,
+                    "L_data":L_data,
+                    "B_data":B_data,
+                    "W_data":W_data,
                     "C_data":C_data,
+                    "BestOffer":BestOffer,
+                    "Status":Status,
+                    "Winner":Winner,
                     "BidForm": FB,
                     "CommentForm": CommentForm(),
                     "ChangeStatusForm" :ChangeStatusForm(),
+                    "AddWatch" : AddWatch(),
+                    "RemoveWatch": RemoveWatch(),
 
                 }
                 return render(request, "auctions/BidsDetail.html", context)
@@ -321,8 +326,7 @@ def Bids_view(request, Btitle):
                 return HttpResponse(" Something Wrong tyring to save Bid")
 
         if FC.is_valid():
-            User= request.POST["User"]
-            C_Cuser= User
+            C_Cuser= Username
             C_comment =  FC.cleaned_data["C_Ccomment"]
             C_Lcode = int(Lid_value)
             C_Cdate = time.strftime("%Y-%m-%d")
@@ -332,22 +336,24 @@ def Bids_view(request, Btitle):
                 NewComment = Comments(Cdate=C_Cdate, Cuser=C_Cuser,Ccomment=C_comment, Lcode_id=C_Lcode )
                 NewComment.save()
 
-                NewC_data=Comments.objects.filter(Lcode__Ltitle=B_title)
+                C_data=Comments.objects.filter(Lcode__Ltitle=B_title)
 
                 context = {
                     "msgcomment" :"New comment saved!",
                     "d":d,
-                    "Btitle" : Btitle,
-                    "L_data" :L_data,
-                    "Status":Status,
-                    "B_data" :B_data,
+                    "Btitle":B_title,
+                    "L_data":L_data,
+                    "B_data":B_data,
+                    "W_data":W_data,
+                    "C_data":C_data,
                     "BestOffer":BestOffer,
+                    "Status":Status,
                     "Winner":Winner,
-                    "W_data" :W_data,
-                    "C_data":NewC_data,
                     "CommentForm": FC,
                     "BidForm":BidForm(),
                     "ChangeStatusForm" :ChangeStatusForm(),
+                    "AddWatch" : AddWatch(),
+                    "RemoveWatch": RemoveWatch(),
 
                 }
                 return render(request, "auctions/BidsDetail.html", context)
@@ -376,21 +382,77 @@ def Bids_view(request, Btitle):
                 context = {
                     "msgstatus" :"New Status saved!",
                     "d":d,
-                    "Btitle" : Btitle,
-                    "L_data" :L_data,
-                    "Status":Status,
-                    "B_data" :B_data,
+                    "Btitle":B_title,
+                    "L_data":L_data,
+                    "B_data":B_data,
+                    "W_data":W_data,
+                    "C_data":C_data,
                     "BestOffer":BestOffer,
+                    "Status":Status,
                     "Winner":Winner,
-                    "W_data" :W_data,
-                    "C_data": C_data,
                     "ChangeStatusForm": FChange,
                     "BidForm":BidForm(),
                     "CommentForm": CommentForm(),
+                    "AddWatch" : AddWatch(),
+                    "RemoveWatch": RemoveWatch(),
+
                 }
                 return render(request, "auctions/BidsDetail.html", context)
             except:
                 return HttpResponse( "ERROR trying to update Listing Status" )
+
+            if FAW.is_valid():
+
+
+
+                try:
+                    context = {
+
+                        "d":d,
+                        "Btitle":B_title,
+                        "L_data":L_data,
+                        "B_data":B_data,
+                        "W_data":W_data,
+                        "C_data":C_data,
+                        "BestOffer":BestOffer,
+                        "Status":Status,
+                        "Winner":Winner,
+                        "AddWatch" :FAW,
+                        "ChangeStatusForm": ChangeStatusForm(),
+                        "BidForm":BidForm(),
+                        "CommentForm": CommentForm(),
+                        "RemoveWatch": RemoveWatch(),
+                    }
+                    return render(request, "auctions/BidsDetail.html", context)
+                except:
+                    return HttpResponse( "ERROR trying Add to WatchList" )
+
+
+            if FRW.is_valid():
+
+
+
+                try:
+
+
+                    context = {
+                        "Btitle":B_title,
+                        "L_data":L_data,
+                        "B_data":B_data,
+                        "W_data":W_data,
+                        "C_data":C_data,
+                        "BestOffer":BestOffer,
+                        "Status":Status,
+                        "Winner":Winner,
+                        "RemoveWatch":FRW,
+                        "ChangeStatusForm":ChangeStatusForm(),
+                        "BidForm":BidForm(),
+                        "CommentForm": CommentForm(),
+                        "AddWatch" : AddWatch(),
+                    }
+                    return render(request, "auctions/BidsDetail.html", context)
+                except:
+                    return HttpResponse( "ERROR trying Remove from Watchlist" )
 
 
 
@@ -400,21 +462,24 @@ def Bids_view(request, Btitle):
             "d":d,
             "Btitle":B_title,
             "L_data":L_data,
-            "Status":Status,
             "B_data":B_data,
             "W_data":W_data,
             "C_data":C_data,
             "BestOffer":BestOffer,
+            "Status":Status,
             "Winner":Winner,
             "BidForm":BidForm(),
             "CommentForm": CommentForm(),
             "ChangeStatusForm" :ChangeStatusForm(),
+            "AddWatch" : AddWatch(),
+            "RemoveWatch": RemoveWatch(),
+
         }
         return render(request, "auctions/BidsDetail.html", context)
 
 
 
-
+@login_required
 def Watchlist_view(request):
     d = datetime.now()
     try:
@@ -442,7 +507,7 @@ def Watchlist_add(Btitle,user):
     except IntegrityError:
         return HttpResponse(" Integryty Error tryng to save new watchlist item")
 
-    return None
+    return True
 
 def Watchlist_remove(Btitle,user):
     W_Lcode=Lcode
@@ -454,4 +519,4 @@ def Watchlist_remove(Btitle,user):
 
     except IntegrityError:
         return HttpResponse(" Integryty Error tryng to delete watchlist item")
-    return None
+    return True
