@@ -136,21 +136,23 @@
 
                 <br>
                 <!--WATCH LIST-->
-                <form   >
+                <form  method="post" ><h5>Whatchlist?</h5>
                   {% csrf_token %}
                   <br>
-                      <h5>Add to Whatchlist?</h5>
-                      {% if W_data|length > 0 %}
+
+                      {% if W_data  %}
                              {% for W in W_data %}
                                  {% if W.user == user.username %}
                                      <br>
-                                     <button style="font-size:20px; " id="Removewatch" name="Removewatch" value="0">
+                                     {{ RemoveWatch }}
+                                     <button style="font-size:20px; " id="RemoveWatch" name="RemoveWatch" value="0">
                                          Remove from Watch?<i class="fa fa-shopping-cart"></i></button>
                                  {% endif %}
                              {% endfor %}
-                         {% else %}
+                      {% else %}
                                <br>
-                               <button style="font-size:20px background-color:green" id="Addwatch" name="Addwatch" value="1">
+                               {{ AddWatch }}
+                               <button style="font-size:20px background-color:green" id="AddWatch" name="AddWatch" value="1">
                                 Add to Watch<i class="fa fa-shopping-cart"></i></button>
                          {% endif %}
 
