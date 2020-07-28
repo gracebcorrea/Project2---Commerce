@@ -146,7 +146,7 @@
                                       <h5>Remove from Whatchlist?</h5>
                                       <br>
                                       <p> {{ RemoveWatch }}</p>
-                                      <button type="Submit" class="btn btn-link" name="Remove">
+                                      <button type="Submit" class="btn btn-danger" name="Remove" value="0">
                                        Remove from Watch?<i class="fa fa-shopping-cart"></i></button>
                                  {% endif %}
                            {% endfor %}
@@ -154,7 +154,7 @@
                             <h5>Add To Whatchlist?</h5>
                             <br>
                             <p>{{ AddWatch }}</p>
-                            <button type="Submit" class="btn btn-success" name="Add">
+                            <button type="Submit" class="btn btn-success" name="Add" value="1">
                             Add to Watch<i class="fa fa-shopping-cart"></i></button>
                        {% endif %}
 
