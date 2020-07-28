@@ -99,7 +99,7 @@ def register(request):
 """
 
 #Create Listing
-
+@login_required
 def CreateListings_view(request):
     d = datetime.now()
     if request.method == "POST":
@@ -142,7 +142,7 @@ def CreateListings_view(request):
 
 
 
-
+@login_required
 def Categories_view(request):
     d = datetime.now()
 
@@ -153,7 +153,7 @@ def Categories_view(request):
     return render(request, "auctions/Categories.html", context)
 
 #resolver problema
-
+@login_required
 def CategoryShow_view(request, C_description):
     d = datetime.now()
     cat_filter=[]
@@ -183,24 +183,12 @@ def CategoryShow_view(request, C_description):
 
 
 """
-Listing Page: Clicking on a listing should take users to a page specific to that listing.
-On that page, users should be able to view all details about the listing, including the
-current price for the listing.
-If the user is signed in, the user should be able to add the item to their “Watchlist.”
+
 If the item is already on the watchlist, the user should be able to remove it.
-If the user is signed in, the user should be able to bid on the item.
-The bid must be at least as large as the starting bid, and must be greater than any
-other bids that have been placed (if any). If the bid doesn’t meet those criteria,
-the user should be presented with an error.
-If the user is signed in and is the one who created the listing, the user should have
-the ability to “close” the auction from this page, which makes the highest bidder
-the winner of the auction and makes the listing no longer active.
-If a user is signed in on a closed listing page, and the user has won that auction,
-the page should say so.
-Users who are signed in should be able to add comments to the listing page.
-The listing page should display all comments that have been made on the listing.
+
 """
 #List Listings details -  All
+@login_required
 def Listingspage_view(request):
     d = datetime.now()
     context={
@@ -251,8 +239,8 @@ def Bids_view(request, Btitle):
         FB = BidForm(request.POST)
         FC = CommentForm(request.POST)
         FChange = ChangeStatusForm(request.POST)
-        FAW = AddWatch(request.POST)
-        FRW = RemoveWatch(request.POST)
+        FAdd = AddWatch(request.POST)
+        FRemove = RemoveWatch(request.POST)
 
         #New BID
         if FB.is_valid():
@@ -393,13 +381,13 @@ def Bids_view(request, Btitle):
             except:
                 return HttpResponse( "ERROR trying to update Listing Status" )
 
-        if FAW.is_valid():
+        if FAdd.is_valid():
 
-            Add_W = FAW.cleaned_data
+            Add_W = FAdd.cleaned_data
 
             try:
-                if W_data:
-                   msgwatch = "This Item is already Watched."
+                if Watchlist.objects.filter(Lcode__Ltitle=B_title,user=Username):
+                   msg = "This Item is already Watched."
 
                 else:
                     Watchlist_create= Watchlist.objects.create(Lcode_id=Lid_value,user=Username,Wflag=1)
@@ -407,7 +395,7 @@ def Bids_view(request, Btitle):
                     W_data = Watchlist.objects.filter(Lcode__Ltitle=B_title,user=Username)
 
                 context = {
-                    "msgwatch":msgwatch,
+                    "msgwatch":"This Item is already Watched.",
                     "d":d,
                     "Btitle":B_title,
                     "L_data":L_data,
@@ -428,17 +416,20 @@ def Bids_view(request, Btitle):
                 return HttpResponse( "ERROR trying to ADD to Whatchlist"  )
 
 
-        if FRW.is_valid():
-            print("ACTUAL USER :",Username)
-            Remove_W =FRW.cleaned_data
+        if FRemove.is_valid():
+
+            Remove_W =FRemove.cleaned_data
 
             try:
-                W_remove=Watchlist.objects.delete(Lcode_id=Lid_value,user=Username,Wflag=1).delete()
+                print("TRYING TO DELETE :",Username, Lid_value  )
+                W_remove=Watchlist.objects.filter(Lcode_id=Lid_value,user=Username,Wflag=1)
+                W_remove.delete()
                 W_remove.save()
 
                 W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title,user=Username)
+
                 context = {
-                    "msgwatch":msgwatch,
+                    "msgwatch":"Watch removed!",
                     "d":d,
                     "Btitle":B_title,
                     "L_data":L_data,
