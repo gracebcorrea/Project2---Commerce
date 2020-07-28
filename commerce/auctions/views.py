@@ -2,6 +2,7 @@ import sqlite3, datetime, os, os.path
 import time
 from datetime import datetime
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError, models
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import render
@@ -23,6 +24,12 @@ class CommentForm(forms.Form):
 class ChangeStatusForm(forms.Form):
     CHOICES = [('Active','Active - Receiving Bids'), ('To Begin','To Begin - De Auction didn´t start yet'),('Closed','Closed - The seller gave up the auction'), ('Sold','Sold')]
     L_Lstatus = forms.ChoiceField(label='Do You Want to Change Status?',widget=forms.Select, choices=CHOICES)
+
+class AddWatch(forms.Form):
+    AddWatch = forms.IntegerField()
+
+class RemoveWatch(forms.Form):
+    RemoveWatch = forms.IntegerField()
 
 
 def index(request):
@@ -204,10 +211,14 @@ def Listingspage_view(request):
 
 
 
-
+@login_required
 def Bids_view(request, Btitle):
     B_title =Btitle
     d = datetime.now()
+
+    if request.user.is_authenticated:
+        Username= request.user.username
+        print(Username)
 
     #take data from desired listing
     L_data = Listings.objects.filter(Ltitle=B_title)
@@ -240,6 +251,8 @@ def Bids_view(request, Btitle):
         FB = BidForm(request.POST)
         FC = CommentForm(request.POST)
         FChange = ChangeStatusForm(request.POST)
+        FAW = AddWatch(request.POST)
+        FRW = RemoveWatch(request.POST)
 
         if FB.is_valid():
             User= request.POST["User"]
@@ -320,7 +333,6 @@ def Bids_view(request, Btitle):
                 NewComment.save()
 
                 NewC_data=Comments.objects.filter(Lcode__Ltitle=B_title)
-
 
                 context = {
                     "msgcomment" :"New comment saved!",
@@ -443,5 +455,3 @@ def Watchlist_remove(Btitle,user):
     except IntegrityError:
         return HttpResponse(" Integryty Error tryng to delete watchlist item")
     return None
-
-        
