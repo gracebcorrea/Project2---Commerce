@@ -399,7 +399,7 @@ def Bids_view(request, Btitle):
 
             try:
                 if W_data:
-                   message = "This Item is already Watched."
+                   msgwatch = "This Item is already Watched."
 
                 else:
                     Watchlist_create= Watchlist.objects.create(Lcode_id=Lid_value,user=Username,Wflag=1)
@@ -407,6 +407,7 @@ def Bids_view(request, Btitle):
                     W_data = Watchlist.objects.filter(Lcode__Ltitle=B_title,user=Username)
 
                 context = {
+                    "msgwatch":msgwatch,
                     "d":d,
                     "Btitle":B_title,
                     "L_data":L_data,
@@ -432,11 +433,12 @@ def Bids_view(request, Btitle):
             Remove_W =FRW.cleaned_data
 
             try:
-                W_remove=Watchlist.objects.delete(Lcode_id=Lid_value,user=Username).delete()
+                W_remove=Watchlist.objects.delete(Lcode_id=Lid_value,user=Username,Wflag=1).delete()
                 W_remove.save()
 
                 W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title,user=Username)
                 context = {
+                    "msgwatch":msgwatch,
                     "d":d,
                     "Btitle":B_title,
                     "L_data":L_data,
