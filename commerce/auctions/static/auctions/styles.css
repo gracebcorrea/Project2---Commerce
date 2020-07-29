@@ -59,19 +59,6 @@ body {
   }
 }
 
-.newspaper {
-  column-count: 3;
-  column-gap: 30px;
-}
-
-.newspaper input{
-  width: 70%;
-  font-size: 15px;
-  line-height: 15px;
-  padding: 10px;
-}
-
-
 .center {
   display: flex;
   justify-content: center;
@@ -79,3 +66,12 @@ body {
   height: 200px;
   border: 3px solid green;
 }
+
+
+.BackImage{
+    background-image: url("/static/images/Mural.JPG");
+    opacity: 0.3;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+ }
