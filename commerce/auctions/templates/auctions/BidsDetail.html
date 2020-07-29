@@ -126,7 +126,7 @@
                                   <h5>Remove from Whatchlist?</h5>
                                   <br>
                                   <p> {{ RemoveWatch }}</p>
-                                  <p>{{msgRemove}}</p>
+
                                   <button type="Submit" class="btn btn-danger" name="Remove" value="0">
                                   Remove from Watch? <i class="fa fa-shopping-cart"></i></button>
 
@@ -139,14 +139,12 @@
                               <h5>Add To Whatchlist?</h5>
                               <br>
                               <p>{{ AddWatch }}</p>
-                              <p>{{msgAdd}}</p>
+                      
                               <button type="Submit" class="btn btn-success" name="Add" value="1">
                               Add to Watch <i class="fa fa-shopping-cart"></i></button>
 
                           </form>
                      {% endif %}
-
-
                        <br>
               </form>
               <br>
@@ -157,7 +155,6 @@
                           <b>
                           <b><p style="font-size:18px"> {{ChangeStatusForm}} </p></b>
                           <button type="Submit" name="SaveChange">Save New Status</button>
-
                           <br>
                         {% endif %}
                    {% endfor %}
