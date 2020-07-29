@@ -31,7 +31,7 @@
                     <p style="text-align: center;">Not signed in.</p>
                 {% endif %}
             </div>
-            <div class="col-lg-9" >
+            <div class="col-lg-7" >
                 <ul class="nav">
 
                 <li class="nav-item"><br>
@@ -62,9 +62,11 @@
                         <a  style="color:  #004d00;" class="nav-link" href="{% url 'auctions:register' %}">Register</a>
                     </li>
                 {% endif %}
-                    <li></li>
-                    <li>   {{d}} </li>
+
                 </ul>
+            </div>
+            <div class="col-lg-2" >
+                <p> {{d}} </p>
             </div>
         </div>
       <hr>
