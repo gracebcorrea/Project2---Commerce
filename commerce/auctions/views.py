@@ -392,7 +392,7 @@ def Bids_view(request, Btitle):
                     Watchlist_create= Watchlist.objects.create(Lcode_id=Lid_value,user=Username,Wflag=1)
                     Watchlist_create.save()
                     W_data = Watchlist.objects.filter(Lcode__Ltitle=B_title,user=Username)
-                
+
                 context = {
 
                     "d":d,
@@ -418,9 +418,9 @@ def Bids_view(request, Btitle):
         if FRemove.is_valid():
 
             Remove_W =FRemove.cleaned_data
-
+            print("TRYING TO DELETE :",Username, Lid_value  )
             try:
-                print("TRYING TO DELETE :",Username, Lid_value  )
+
                 W_remove=Watchlist.objects.filter(Lcode_id=Lid_value,user=Username,Wflag=1)
                 W_remove.delete()
 
