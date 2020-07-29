@@ -1,5 +1,7 @@
 body {
     padding: 10px;
+    color:  #004d00 ;
+    background: #e6ffe6 url("images/Mural.JPG") no-repeat;
 
 }
 
@@ -65,11 +67,4 @@ body {
   align-items: center;
   height: 200px;
   border: 3px solid green;
-}
-
-.BackImg {
-  background-image: url( "{% static 'images/Mural.JPG' %}" );
-  background-repeat: no-repeat;
-  background-size: auto;
-  background-position: 50% 50%;
 }
