@@ -393,13 +393,11 @@ def Bids_view(request, Btitle):
                     Watchlist_create.save()
 
 
-                    FAdd.save()
-
                     W_data = Watchlist.objects.filter(Lcode__Ltitle=B_title,user=Username)
                     msgAdd = "Saved To WatchList."
 
                 context = {
-                    "msgAdd" : msgAdd,
+            
                     "d":d,
                     "Btitle":B_title,
                     "L_data":L_data,
@@ -423,22 +421,20 @@ def Bids_view(request, Btitle):
         if FRemove.is_valid():
 
             Remove_W =FRemove.cleaned_data
-            print("TRYING TO DELETE :",Username, Lid_value  )
+
             try:
 
                 if Watchlist.objects.filter(Lcode_id=Lid_value,user=Username,Wflag=1):
                     W_remove=Watchlist.objects.filter(Lcode_id=Lid_value,user=Username,Wflag=1)
                     W_remove.delete()
-                    W_remove.save()
 
+                print("TRYING TO DELETE :",Username, Lid_value  )
 
                 FRemove.save()
-
                 W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title,user=Username)
 
-
                 context = {
-                    "msgRemove": "Removed from WatchList",
+
                     "d":d,
                     "Btitle" :B_title,
                     "L_data" :L_data,
