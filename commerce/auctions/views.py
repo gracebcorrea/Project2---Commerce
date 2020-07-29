@@ -26,10 +26,10 @@ class ChangeStatusForm(forms.Form):
     L_Lstatus = forms.ChoiceField(label='Do You Want to Change Status?',widget=forms.Select, choices=CHOICES)
 
 class AddWatch(forms.Form):
-    AddWatch = forms.IntegerField(initial=1,widget=forms.HiddenInput,required=False)
+    AddWatch = forms.IntegerField(initial=1,widget=forms.HiddenInput)
 
 class RemoveWatch(forms.Form):
-    RemoveWatch = forms.IntegerField(initial=0,widget=forms.HiddenInput,required=False)
+    RemoveWatch = forms.IntegerField(initial=0,widget=forms.HiddenInput)
 
 
 def index(request):
@@ -386,15 +386,20 @@ def Bids_view(request, Btitle):
 
             try:
                 if Watchlist.objects.filter(Lcode__Ltitle=B_title,user=Username):
-                   msgadd = "This Item is already Watched."
+                   msgAdd = "This Item is already Watched."
 
                 else:
                     Watchlist_create= Watchlist.objects.create(Lcode_id=Lid_value,user=Username,Wflag=1)
                     Watchlist_create.save()
+
+
+                    FAdd.save()
+
                     W_data = Watchlist.objects.filter(Lcode__Ltitle=B_title,user=Username)
+                    msgAdd = "Saved To WatchList."
 
                 context = {
-
+                    "msgAdd" : msgAdd,
                     "d":d,
                     "Btitle":B_title,
                     "L_data":L_data,
@@ -421,26 +426,33 @@ def Bids_view(request, Btitle):
             print("TRYING TO DELETE :",Username, Lid_value  )
             try:
 
-                W_remove=Watchlist.objects.filter(Lcode_id=Lid_value,user=Username,Wflag=1)
-                W_remove.delete()
+                if Watchlist.objects.filter(Lcode_id=Lid_value,user=Username,Wflag=1):
+                    W_remove=Watchlist.objects.filter(Lcode_id=Lid_value,user=Username,Wflag=1)
+                    W_remove.delete()
+                    W_remove.save()
+
+
+                FRemove.save()
 
                 W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title,user=Username)
 
+
                 context = {
+                    "msgRemove": "Removed from WatchList",
                     "d":d,
-                    "Btitle":B_title,
-                    "L_data":L_data,
-                    "B_data":B_data,
-                    "W_data":W_data,
-                    "C_data":C_data,
-                    "BestOffer":BestOffer,
-                    "Status":Status,
-                    "Winner":Winner,
-                    "CommentForm": CommentForm(),
-                    "BidForm":BidForm(),
-                    "ChangeStatusForm":ChangeStatusForm(),
-                    "AddWatch":AddWatch(),
-                    "RemoveWatch":RemoveWatch(),
+                    "Btitle" :B_title,
+                    "L_data" :L_data,
+                    "B_data" :B_data,
+                    "W_data" :W_data,
+                    "C_data" :C_data,
+                    "BestOffer" :BestOffer,
+                    "Status" :Status,
+                    "Winner" :Winner,
+                    "CommentForm" : CommentForm(),
+                    "BidForm" :BidForm(),
+                    "ChangeStatusForm" :ChangeStatusForm(),
+                    "AddWatch" :AddWatch(),
+                    "RemoveWatch" :RemoveWatch(),
                 }
                 return render(request, "auctions/BidsDetail.html", context)
             except:
