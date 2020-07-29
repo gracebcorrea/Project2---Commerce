@@ -118,26 +118,28 @@
             <!--CHANGE STATUS-->
             <div class="col-lg-4" style=" border: 4px dotted #004d00 ;">
               <!--WATCH LIST-->
-                    {% if W_data|length > 0 %}
-                         {% for W in W_data %}
-                               {% if W.user == user.username %}
-                                    <form method="post" >
-                                        {% csrf_token %}
-                                        <h5>Remove from Whatchlist?</h5>
-                                        <br>
-                                        <p> {{ RemoveWatch }}</p>
-                                        <button type="Submit" class="btn btn-danger" name="Remove" value="1">
-                                        Remove from Watch? <i class="fa fa-shopping-cart"></i></button>
-                                        <p>{{msgwatch}}</p>
-                                    </form >
-                               {% endif %}
-                         {% endfor %}
+                  {% if W_data|length > 0 %}
+                      {% for W in W_data %}
+                         {% if W.user == user.username %}
+                              <form method="post" >
+                                  {% csrf_token %}
+                                  <h5>Remove from Whatchlist?</h5>
+                                  <br>
+                                  <p> {{ RemoveWatch }}</p>
+                                  <p>{{msgRemove}}</p>
+                                  <button type="Submit" class="btn btn-danger" name="Remove" value="0">
+                                  Remove from Watch? <i class="fa fa-shopping-cart"></i></button>
+
+                              </form >
+                           {% endif %}
+                       {% endfor %}
                     {% else %}
                           <form  method="post" >
                               {% csrf_token %}
                               <h5>Add To Whatchlist?</h5>
                               <br>
                               <p>{{ AddWatch }}</p>
+                              <p>{{msgAdd}}</p>
                               <button type="Submit" class="btn btn-success" name="Add" value="1">
                               Add to Watch <i class="fa fa-shopping-cart"></i></button>
 
