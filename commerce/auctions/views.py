@@ -218,10 +218,10 @@ def Bids_view(request, Btitle):
         Lprice = float(Search_id['Lprice'])
 
     #Take Watchlist
-    W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title,user=Username)
+    W_data = Watchlist.objects.filter(Lcode__Ltitle=B_title,user=Username)
 
     #Take comments for this listing
-    C_data=Comments.objects.filter(Lcode__Ltitle=B_title)
+    C_data = Comments.objects.filter(Lcode__Ltitle=B_title)
 
     #take all bids for this listing
     B_data = Bids.objects.filter(Lcode__Ltitle=B_title)
@@ -235,7 +235,6 @@ def Bids_view(request, Btitle):
 
     if request.method == "POST":
 
-        #User= request.POST.get('User')
         FB = BidForm(request.POST)
         FC = CommentForm(request.POST)
         FChange = ChangeStatusForm(request.POST)
@@ -345,7 +344,7 @@ def Bids_view(request, Btitle):
                 return HttpResponse( "ERROR trying to save new comment."  )
 
         if FChange.is_valid():
-            #New_Status =FB.cleaned_data["L_Lstatus"]
+
             New_Status =FChange.cleaned_data
             SelectedStatus = request.POST.getlist('L_Lstatus')
             for S in SelectedStatus:
@@ -387,15 +386,15 @@ def Bids_view(request, Btitle):
 
             try:
                 if Watchlist.objects.filter(Lcode__Ltitle=B_title,user=Username):
-                   msg = "This Item is already Watched."
+                   msgadd = "This Item is already Watched."
 
                 else:
                     Watchlist_create= Watchlist.objects.create(Lcode_id=Lid_value,user=Username,Wflag=1)
                     Watchlist_create.save()
                     W_data = Watchlist.objects.filter(Lcode__Ltitle=B_title,user=Username)
-
+                
                 context = {
-                    "msgwatch":"This Item is already Watched.",
+
                     "d":d,
                     "Btitle":B_title,
                     "L_data":L_data,
@@ -424,12 +423,10 @@ def Bids_view(request, Btitle):
                 print("TRYING TO DELETE :",Username, Lid_value  )
                 W_remove=Watchlist.objects.filter(Lcode_id=Lid_value,user=Username,Wflag=1)
                 W_remove.delete()
-                W_remove.save()
 
                 W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title,user=Username)
 
                 context = {
-                    "msgwatch":"Watch removed!",
                     "d":d,
                     "Btitle":B_title,
                     "L_data":L_data,
