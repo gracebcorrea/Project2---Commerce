@@ -4,12 +4,14 @@
   <h2 style=" text-align: center;">Active Listings</h2>
   <h4 style="color:red;"> {{message}}</h4>
   <hr>
+  <div class="BackImage">
     <div class="form-group" >
       <form >
           {% csrf_token %}
           {% if ActiveListings|length > 0 %}
               {% for Active in ActiveListings %}
                     {%if Active.Lstatus == "Active"%}
+
                         <div class="container" style="border:#004d00; width:90%">
                             <div class="row"  width="1700px">
                                 <div class="col-lg-2">
@@ -43,6 +45,6 @@
           {% endif %}
     	</form>
     </div>
-
+</div>
 
 {% endblock %}
