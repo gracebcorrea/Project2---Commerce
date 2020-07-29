@@ -11,18 +11,21 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
+        <link href="{% static 'images/Mural.JPG' %}" >
 
     <style>
       body{
-           background-color:#e6ffe6 ;
-           color:  #004d00;
+         background-color:#e6ffe6 ;
+         color:  #004d00;
         }
+
 
     </style>
 
     </head>
     <body>
-        <div class="row">
+
+        <div class="row" >
             <div class="col-lg-3" style="background-color:#004d00;color:#e6ffe6 ;">
                 <h1 style="text-align: center;">Auctions</h1>
                 {% if user.is_authenticated %}
@@ -69,6 +72,7 @@
                 <p> {{d}} </p>
             </div>
         </div>
+
       <hr>
 
 
