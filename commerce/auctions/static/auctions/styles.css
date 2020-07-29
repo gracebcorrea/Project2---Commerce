@@ -67,11 +67,9 @@ body {
   border: 3px solid green;
 }
 
-
-.BackImage{
-    background-image: url("/static/images/Mural.JPG");
-    opacity: 0.3;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
- }
+.BackImg {
+  background-image: url( "{% static 'images/Mural.JPG' %}" );
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: 50% 50%;
+}
