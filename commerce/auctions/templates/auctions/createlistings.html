@@ -9,7 +9,7 @@
 <h2 style=" text-align: center;">Create a new Listing:</h2>
   <h4 style="color:red;"> {{message}}</h4>
   <hr>
-<p style="color: red;">Fields with * are required to save the listing.<p>
+<p style="color: red;text-align: center;">Fields with * are required to save the listing.<p>
 
 <p>{{message}}<p>
 
@@ -20,15 +20,17 @@
 
         <div class="container">
           <div class="row">
-            <div class="col-sm-4">
+            <div class="col-lg-2">
+            </div>
+            <div class="col-lg-3">
                 <label for="Ltitle" ><b>Title for the auction item : *</b>
                 <input type="text" class="form-inline" id="Ltitle" name="Ltitle" required></label>
             </div>
-            <div class="col-sm-4">
+            <div class="col-lg-3">
                 <label for="Lprice" ><b>Start Price : *</b>
                 <input type="text" class="form-inline" id="Lprice" name="Lprice" required></label>
             </div>
-            <div class="col-sm-4">
+            <div class="col-lg-3">
                 <label for="Ccode" ><b>Select the Category: *</b>
                   <select  class="form-control" id="Ccode" name="Ccode">
                       {% for Category in Categories %}
@@ -37,50 +39,69 @@
                   </select>
                 </label>
             </div>
+
           </div>
         </div>
         <br>
-        <p><label for="Ldescription"><b>Describe de Item do be sold : *</b></label></p>
-        <textarea  type="text" id="Ldescription" name="Ldescription" rows="6" cols="125" required ></textarea>
-
+        <div class="container">
+           <div class="row">
+             <div class="col-lg-2">
+             </div>
+             <div class="col-lg-8">
+             <p><label for="Ldescription"><b>Describe de Item do be sold : *</b></label></p>
+             <textarea  type="text" id="Ldescription" name="Ldescription" rows="6" cols="105" required ></textarea>
+             </div>
+             <div class="col-lg-2">
+             </div>
+          </div>
+        </div>
         <br>
 
         <div class="container">
           <div class="row">
-            <div class="col-sm-4">
+            <div class="col-lg-2">
+            </div>
+            <div class="col-lg-3">
                 <label for="Ldatestart"><b>Date for Auction starts : *</b>
                 <input type="text" class="form-inline" id="Ldatestart" name="Ldatestart" placeholder=YYYY-MM-DD required>{{d}}</label>
             </div>
-            <div class="col-sm-4">
+            <div class="col-lg-3">
                 <label for="Lduration"><b>Deadline to close (in days)? *</b>
                 <input type="text" class="form-inline" id="Lduration" name="Lduration" required></label>
             </div>
-            <div class="col-sm-4">
+            <div class="col-lg-4">
                 <label for="Luser"><b>Advertiser user : *</b>
                 <input type="text" class="form-inline"  id="Luser" name="Luser" value="{{ user.username }}" required> </label>
             </div>
+
           </div>
         </div>
         <br>
 
-
-        <label for="Lstatus"><b>Status : *</b>
-        <select name="Lstatus" id="Lstatus" name="Lstatus">
-            <option value="Active">Active </option>
-            <option value="To Begin">To Begin </option>
-            <option value="Closed">Closed </option>
-            <option value="Sold">Sold </option>
-        </select></label>
-        <br><br>
-        <p><b>Click on the "Choose File" button to upload a Picture:</b></p>
-        <input type="file" id="Limage" name="Limage">
-        <br>
-        <br>
-
-        <form class="form-inline" style="position:relative; top:100px">
-             <button type="submit" class="btn btn-success">Save</button>
-             <button type="button" class="btn btn-danger"><a href="{% url 'auctions:index' %}">Cancel</button>
-        </form>
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-2">
+            </div>
+            <div class="col-lg-2">
+                <label for="Lstatus"><b>Status : *</b>
+                <select name="Lstatus" id="Lstatus" name="Lstatus">
+                    <option value="Active">Active </option>
+                    <option value="To Begin">To Begin </option>
+                    <option value="Closed">Closed </option>
+                    <option value="Sold">Sold </option>
+               </select></label>
+            </div>
+            <br><br>
+            <div class="col-lg-5">
+               <p><b>Click on the "Choose File" button to upload a Picture:</b></p>
+               <input type="file" id="Limage" name="Limage">
+            </div>
+            <div class="col-lg-3">
+                <form class="form-inline" style="position:relative; top:100px">
+                    <button type="submit" class="btn btn-success">Save</button>
+                    <button type="button" class="btn btn-danger"><a href="{% url 'auctions:index' %}">Cancel</button>
+               </form>
+            </div>
 
     </form>
 </div>
