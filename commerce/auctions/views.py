@@ -397,7 +397,7 @@ def Bids_view(request, Btitle):
                     msgAdd = "Saved To WatchList."
 
                 context = {
-            
+
                     "d":d,
                     "Btitle":B_title,
                     "L_data":L_data,
@@ -427,28 +427,26 @@ def Bids_view(request, Btitle):
                 if Watchlist.objects.filter(Lcode_id=Lid_value,user=Username,Wflag=1):
                     W_remove=Watchlist.objects.filter(Lcode_id=Lid_value,user=Username,Wflag=1)
                     W_remove.delete()
+                    print("TRYING TO DELETE :",Username, Lid_value  )
 
-                print("TRYING TO DELETE :",Username, Lid_value  )
 
-                FRemove.save()
                 W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title,user=Username)
 
                 context = {
-
                     "d":d,
-                    "Btitle" :B_title,
-                    "L_data" :L_data,
-                    "B_data" :B_data,
-                    "W_data" :W_data,
-                    "C_data" :C_data,
-                    "BestOffer" :BestOffer,
-                    "Status" :Status,
-                    "Winner" :Winner,
-                    "CommentForm" : CommentForm(),
-                    "BidForm" :BidForm(),
-                    "ChangeStatusForm" :ChangeStatusForm(),
-                    "AddWatch" :AddWatch(),
-                    "RemoveWatch" :RemoveWatch(),
+                    "Btitle":B_title,
+                    "L_data":L_data,
+                    "B_data":B_data,
+                    "W_data":W_data,
+                    "C_data":C_data,
+                    "BestOffer":BestOffer,
+                    "Status":Status,
+                    "Winner":Winner,
+                    "CommentForm": CommentForm(),
+                    "BidForm":BidForm(),
+                    "ChangeStatusForm":ChangeStatusForm(),
+                    "AddWatch":AddWatch(),
+                    "RemoveWatch":RemoveWatch(),
                 }
                 return render(request, "auctions/BidsDetail.html", context)
             except:
