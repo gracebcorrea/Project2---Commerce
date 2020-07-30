@@ -1,8 +1,8 @@
 body {
     padding: 10px;
     color:  #004d00 ;
-    background: #e6ffe6 url("images/Mural.JPG") no-repeat;
-
+    background-color: color:#e6ffe6 ;
+    background: white url("images/Mural.JPG") no-repeat;
 }
 
 /* form in line */
