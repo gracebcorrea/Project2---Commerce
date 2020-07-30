@@ -35,7 +35,7 @@ class RemoveWatch(forms.Form):
 def index(request):
     d = datetime.now()
     context={
-            "d" : d,
+            "Today" : d,
             "ActiveListings": Listings.objects.all(),
     }
     return render(request, "auctions/index.html", context)
@@ -113,28 +113,32 @@ def CreateListings_view(request):
         Lstatus=request.POST["Lstatus"]
         Limage="media/"+str(request.POST["Limage"])
 
+        if Listings.objects.filter(Ltitle=Ltitle,Luser=Luser,Ccode=Ccode,Lprice=Lprice,Ldatestart=Ldatestart,Lstatus=Lstatus):
+            message="Listing already exists, please try Title."
+        else:
+            try:
+                Listings_create = Listings.objects.create(Ltitle=Ltitle, Ccode=Ccode, Ldescription=Ldescription, Lprice= Lprice, Ldatestart=Ldatestart, Lduration=Lduration, Luser=Luser, Limage=Limage, Lstatus=Lstatus )
+                Listings_create.save()
 
-        try:
-            Listings_create = Listings.objects.create(Ltitle=Ltitle, Ccode=Ccode, Ldescription=Ldescription, Lprice= Lprice, Ldatestart=Ldatestart, Lduration=Lduration, Luser=Luser, Limage=Limage, Lstatus=Lstatus )
-            Listings_create.save()
+                context={
+                        "Today" : d,
+                        "ActiveListings": Listings.objects.all(),
+                }
+                return render(request, "auctions/index.html", context)
 
-        except IntegrityError:
-            context={
-                "message": "Title already exists, please choose other Title",
-                "d" : d ,
-                "Categories": Categories.objects.all(),
-            }
-            return render(request, "auctions/CreateListings.html", context)
+            except:
+                context={
+                    "message": "ERROR Trying to save new Listing.",
+                    "Today" : d ,
+                    "Categories": Categories.objects.all(),
+                     }
+                return render(request, "auctions/CreateListings.html", context)
 
-        context={
-                "d" : d,
-                "ActiveListings": Listings.objects.all(),
-        }
-        return render(request, "auctions/index.html", context)
+
 
     else:
         context={
-            "d" : d ,
+            "Today" : d ,
             "Categories": Categories.objects.all(),
         }
         return render(request, "auctions/CreateListings.html", context)
@@ -147,7 +151,7 @@ def Categories_view(request):
     d = datetime.now()
 
     context= {
-        "d": d,
+        "Today": d,
         "Categories": Categories.objects.all(),
         }
     return render(request, "auctions/Categories.html", context)
@@ -166,14 +170,14 @@ def CategoryShow_view(request, C_description):
         cat_data = Listings.objects.filter(Ccode=cat_code)
 
         context= {
-           "d" :d,
+           "Today" :d,
            "C_description" :cat_description ,
            "C_data" :cat_data,
         }
         return render(request, "auctions/CategoryShow.html", context)
     except:
         context= {
-            "d" :d,
+            "Today" :d,
             "C_description" :cat_description ,
             "message":"Nothing to show in category:  " + C_description,
         }
@@ -192,7 +196,7 @@ If the item is already on the watchlist, the user should be able to remove it.
 def Listingspage_view(request):
     d = datetime.now()
     context={
-       "d": d,
+       "Today": d,
        "Listings": Listings.objects.all(),
     }
     return render(request,"auctions/Listingspage.html", context)
@@ -261,7 +265,7 @@ def Bids_view(request, Btitle):
 
                 context={
                     "msgbids":msgbids ,
-                    "d":d,
+                    "Today":d,
                     "Btitle":B_title,
                     "L_data":L_data,
                     "B_data":B_data,
@@ -288,7 +292,7 @@ def Bids_view(request, Btitle):
                 msgbids ="New Bid Saved, Good Luck!"
                 context={
                     "msgbids":msgbids ,
-                    "d":d,
+                    "Today":d,
                     "Btitle":B_title,
                     "L_data":L_data,
                     "B_data":B_data,
@@ -324,7 +328,7 @@ def Bids_view(request, Btitle):
 
                 context = {
                     "msgcomment" :"New comment saved!",
-                    "d":d,
+                    "Today":d,
                     "Btitle":B_title,
                     "L_data":L_data,
                     "B_data":B_data,
@@ -360,7 +364,7 @@ def Bids_view(request, Btitle):
 
                 context = {
                     "msgstatus" :"New Status saved!",
-                    "d":d,
+                    "Today":d,
                     "Btitle":B_title,
                     "L_data":L_data,
                     "B_data":B_data,
@@ -398,7 +402,7 @@ def Bids_view(request, Btitle):
 
                 context = {
 
-                    "d":d,
+                    "Today":d,
                     "Btitle":B_title,
                     "L_data":L_data,
                     "B_data":B_data,
@@ -433,7 +437,7 @@ def Bids_view(request, Btitle):
                 W_data=Watchlist.objects.filter(Lcode__Ltitle=B_title,user=Username)
 
                 context = {
-                    "d":d,
+                    "Today":d,
                     "Btitle":B_title,
                     "L_data":L_data,
                     "B_data":B_data,
@@ -457,7 +461,7 @@ def Bids_view(request, Btitle):
     else:
         context = {
 
-            "d":d,
+            "Today":d,
             "Btitle":B_title,
             "L_data":L_data,
             "B_data":B_data,
@@ -482,12 +486,12 @@ def Watchlist_view(request):
     try:
         W = Watchlist.objects.all()
         context={
-           "d" : d,
+           "Today" : d,
            "Wishlists": W,
         }
         return render(request, "auctions/Watchlist.html", context)
     except:
         context={
-          "d" : d,
+          "Today" : d,
         }
         return render(request, "auctions/Watchlist.html", context)
