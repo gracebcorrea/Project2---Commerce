@@ -22,8 +22,6 @@ urlpatterns = [
     path('Bid/<str:Btitle>', views.Bids_view, name='BidsDetail'),
     path('Categories', views.Categories_view, name='Categories'),
     path('Category/<str:C_description>', views.CategoryShow_view, name='CategoryShow'),
-
-
     path('Watchlist', views.Watchlist_view, name='Watchlist'),
 
 
