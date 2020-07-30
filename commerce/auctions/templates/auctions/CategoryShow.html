@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block body %}
+
 <h2 style=" text-align: center;">Active Listings by Category:   {{C_description}}</h2>
   <h4 style="color:red;"> {{message}}</h4>
   <hr>
@@ -15,8 +16,11 @@
     {% csrf_token %}
     {% for C in C_data%}
         {%if C.Lstatus == "Active"%}
+          <br>
             <div class="container" style="border:#004d00; width:90%">
+                <br>
                 <div class="row"  width="1700px">
+                    <br>
                     <div class="col-lg-2">
                     </div>
                     <div class="col-lg-4">
@@ -37,6 +41,7 @@
                       <h5>Seller</h5>
                       <p>{{ C.Luser }}</p>
                       <P>{{C_description}}</P>
+                      <br>
                     </div>
                 </div>
                 <hr>
