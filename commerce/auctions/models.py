@@ -22,7 +22,7 @@ one for auction listings, one for bids, and one for comments made on auction lis
 It’s up to you to decide what fields each model should have, and what the types of those
 fields should be. You may have additional models if you would like.
 """
-#Properties   table  auctions_Listings
+#Model 1   auctions_Listings
 class Listings(models.Model):
     STATUS = (
         ('Active', 'Active - Receiving Bids'),
@@ -43,7 +43,7 @@ class Listings(models.Model):
     def __str__(self):
         return f"({self.Ltitle}) ({self.Ccode}) ({self.Ldescription})  ({self.Lprice}) ({self.Ldatestart}) ({self.Lduration}) ({self.Luser})({self.Limage})({self.Lstatus}) "
 
-#Properties types table auctions_Categories
+#Model2  auctions_Categories
 class Categories(models.Model):
     Ccode=models.IntegerField() #key
     Cdescription = models.CharField(max_length=50)
@@ -52,7 +52,7 @@ class Categories(models.Model):
 
 
 
-#bids list  table auctions_Bids
+#Model3  auctions_Bids
 class Bids(models.Model):
     Lcode = models.ForeignKey(Listings, on_delete=models.CASCADE)
     Buser = models.CharField(max_length=25) #Who is going to buy
@@ -64,7 +64,7 @@ class Bids(models.Model):
 
 
 
-#Like Faforits???  table auctions_Watchlist
+#Model4 auctions_Watchlist
 class Watchlist(models.Model):
     Lcode = models.ForeignKey(Listings, on_delete=models.CASCADE)
     Wflag =models.IntegerField() #Key
@@ -73,7 +73,7 @@ class Watchlist(models.Model):
         return f"({self.Lcode}) ({self.Wflag}) ({self.user}) "
 
 
-#Comments table auctions_Comments
+#Model5 auctions_Comments
 class Comments(models.Model):
     Lcode = models.ForeignKey(Listings, on_delete=models.CASCADE)
     Cdate=  models.DateField(help_text="Please use the following format: <em>YYYY-MM-DD</em>. for the auction start", blank=True)
