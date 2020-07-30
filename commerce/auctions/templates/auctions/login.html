@@ -11,16 +11,17 @@
     <form action="{% url 'auctions:login' %}" method="post" >
         {% csrf_token %}
         <div class ="flex-container" style="text-align: center;">
-            <br>
-            <div class="form-group" style="margin:auto; width: 60%;" >
+            <br><br>
+            <div class="form-group" style="margin:auto; width: 50%;" >
                 <input  autofocus class="form-control" type="text" name="username" placeholder="Username">
             </div>
             <br>
-            <div class="form-group" style="margin:auto; width: 60%;" >
+            <div class="form-group" style="margin:auto; width: 50%;" >
                 <input  class="form-control" type="password" name="password" placeholder="Password">
             </div>
             <br>
-            <div class="center" style="align-items: center;" >
+            <br>
+            <div class="form-group" style="align-items: center;" >
                 <input class="btn btn-primary" type="submit"  value="Login">     Don't have an account?
                 <a  href="{% url 'auctions:register' %}">Register here.</a>
              </div>
