@@ -114,17 +114,24 @@ def CreateListings_view(request):
         Limage="media/"+str(request.POST["Limage"])
 
         if Listings.objects.filter(Ltitle=Ltitle,Luser=Luser,Ccode=Ccode,Lprice=Lprice,Ldatestart=Ldatestart,Lstatus=Lstatus):
-            message="Listing already exists, please try Title."
+            context={
+                "message": "Listing already exists, please try to creat other list",
+                "Today" : d ,
+                "Categories": Categories.objects.all(),
+                }
+            return render(request, "auctions/CreateListings.html", context)
         else:
             try:
                 Listings_create = Listings.objects.create(Ltitle=Ltitle, Ccode=Ccode, Ldescription=Ldescription, Lprice= Lprice, Ldatestart=Ldatestart, Lduration=Lduration, Luser=Luser, Limage=Limage, Lstatus=Lstatus )
                 Listings_create.save()
 
                 context={
-                        "Today" : d,
-                        "ActiveListings": Listings.objects.all(),
-                }
+                    "Today" : d,
+                    "ActiveListings": Listings.objects.all(),
+                    }
                 return render(request, "auctions/index.html", context)
+
+
 
             except:
                 context={
@@ -133,6 +140,7 @@ def CreateListings_view(request):
                     "Categories": Categories.objects.all(),
                      }
                 return render(request, "auctions/CreateListings.html", context)
+
 
 
 
